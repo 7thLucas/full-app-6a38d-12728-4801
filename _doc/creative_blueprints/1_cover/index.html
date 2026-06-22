@@ -1,0 +1,40 @@
+<section class="w-full h-full overflow-auto bg-white relative flex">
+  <style>
+    .mode-landscape .sl-cover { flex-direction: row; }
+    .mode-portrait .sl-cover { flex-direction: column; }
+    .mode-portrait .sl-visual { min-height: 38%; }
+    .mode-landscape .sl-visual { width: 42%; }
+  </style>
+  <div class="sl-cover flex w-full h-full">
+    <!-- Content column -->
+    <div class="flex-1 h-full flex flex-col justify-between p-12">
+      <div class="flex items-center gap-3">
+        <span class="inline-block w-2.5 h-2.5 rounded-full" style="background:#0E7C86"></span>
+        <span class="text-sm font-semibold tracking-widest uppercase" style="color:#0E7C86">Clinic Intake &amp; Queue</span>
+      </div>
+
+      <div class="max-w-2xl">
+        <h1 class="text-slate-900 font-extrabold leading-[1.05] tracking-tight" style="font-size:3.6rem">
+          The front desk,<br>without the clipboard.
+        </h1>
+        <p class="mt-6 text-xl text-slate-600 leading-relaxed max-w-xl">
+          Patients complete intake before they reach the desk. Staff watch one live queue.
+          Every patient gets an SMS confirmation — automatically.
+        </p>
+      </div>
+
+      <div class="flex items-end justify-between">
+        <data-attribution />
+        <span class="text-sm text-slate-400">Patient intake dashboard for small clinics</span>
+      </div>
+    </div>
+
+    <!-- Visual column -->
+    <div class="sl-visual relative overflow-hidden">
+      <img class="absolute inset-0 w-full h-full object-cover"
+        src="https://api.qb-deck.quantumbyte.ai/common/image-generation?prompt=calm%20bright%20modern%20small%20clinic%20reception%20desk%2C%20soft%20teal%20accents%2C%20friendly%20staff%20at%20tablet%2C%20clean%20minimal%20healthcare%2C%20natural%20light%2C%20editorial%20photography"
+        alt="Clinic reception" />
+      <div class="absolute inset-0" style="background:linear-gradient(120deg,rgba(14,124,134,0.15),rgba(255,255,255,0) 55%)"></div>
+    </div>
+  </div>
+</section>

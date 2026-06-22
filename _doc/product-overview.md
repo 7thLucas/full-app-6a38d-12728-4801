@@ -46,8 +46,13 @@ appointment per week tends to cover the product's cost.
 
 - **Tone**: calm, trustworthy, clinical-clean. Reassuring to patients, efficient for
   staff. Privacy-respecting.
-- **Name / branding**: not yet decided _(assumption — working title "Clinic Intake &
-  Queue")_.
+- **Name**: **Clearway** (confirmed).
+- **One-liner**: "Clearway turns patient intake into a calm, paperless flow for small
+  clinics: patients self-complete a no-login mobile form, every submission lands in a
+  live staff queue with clear waiting / in progress / seen status, and each patient gets
+  an automatic SMS confirmation — reclaiming front-desk time and cutting no-shows."
+- **Logo**: set — minimal teal (#0E7C86) clinical-clean mark. Accent color **#0E7C86**
+  carries across logo and blueprint.
 
 ## Scope (current)
 

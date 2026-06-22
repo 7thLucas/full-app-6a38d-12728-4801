@@ -1,110 +1,218 @@
-<section id="cw6" class="w-full h-full overflow-auto px-12 py-10" style="background:#EEF3F3">
+<section id="cw6" class="w-full h-full overflow-auto">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
-    #cw6{font-family:'Hanken Grotesk',system-ui,sans-serif;color:#0E2A2D;-webkit-font-smoothing:antialiased}
-    #cw6 h2,#cw6 h3,#cw6 .disp{font-family:'Bricolage Grotesque',system-ui,sans-serif;letter-spacing:-.025em;font-weight:800;text-wrap:balance}
-    #cw6 .mono{font-family:'Geist Mono',ui-monospace,monospace;font-feature-settings:'tnum' 1}
-    #cw6 .rail{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600}
-    #cw6 .mode-portrait .cw6-split{flex-direction:column}
-    #cw6 .mode-landscape .cw6-split{flex-direction:row}
-    .mode-portrait #cw6 .cw6-split{flex-direction:column}
-    .mode-landscape #cw6 .cw6-split{flex-direction:row}
-    #cw6 [data-anchor]{cursor:pointer;transition:background .15s,border-color .15s,box-shadow .15s}
-    #cw6 [data-anchor]:hover{background:#F4FAFA;border-color:#BFE6E1}
-    #cw6 [data-anchor].sel{box-shadow:0 0 0 2px #9FE3DE}
-    #cw6 .cw6-btn{cursor:pointer;transition:transform .08s,opacity .15s,box-shadow .15s}
-    #cw6 .cw6-btn:not([disabled]):hover{box-shadow:0 4px 14px rgba(14,124,134,.22)}
-    #cw6 .cw6-btn:active{transform:translateY(1px)}
-    #cw6 .cw6-btn[disabled]{opacity:.4;cursor:not-allowed}
-    #cw6 .cw6-fade{animation:cw6in .25s ease}
-    @keyframes cw6in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-    @media (prefers-reduced-motion:reduce){#cw6 .cw6-fade{animation:none}}
+    #cw6 {
+      --bg:#f6f8fc; --panel:#ffffff; --ink:#111827; --muted:#667085; --line:#e5e9f2;
+      --blue:#3454f5; --blue-soft:#eef2ff; --green:#168a4a; --green-soft:#eaf8ef;
+      --red:#d92d20; --red-soft:#fff1f0; --amber:#b85c00; --amber-soft:#fff7e6;
+      --purple:#6d28d9; --purple-soft:#f3e8ff; --shadow:0 18px 50px rgba(17,24,39,0.08); --radius:22px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 16% 12%, rgba(52,84,245,0.08), transparent 24%),
+        radial-gradient(circle at 80% 0%, rgba(109,40,217,0.08), transparent 24%),
+        var(--bg);
+      display:flex; padding:16px; height:100%;
+    }
+    #cw6 *, #cw6 *::before, #cw6 *::after { box-sizing:border-box; }
+    #cw6 button, #cw6 input, #cw6 textarea { font: inherit; }
+    #cw6 button { cursor: pointer; }
+
+    #cw6 .panel {
+      background: rgba(255,255,255,0.92); border: 1px solid var(--line);
+      border-radius: var(--radius); box-shadow: var(--shadow); min-height: 0; overflow: hidden;
+    }
+    #cw6 .center-panel { display:flex; flex-direction:column; min-height:0; flex:1; }
+
+    #cw6 .center-top { padding: 18px 24px 0; border-bottom: 1px solid var(--line); background: rgba(255,255,255,.84); }
+    #cw6 .top-row { display:flex; align-items:flex-start; justify-content:space-between; gap: 18px; }
+    #cw6 h1 { margin: 0; font-size: 23px; letter-spacing: -0.03em; }
+    #cw6 .subtitle { color: var(--muted); margin-top: 3px; }
+    #cw6 .actions { display:flex; gap:10px; align-items:center; flex-wrap: wrap; }
+    #cw6 .chips { display:flex; gap: 0; border: 1px solid var(--line); border-radius: 13px; overflow:hidden; background:white; }
+    #cw6 .chip { padding: 10px 14px; border-right: 1px solid var(--line); font-size: 12px; min-width: 82px; }
+    #cw6 .chip:last-child { border-right:0; }
+    #cw6 .chip b { display:block; font-size: 11px; color:#475467; }
+    #cw6 .chip span { color:#111827; }
+    #cw6 .staging::after { content:""; display:inline-block; width:7px; height:7px; border-radius:50%; background:#22c55e; margin-left:5px; }
+    #cw6 .inspect-btn { border:1px solid var(--line); background:#fff; padding: 12px 16px; border-radius: 13px; font-weight:800; color:#263149; }
+
+    #cw6 .tabs { display:flex; gap: 10px; margin-top: 18px; overflow-x:auto; }
+    #cw6 .tab { border:0; background:transparent; padding: 13px 14px; color: #475467; font-weight: 800; border-bottom: 3px solid transparent; }
+    #cw6 .tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+    #cw6 .main-content { flex:1; overflow:auto; padding: 18px 24px; min-height:0; }
+    #cw6 .toolbar { display:flex; justify-content:space-between; gap:12px; align-items:center; margin-bottom: 14px; }
+    #cw6 h2 { margin: 0; font-size: 17px; letter-spacing: -0.02em; }
+    #cw6 .hint { color: var(--muted); font-size: 13px; margin-top: 3px; }
+    #cw6 .primary, #cw6 .secondary, #cw6 .danger {
+      border-radius: 13px; padding: 10px 13px; font-size: 12px; font-weight: 900; border: 1px solid var(--line); background: white; color:#344054;
+    }
+    #cw6 .primary { background: var(--blue); border-color: var(--blue); color:white; }
+    #cw6 .danger { color:var(--red); background:#fff; }
+    #cw6 .select { border:1px solid var(--line); border-radius: 13px; padding:10px 12px; font-weight:800; color:#344054; background:white; font-size:12px; }
+    #cw6 .small-btn { border: 1px solid var(--line); background: #fff; color: #334155; border-radius: 12px; padding: 8px 11px; font-weight: 700; font-size: 12px; }
+
+    #cw6 .ledger { border:1px solid var(--line); border-radius: 16px; overflow:hidden; background:white; }
+    #cw6 .ledger-head, #cw6 .ledger-row { display:grid; grid-template-columns: 1.25fr .85fr .75fr 86px; gap:14px; align-items:center; padding: 12px 18px; }
+    #cw6 .ledger-head { font-size:11px; color:#667085; background:#fbfcff; font-weight:900; text-transform:none; }
+    #cw6 .ledger-row { border-top:1px solid var(--line); cursor:pointer; }
+    #cw6 .ledger-row:hover { background:#fbfcff; }
+    #cw6 .anchor-cell { display:flex; gap:13px; align-items:center; }
+    #cw6 .num { width:34px; height:34px; border-radius: 10px; display:grid; place-items:center; font-weight:900; border: 1px solid; flex-shrink:0; }
+    #cw6 .num.red { color:var(--red); border-color:#ffb4ad; background:#fff6f5; }
+    #cw6 .num.green { color:var(--green); border-color:#a7e8c1; background:#f0fff5; }
+    #cw6 .num.amber { color:var(--amber); border-color:#ffd79d; background:#fff9ed; }
+    #cw6 .anchor-title { font-weight:900; font-size:13px; }
+    #cw6 .anchor-desc { color:#667085; font-size:12px; line-height:1.35; margin-top:3px; }
+    #cw6 .trace { color:#475467; font-size:12px; line-height:1.4; }
+    #cw6 .pill { display:inline-flex; align-items:center; justify-content:center; padding: 8px 10px; border-radius: 9px; font-size: 12px; font-weight:900; border:1px solid; line-height:1.2; }
+    #cw6 .pill.red { color:var(--red); background:var(--red-soft); border-color:#ffc9c4; }
+    #cw6 .pill.green { color:var(--green); background:var(--green-soft); border-color:#c1eacf; }
+    #cw6 .pill.amber { color:var(--amber); background:var(--amber-soft); border-color:#ffdca7; }
+    #cw6 .updated { color:#475467; font-size: 12px; display:flex; align-items:center; justify-content:space-between; }
+
+    #cw6 .trace-flow, #cw6 .gate-panel, #cw6 .overview-grid, #cw6 .simple-card {
+      background:#fff; border:1px solid var(--line); border-radius: 16px; margin-top:14px; padding:16px;
+    }
+    #cw6 .flow-row { display:flex; justify-content:space-between; align-items:flex-start; gap: 14px; margin-top: 16px; }
+    #cw6 .flow-step { flex:1; text-align:center; position:relative; }
+    #cw6 .flow-step:not(:last-child)::after { content:""; position:absolute; top:24px; left:62%; width:76%; border-top:2px dotted #cbd5e1; }
+    #cw6 .flow-icon { width:44px; height:44px; border-radius:50%; display:grid; place-items:center; margin:0 auto 8px; background:var(--blue-soft); color:var(--blue); font-size:20px; border:1px solid #d8e0ff; }
+    #cw6 .flow-label { font-weight:900; font-size:12px; }
+    #cw6 .flow-copy { color:#667085; font-size:11px; line-height:1.3; margin-top:3px; }
+
+    #cw6 .gate-panel { display:grid; grid-template-columns: 220px 1fr 170px; padding:0; overflow:hidden; }
+    #cw6 .gate-status { padding: 22px 18px; background: var(--red-soft); }
+    #cw6 .gate-status.ship { background: var(--green-soft); }
+    #cw6 .gate-status.reopen { background: var(--amber-soft); }
+    #cw6 .gate-word { font-size:30px; font-weight: 1000; margin: 10px 0 4px; letter-spacing: -0.05em; }
+    #cw6 .gate-word.block { color:var(--red); }
+    #cw6 .gate-word.ship { color:var(--green); }
+    #cw6 .gate-word.reopen { color:var(--amber); }
+    #cw6 .gate-list, #cw6 .gate-summary { padding: 18px; border-left:1px solid var(--line); }
+    #cw6 .gate-list h3, #cw6 .gate-summary h3 { font-size:13px; margin:0 0 12px; }
+    #cw6 .gate-anchor { display:grid; grid-template-columns: 24px 1fr auto; gap:10px; align-items:center; margin:10px 0; font-size:12px; }
+    #cw6 .small-num { width:22px; height:22px; border-radius:7px; border:1px solid #ffc4be; color:var(--red); display:grid; place-items:center; font-weight:900; background:white; }
+    #cw6 .summary-row { display:flex; justify-content:space-between; font-size:12px; margin-bottom:8px; }
+    #cw6 .footer-note { margin-top:14px; color:#667085; font-size:12px; display:flex; justify-content:space-between; }
+
+    #cw6 .tab-pane { display:none; }
+    #cw6 .tab-pane.active { display:block; }
+    #cw6 .overview-grid { display:grid; grid-template-columns: repeat(3,1fr); gap:14px; }
+    #cw6 .metric { background:#fbfcff; border:1px solid var(--line); border-radius:14px; padding:16px; }
+    #cw6 .metric-val { font-size:28px; font-weight:1000; letter-spacing:-.05em; }
+    #cw6 .metric-label { color:#667085; font-size:12px; margin-top:5px; }
+    #cw6 .hypothesis-list { display:grid; gap:10px; }
+    #cw6 .hypothesis-item { padding:14px; border:1px solid var(--line); border-radius:14px; background:#fff; display:flex; justify-content:space-between; gap: 14px; }
+
+    #cw6 .modal-backdrop { position: fixed; inset: 0; background: rgba(15,23,42,.42); display: none; align-items:center; justify-content:center; z-index: 20; }
+    #cw6 .modal-backdrop.open { display:flex; }
+    #cw6 .modal { width:min(620px, 90vw); background:white; border-radius:22px; padding:22px; box-shadow: 0 30px 100px rgba(0,0,0,.28); }
+    #cw6 .modal h3 { margin: 0 0 10px; }
+    #cw6 .trace-box { background:#0f172a; color:#dbeafe; border-radius:14px; padding:14px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space:pre-wrap; font-size:12px; line-height:1.5; }
+    #cw6 .modal-actions { margin-top:16px; display:flex; justify-content:flex-end; }
+
+    @media (max-width: 1100px) {
+      #cw6 .gate-panel { grid-template-columns: 1fr; }
+      #cw6 .gate-list, #cw6 .gate-summary { border-left:0; border-top:1px solid var(--line); }
+    }
   </style>
 
-  <div class="h-full flex flex-col">
-    <!-- running header -->
-    <div class="flex items-center justify-between pb-3.5 mb-5" style="border-bottom:1px solid #DCE6E6">
-      <div class="flex items-center gap-2.5">
-        <span class="inline-flex items-center justify-center w-6 h-6 rounded-md disp text-xs font-extrabold" style="background:#0E7C86;color:#fff">C</span>
-        <span class="rail" style="color:#0E7C86">Clearway</span>
-      </div>
-      <span class="rail" style="color:#6F898C">Ch. 08 · The Harness — try it</span>
-    </div>
-
-    <div class="mb-5 flex items-start justify-between gap-4">
-      <div>
-        <h2 class="text-4xl" style="line-height:1.05">Proof before it ships</h2>
-        <p class="mt-3 text-base leading-relaxed max-w-2xl" style="color:#4D6164">
-          Clearway builds every visible requirement — then a convergence pass hunts the
-          <span class="font-semibold" style="color:#0E2A2D">hidden rule</span> the prompt never spelled out:
-          a chest-pain intake must reach nurse review, never the normal queue. Run it. Watch it
-          fail, repair, and only then open the gate.
-        </p>
-      </div>
-      <span id="cw6-gateChip" class="px-4 py-2 rounded-full text-xs font-bold tracking-wide whitespace-nowrap flex-shrink-0"
-        style="background:#FFF4CC;color:#8A6D00;border:1px solid #F0E2A8">Gate — WAIT</span>
-    </div>
-
-    <!-- Body split -->
-    <div class="cw6-split flex flex-1 gap-6 min-h-0">
-      <!-- Ledger -->
-      <div class="flex-1 rounded-2xl p-6 flex flex-col min-h-0" style="background:#fff;border:1px solid #DCE6E6">
-        <div class="flex items-center justify-between mb-4">
-          <span class="rail" style="color:#0E7C86">Evidence ledger</span>
-          <span class="text-xs" style="color:#7E9598">Build <span id="cw6-build" class="mono font-semibold" style="color:#41595C">v0.1.0</span></span>
+  <main class="panel center-panel">
+    <div class="center-top">
+      <div class="top-row">
+        <div>
+          <h1>Convergence Harness v0</h1>
+          <div class="subtitle">Clinic Intake Experiment</div>
         </div>
-        <div id="cw6-rows" class="space-y-2.5 flex-1"></div>
-        <!-- inline trace drawer (replaces alert) -->
-        <div id="cw6-trace" class="mt-4 rounded-xl p-4" style="background:#F3F6F6;border:1px solid #DCE6E6">
-          <div class="flex items-center gap-2">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0E7C86" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-            <span id="cw6-traceTitle" class="rail" style="color:#0E7C86">Trace inspector</span>
+        <div class="actions">
+          <div class="chips">
+            <div class="chip"><b>Build</b><span id="buildVersion">v0.1.0</span></div>
+            <div class="chip"><b>Last run</b><span id="lastRun">Not run</span></div>
+            <div class="chip"><b>Environment</b><span class="staging">Staging</span></div>
           </div>
-          <p id="cw6-traceBody" class="mt-2 text-sm leading-relaxed" style="color:#5C6F72">Click any anchor in the ledger to read its trace.</p>
+          <button class="inspect-btn" id="inspectBuild">&lt;/&gt; Inspect build</button>
         </div>
       </div>
-
-      <!-- Gate + triage routing -->
-      <div class="flex flex-col gap-4" style="flex-basis:38%">
-        <div id="cw6-gate" class="rounded-2xl p-6 flex flex-col items-center justify-center text-center"
-          style="background:#FFF8E6;border:1px solid #F0E2A8;min-height:140px">
-          <span class="rail" style="color:#8A6D00">Decision gate</span>
-          <div id="cw6-gateWord" class="text-5xl disp tracking-tight mt-2" style="color:#8A6D00">WAIT</div>
-          <p id="cw6-gateSub" class="mt-2 text-sm leading-snug" style="color:#5C6F72">Run the convergence pass to begin.</p>
-        </div>
-
-        <div class="rounded-2xl p-5 text-white flex flex-col relative overflow-hidden" style="background:#0E7C86">
-          <div class="absolute pointer-events-none" style="top:-30%;right:-12%;width:55%;height:70%;background:radial-gradient(circle,rgba(159,227,222,.18),transparent 70%)"></div>
-          <span class="rail relative" style="color:#9FE3DE">Triage — live scenario</span>
-          <div class="mt-3 rounded-xl p-3 flex items-center gap-3 relative" style="background:#0A5F66">
-            <div class="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0" style="background:#0E7C86">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#9FE3DE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2 5 4-12 2 7h7"/></svg>
-            </div>
-            <div class="min-w-0">
-              <div class="text-sm font-bold">Jordan P.</div>
-              <div class="text-xs" style="color:#9FE3DE">Reason: chest pain</div>
-            </div>
-          </div>
-          <div class="mt-3 flex items-center gap-2 text-sm relative">
-            <span style="color:#9FE3DE">Routed to →</span>
-            <span id="cw6-route" class="px-2.5 py-1 rounded-full text-xs font-bold" style="background:#0A5F66;color:#9FE3DE">not screened yet</span>
-          </div>
-          <div id="cw6-routeNote" class="mt-2 text-xs font-semibold relative" style="color:#9FE3DE">Run the pass to trace this submission.</div>
-        </div>
+      <div class="tabs" id="tabs">
+        <button class="tab" data-tab="overview">⌘ Overview</button>
+        <button class="tab" data-tab="hypothesis">☷ Hypothesis Ledger</button>
+        <button class="tab active" data-tab="evidence">♙ Evidence</button>
+        <button class="tab" data-tab="regression">⟳ Regression</button>
+        <button class="tab" data-tab="gate">◇ Gate</button>
       </div>
     </div>
 
-    <!-- Action bar -->
-    <div class="mt-5 flex items-center gap-3 flex-wrap">
-      <button id="cw6-run" class="cw6-btn px-5 py-2.5 rounded-xl text-sm font-bold text-white" style="background:#0E7C86">▶ Run convergence pass</button>
-      <button id="cw6-repair" class="cw6-btn px-5 py-2.5 rounded-xl text-sm font-bold text-white" style="background:#B4543A" disabled>⌁ Repair &amp; regress</button>
-      <button id="cw6-ship" class="cw6-btn px-5 py-2.5 rounded-xl text-sm font-bold" style="background:#E9F6F4;color:#0E7C86;border:1px solid #C6E5E1" disabled>🔒 Open the gate</button>
-      <button id="cw6-reset" class="cw6-btn ml-auto px-4 py-2.5 rounded-xl text-sm font-semibold" style="background:#fff;color:#7E9598;border:1px solid #DCE6E6">↺ Reset</button>
+    <section class="main-content">
+      <div id="overview" class="tab-pane">
+        <div class="toolbar">
+          <div><h2>Run overview</h2><div class="hint">One screen summary for the clinic intake convergence pass.</div></div>
+          <button class="primary" id="runFromOverview">▶ Run convergence pass</button>
+        </div>
+        <div class="overview-grid">
+          <div class="metric"><div id="mAnchors" class="metric-val">4</div><div class="metric-label">Tracked anchors</div></div>
+          <div class="metric"><div id="mPassed" class="metric-val">0</div><div class="metric-label">Passed / evidenced</div></div>
+          <div class="metric"><div id="mGate" class="metric-val">WAIT</div><div class="metric-label">Decision gate</div></div>
+        </div>
+        <div class="simple-card">
+          <h2>What this app simulates</h2>
+          <p class="hint">The harness builds a clinic intake workflow, tests hidden rules like urgent routing and SMS privacy, repairs failures, re-runs regressions, and decides whether the app can ship.</p>
+        </div>
+      </div>
+
+      <div id="hypothesis" class="tab-pane">
+        <div class="toolbar"><div><h2>Hypothesis Ledger</h2><div class="hint">Potential hidden rules before we have proof.</div></div></div>
+        <div id="hypothesisList" class="hypothesis-list"></div>
+      </div>
+
+      <div id="evidence" class="tab-pane active">
+        <div class="toolbar">
+          <div><h2>Evidence Ledger</h2><div class="hint">Anchors capture hidden rules, tests, traces, and outcomes.</div></div>
+          <div class="actions">
+            <select class="select"><option>All anchors</option><option>Critical</option><option>Open risk</option></select>
+            <button class="secondary" id="runTests">▶ Run hidden-rule tests</button>
+            <button class="primary" id="repairBtn">Repair & regress</button>
+            <button class="secondary" id="collectBtn">Collect audit evidence</button>
+            <button class="secondary" id="exportBtn">Export log</button>
+            <button class="danger" id="resetBtn">Reset</button>
+          </div>
+        </div>
+        <div class="ledger">
+          <div class="ledger-head"><div>Anchor</div><div>Evidence & Trace</div><div>Status</div><div>Updated</div></div>
+          <div id="ledgerRows"></div>
+        </div>
+        <div class="trace-flow">
+          <b>Trace flow</b> <span class="hint">How every anchor is proven before we gate.</span>
+          <div class="flow-row">
+            <div class="flow-step"><div class="flow-icon">☑</div><div class="flow-label">Scenario</div><div class="flow-copy">Define what<br>must hold</div></div>
+            <div class="flow-step"><div class="flow-icon">☍</div><div class="flow-label">Trace</div><div class="flow-copy">Execute & capture<br>evidence</div></div>
+            <div class="flow-step"><div class="flow-icon">⌁</div><div class="flow-label">Repair</div><div class="flow-copy">Fix rule or code<br>when needed</div></div>
+            <div class="flow-step"><div class="flow-icon">▣</div><div class="flow-label">Regression</div><div class="flow-copy">Re-run to confirm<br>no side effects</div></div>
+            <div class="flow-step"><div class="flow-icon">🔒</div><div class="flow-label">Gate</div><div class="flow-copy">Ship, Block,<br>or Reopen</div></div>
+          </div>
+        </div>
+        <div id="gatePanel" class="gate-panel"></div>
+        <div class="footer-note"><span>Harness v0 provides evidence that hidden constraints are satisfied before we ship. <b>No hidden rule. No silent risk. No ship.</b></span><span>Learn more ↗</span></div>
+      </div>
+
+      <div id="regression" class="tab-pane">
+        <div class="toolbar"><div><h2>Regression checks</h2><div class="hint">Repairs should not break previously discovered anchors.</div></div></div>
+        <div id="regressionList" class="hypothesis-list"></div>
+      </div>
+
+      <div id="gate" class="tab-pane">
+        <div class="toolbar"><div><h2>Decision Gate</h2><div class="hint">The app only ships if critical blockers are cleared and evidenced.</div></div></div>
+        <div id="gateOnly"></div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+      <h3 id="modalTitle">Trace</h3>
+      <div class="trace-box" id="modalBody"></div>
+      <div class="modal-actions"><button class="primary" id="closeModal">Close</button></div>
     </div>
-    <p class="mt-3 text-xs" style="color:#90A5A7">
-      Visible requirements pass on build. The critical rule is hidden — it only ships once traced and evidenced.
-      No hidden rule, no silent risk, no ship. Click an anchor to read its trace.
-    </p>
   </div>
 
   <script>
@@ -113,152 +221,289 @@
     if (!root || root.dataset.wired) return;
     root.dataset.wired = '1';
 
-    var base = [
-      { id:'V1', key:'v1', kind:'visible', title:'Intake form captures details', desc:'Name, contact, reason for visit, and preferred time.',
-        trace:'Visible requirement V1 — built into the intake form. Captured cleanly, no clipboard re-key.' },
-      { id:'V2', key:'v2', kind:'visible', title:'Staff queue shows submissions', desc:'Every submitted request appears in the live staff queue.',
-        trace:'Visible requirement V2 — submissions render in the staff dashboard queue in real time.' },
-      { id:'V3', key:'v3', kind:'visible', title:'SMS confirmation on submit', desc:'Patient receives a text confirming intake was received.',
-        trace:'Visible requirement V3 — confirmation SMS fires on submission. Status only, no marketing.' },
-      { id:'V4', key:'v4', kind:'visible', title:'Staff can mark reviewed', desc:'Staff advance a request to a reviewed state.',
-        trace:'Visible requirement V4 — staff move each request forward until cleared.' },
-      { id:'C1', key:'urgent', kind:'critical', title:'Urgent symptom routing', desc:'Chest pain must reach nurse review, never the normal queue.',
-        trace:'Hidden critical C1 — not yet tested. Discoverable by run_scenario:urgent_symptom or inspect_policy:triage_policy.' }
+    const nowTime = () => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    const baseAnchors = [
+      {
+        id: 1, key: 'urgent', title: 'Urgent symptom routing',
+        desc: 'Patients with urgent indicators must be routed to urgent queue with high priority.',
+        trace: 'No scenario captured yet\nWaiting on evidence', status: 'unknown', updated: '—', severity: 'red',
+        traceText: 'No trace yet. Run hidden-rule tests to test chest pain routing.'
+      },
+      {
+        id: 2, key: 'sms', title: 'SMS privacy',
+        desc: 'SMS messages must not include sensitive symptom details or free text.',
+        trace: 'No scenario captured yet\nWaiting on evidence', status: 'unknown', updated: '—', severity: 'red',
+        traceText: 'No trace yet. Run hidden-rule tests to preview SMS payload.'
+      },
+      {
+        id: 3, key: 'duplicate', title: 'Duplicate submission merge',
+        desc: 'Repeated submissions for same patient within 15 min should merge.',
+        trace: 'No scenario captured yet\nWaiting on evidence', status: 'unknown', updated: '—', severity: 'amber',
+        traceText: 'No trace yet. Run hidden-rule tests to test repeated submissions.'
+      },
+      {
+        id: 4, key: 'audit', title: 'Audit log for manual override',
+        desc: 'All manual overrides must be recorded with reason and staff identity.',
+        trace: 'No trace captured yet\nWaiting on evidence', status: 'open', updated: '—', severity: 'amber',
+        traceText: 'No trace yet. Manual override audit logging still needs evidence.'
+      }
     ];
 
-    var STATUS = {
-      unknown:  { label:'Not tested',         bg:'#FFF4CC', fg:'#8A6D00', bd:'#F0E2A8', numbg:'#FFF8E6' },
-      pass:     { label:'Passed + evidenced', bg:'#E9F6F4', fg:'#0E7C86', bd:'#C6E5E1', numbg:'#E9F6F4' },
-      fail:     { label:'Critical blocker',   bg:'#FBF1EE', fg:'#B4543A', bd:'#EAC9BE', numbg:'#FBF1EE' },
-      patched:  { label:'Patched — verifying',bg:'#FFF4CC', fg:'#8A6D00', bd:'#F0E2A8', numbg:'#FFF8E6' }
+    const state = {
+      stage: 'initial', build: 'v0.1.0',
+      anchors: JSON.parse(JSON.stringify(baseAnchors)),
+      chat: [
+        { who: 'You', type: 'user', time: '10:02 AM', text: 'Build a clinic intake dashboard for patients and staff. Include triage, queue, and SMS updates.' },
+        { who: 'Harness', type: 'bot', time: '10:02 AM', text: 'Got it. I’ll build the intake experience and run a convergence pass to surface hidden rules and risks before we ship.' }
+      ],
+      regressions: [
+        { name: 'Happy-path intake submits', status: 'not run', detail: 'Routine visible requirement.' },
+        { name: 'Normal queue still works', status: 'not run', detail: 'Repair should not break routine queue.' },
+        { name: 'Duplicate submission merge', status: 'not run', detail: 'Privacy patch should preserve internal reason field.' }
+      ]
     };
 
-    var stage = 'initial';
-    var anchors = JSON.parse(JSON.stringify(base));
-    anchors.forEach(function (a) { a.status = 'unknown'; });
-    var selected = null;
-
-    var els = {
-      rows:   root.querySelector('#cw6-rows'),
-      build:  root.querySelector('#cw6-build'),
-      gate:   root.querySelector('#cw6-gate'),
-      word:   root.querySelector('#cw6-gateWord'),
-      sub:    root.querySelector('#cw6-gateSub'),
-      chip:   root.querySelector('#cw6-gateChip'),
-      route:  root.querySelector('#cw6-route'),
-      routeNote: root.querySelector('#cw6-routeNote'),
-      traceTitle: root.querySelector('#cw6-traceTitle'),
-      traceBody:  root.querySelector('#cw6-traceBody'),
-      run:    root.querySelector('#cw6-run'),
-      repair: root.querySelector('#cw6-repair'),
-      ship:   root.querySelector('#cw6-ship'),
-      reset:  root.querySelector('#cw6-reset')
+    const statusMap = {
+      unknown: { label: 'Unknown / not tested', cls: 'amber' },
+      open: { label: 'Needs evidence\n/ open risk', cls: 'amber' },
+      failed: { label: 'Critical blocker\nfound', cls: 'red' },
+      patched: { label: 'Scenario failed\n→ patched', cls: 'red' },
+      repaired: { label: 'Critical blocker\nfound → repaired', cls: 'red' },
+      passed: { label: 'Regression\npassed', cls: 'green' },
+      evidenced: { label: 'Passed\n+ evidenced', cls: 'green' }
     };
 
-    function showTrace(a) {
-      selected = a.key;
-      els.traceTitle.textContent = a.id + ' — ' + a.title;
-      els.traceTitle.style.color = a.kind === 'critical' ? '#B4543A' : '#0E7C86';
-      els.traceBody.textContent = a.trace;
-      els.rows.querySelectorAll('[data-anchor]').forEach(function (r) {
-        r.classList.toggle('sel', r.dataset.anchor === a.key);
-      });
+    const $ = id => document.getElementById(id);
+
+    function addChat(message) { state.chat.push(message); renderChat(); }
+
+    function renderChat() {
+      const chat = $('chat');
+      if (!chat) return;
+      chat.innerHTML = state.chat.map(m => `
+        <div class="msg">
+          <div class="avatar ${m.type === 'bot' ? 'bot' : ''}">${m.type === 'bot' ? '🤖' : 'Y'}</div>
+          <div>
+            <div class="msg-meta"><b>${m.who}</b><span>${m.time}</span></div>
+            <div class="bubble ${m.type === 'user' ? 'user' : ''} ${m.kind || ''}">${m.text}</div>
+          </div>
+        </div>`).join('');
+      chat.scrollTop = chat.scrollHeight;
     }
 
-    function renderRows() {
-      els.rows.innerHTML = anchors.map(function (a) {
-        var s = STATUS[a.status];
-        var crit = a.kind === 'critical';
-        return '<div data-anchor="' + a.key + '" class="cw6-fade rounded-xl p-3 flex items-center gap-3' + (selected === a.key ? ' sel' : '') + '"' +
-          ' style="background:#fff;border:1px solid ' + (crit ? '#EAC9BE' : '#E2EBEC') + '">' +
-            '<div class="w-9 h-9 rounded-lg flex items-center justify-center text-xs font-extrabold disp flex-shrink-0"' +
-            ' style="color:' + s.fg + ';background:' + s.numbg + ';border:1px solid ' + s.bd + '">' + a.id + '</div>' +
-            '<div class="min-w-0 flex-1">' +
-              '<div class="text-sm font-bold truncate" style="color:#0E2A2D">' + a.title +
-                (crit ? ' <span class="ml-1 px-1.5 py-0.5 rounded text-[10px] font-bold align-middle" style="background:#B4543A;color:#fff">CRITICAL · HIDDEN</span>' : '') +
-              '</div>' +
-              '<div class="text-xs leading-snug" style="color:#7E9598">' + a.desc + '</div>' +
-            '</div>' +
-            '<span class="px-2.5 py-1 rounded-full text-xs font-bold whitespace-nowrap"' +
-            ' style="background:' + s.bg + ';color:' + s.fg + ';border:1px solid ' + s.bd + '">' + s.label + '</span>' +
-          '</div>';
+    function renderLedger() {
+      const rows = $('ledgerRows');
+      if (!rows) return;
+      rows.innerHTML = state.anchors.map(a => {
+        const st = statusMap[a.status];
+        const numCls = st.cls === 'green' ? 'green' : st.cls === 'red' ? 'red' : 'amber';
+        return `
+        <div class="ledger-row" data-anchor="${a.key}">
+          <div class="anchor-cell">
+            <div class="num ${numCls}">${a.id}</div>
+            <div><div class="anchor-title">${a.title}</div><div class="anchor-desc">${a.desc}</div></div>
+          </div>
+          <div class="trace">${a.trace.replace(/\n/g, '<br>')}</div>
+          <div><span class="pill ${st.cls}">${st.label.replace(/\n/g, '<br>')}</span></div>
+          <div class="updated"><span>${a.updated}</span><span>›</span></div>
+        </div>`;
       }).join('');
-      els.rows.querySelectorAll('[data-anchor]').forEach(function (r) {
-        r.addEventListener('click', function () {
-          var a = anchors.filter(function (x) { return x.key === r.dataset.anchor; })[0];
-          showTrace(a);
-        });
-      });
+      rows.querySelectorAll('.ledger-row').forEach(row => row.addEventListener('click', () => openTrace(row.dataset.anchor)));
     }
 
-    function setGate(word, sub, bg, fg, bd, chipText) {
-      els.word.textContent = word; els.word.style.color = fg;
-      els.sub.textContent = sub;
-      els.gate.style.background = bg; els.gate.style.borderColor = bd;
-      els.chip.textContent = 'Gate — ' + chipText;
-      els.chip.style.background = bg; els.chip.style.color = fg; els.chip.style.borderColor = bd;
+    function renderHypotheses() {
+      const list = $('hypothesisList');
+      if (!list) return;
+      const hypotheses = [
+        ['Urgent symptoms may need special triage', 'critical', 'Medical intake workflows often have hidden urgent-routing rules.'],
+        ['SMS content may leak private health details', 'critical', 'Confirmation messages can accidentally include symptoms or visit reasons.'],
+        ['Duplicate submissions should merge', 'moderate', 'Patients may submit repeatedly; duplicates can confuse triage.'],
+        ['Manual overrides need audit logs', 'critical', 'Staff actions in healthcare workflows often require auditability.'],
+        ['Missing insurance should route to follow-up', 'moderate', 'Operational workflows need exception queues, not silent drops.']
+      ];
+      list.innerHTML = hypotheses.map(h => `
+        <div class="hypothesis-item"><div><b>${h[0]}</b><div class="hint">${h[2]}</div></div><span class="pill ${h[1] === 'critical' ? 'red' : 'amber'}">${h[1]}</span></div>
+      `).join('');
     }
 
-    function setRoute(text, bg, fg, note, noteColor) {
-      els.route.textContent = text; els.route.style.background = bg; els.route.style.color = fg;
-      els.routeNote.textContent = note; els.routeNote.style.color = noteColor;
+    function renderRegressions() {
+      const list = $('regressionList');
+      if (!list) return;
+      list.innerHTML = state.regressions.map(r => {
+        const cls = r.status === 'pass' ? 'green' : r.status === 'fail' ? 'red' : 'amber';
+        return `<div class="hypothesis-item"><div><b>${r.name}</b><div class="hint">${r.detail}</div></div><span class="pill ${cls}">${r.status}</span></div>`;
+      }).join('');
     }
 
-    function render() {
-      els.build.textContent = stage === 'initial' ? 'v0.1.0' : stage === 'tested' ? 'v0.2.0' : 'v0.7.3';
-      renderRows();
-      els.repair.disabled = stage !== 'tested';
-      els.ship.disabled   = stage !== 'repaired';
-      els.run.disabled    = stage !== 'initial';
-
-      if (stage === 'initial') {
-        setGate('WAIT', 'Run the convergence pass to begin.', '#FFF8E6', '#8A6D00', '#F0E2A8', 'WAIT');
-      } else if (stage === 'tested') {
-        setGate('BLOCK', 'Critical C1 unresolved: chest pain sat in the normal queue.', '#FBF1EE', '#B4543A', '#EAC9BE', 'BLOCK');
-      } else if (stage === 'repaired') {
-        setGate('REVIEW', 'C1 patched and regressed — collect evidence to open the gate.', '#FFF8E6', '#8A6D00', '#F0E2A8', 'REVIEW');
-      } else {
-        setGate('SHIP', 'All critical rules satisfied and evidenced.', '#E9F6F4', '#0E7C86', '#C6E5E1', 'SHIP');
-      }
+    function gateStatus() {
+      const blocking = state.anchors.filter(a => ['failed', 'patched', 'repaired'].includes(a.status) || a.status === 'open' || a.status === 'unknown');
+      const passed = state.anchors.filter(a => ['passed', 'evidenced'].includes(a.status));
+      if (state.stage === 'final') return { word: 'SHIP', cls: 'ship', sub: 'All critical anchors cleared and evidenced.', blocking: [] };
+      if (state.stage === 'initial') return { word: 'WAIT', cls: 'reopen', sub: 'Run convergence pass before shipping.', blocking };
+      if (state.stage === 'tested') return { word: 'BLOCK', cls: 'block', sub: 'Critical blockers found. Repair before shipping.', blocking };
+      return { word: 'REOPEN', cls: 'reopen', sub: 'Audit evidence remains open. Collect evidence.', blocking };
     }
 
-    els.run.addEventListener('click', function () {
-      stage = 'tested';
-      anchors[0].status = 'pass'; anchors[1].status = 'pass'; anchors[2].status = 'pass'; anchors[3].status = 'pass';
-      anchors[4].status = 'fail';
-      anchors[4].trace = 'Trace URG-041 (run_scenario:urgent_symptom) — Input reason="chest pain". Observed: dropped into NORMAL queue, no urgent flag. Expected: nurse review before normal queue. Result: CRITICAL FAIL.';
-      setRoute('Normal queue', '#FBF1EE', '#B4543A', 'Urgent symptom left in the normal queue — critical fail.', '#FFD9CC');
-      render(); showTrace(anchors[4]);
-    });
+    function renderGate() {
+      const gate = gateStatus();
+      const passedCount = state.anchors.filter(a => ['passed', 'evidenced'].includes(a.status)).length;
+      const openCount = state.anchors.filter(a => ['open', 'unknown'].includes(a.status)).length;
+      const blockCount = gate.blocking.length;
+      const lastRunText = $('lastRun') ? $('lastRun').textContent : '—';
+      const panelHtml = `
+        <div class="gate-status ${gate.cls}">
+          <div style="font-weight:900">Decision Gate</div>
+          <div class="gate-word ${gate.cls}">${gate.word}</div>
+          <div class="hint">${gate.sub}</div>
+          <button class="small-btn" style="margin-top:14px" onclick="openGatePolicy()">View gate policy</button>
+        </div>
+        <div class="gate-list">
+          <h3>${gate.blocking.length ? 'Blocking / open anchors' : 'Cleared anchors'}</h3>
+          ${(gate.blocking.length ? gate.blocking : state.anchors).slice(0,4).map(a => `<div class="gate-anchor"><span class="small-num">${a.id}</span><b>${a.title}</b><span class="hint">${statusMap[a.status].label.split('\n')[0]} ›</span></div>`).join('')}
+        </div>
+        <div class="gate-summary">
+          <h3>Summary</h3>
+          <div class="summary-row"><span>Total anchors</span><b>${state.anchors.length}</b></div>
+          <div class="summary-row"><span>Passed</span><b style="color:var(--green)">${passedCount}</b></div>
+          <div class="summary-row"><span>Open risks</span><b style="color:var(--amber)">${openCount}</b></div>
+          <div class="summary-row"><span>Blocking</span><b style="color:var(--red)">${blockCount}</b></div>
+          <div class="summary-row"><span>Last run</span><b>${lastRunText}</b></div>
+        </div>`;
+      if ($('gatePanel')) $('gatePanel').innerHTML = panelHtml;
+      if ($('gateOnly')) $('gateOnly').innerHTML = `<div class="gate-panel">${panelHtml}</div>`;
+      if ($('mPassed')) $('mPassed').textContent = passedCount;
+      if ($('mGate')) $('mGate').textContent = gate.word;
+    }
 
-    els.repair.addEventListener('click', function () {
-      stage = 'repaired';
-      anchors[4].status = 'patched';
-      anchors[4].trace = 'Trace URG-041 (patched v0.7.3) — triage_policy now flags chest pain HIGH PRIORITY and routes to nurse review before the normal queue. Regression: normal-queue patients unaffected. Result: PATCHED, awaiting final evidence.';
-      setRoute('Nurse review', '#9FE3DE', '#0A5F66', 'Routed to nurse review before the normal queue — patched.', '#E6F6F4');
-      render(); showTrace(anchors[4]);
-    });
+    function renderAll() {
+      if ($('buildVersion')) $('buildVersion').textContent = state.build;
+      renderChat(); renderLedger(); renderHypotheses(); renderRegressions(); renderGate();
+    }
 
-    els.ship.addEventListener('click', function () {
-      stage = 'final';
-      anchors[4].status = 'pass';
-      anchors[4].trace = 'Trace URG-041 + triage_policy citation — satisfaction_check met: final workflow routes chest pain to nurse review before the normal queue. Evidence: scenario trace + policy citation. Result: PASS + EVIDENCED.';
-      setRoute('Nurse review', '#9FE3DE', '#0A5F66', 'Evidenced by scenario trace + triage_policy citation.', '#E6F6F4');
-      render(); showTrace(anchors[4]);
-    });
+    function runTests() {
+      state.stage = 'tested';
+      state.build = 'v0.2.0';
+      if ($('lastRun')) $('lastRun').textContent = nowTime();
+      state.anchors[0].status = 'failed'; state.anchors[0].updated = nowTime(); state.anchors[0].trace = '3 scenarios • 18 steps\nTrace URG-041\nChest pain → normal queue';
+      state.anchors[0].traceText = 'Trace URG-041\nInput: patient reason="chest pain"\nObserved: case entered normal queue. No urgent flag.\nExpected: route to nurse review before normal queue.\nResult: CRITICAL FAIL.';
+      state.anchors[1].status = 'failed'; state.anchors[1].updated = nowTime(); state.anchors[1].trace = '5 scenarios • 22 steps\nTrace SMS-017\nSymptom leaked in SMS';
+      state.anchors[1].traceText = 'Trace SMS-017\nInput: SMS preview after chest pain intake.\nObserved: "Your visit for chest pain is confirmed."\nExpected: no symptom or visit reason in SMS.\nResult: CRITICAL FAIL.';
+      state.anchors[2].status = 'unknown'; state.anchors[2].trace = 'Queued after repairs\nWaiting on regression'; state.anchors[2].updated = nowTime();
+      state.anchors[3].status = 'open'; state.anchors[3].updated = nowTime();
+      addChat({ who:'Harness', type:'bot', time: nowTime(), text:'Starting hidden-rule tests:<ul><li>Urgent symptom routing</li><li>SMS privacy & leakage</li><li>Duplicate submission merge</li><li>Audit log for manual override</li></ul>I’ll record evidence and update the ledger.' });
+      addChat({ who:'Harness', type:'bot', time: nowTime(), kind:'alert', text:'⚠️ <b>Critical issue discovered</b><br><br>Urgent symptoms are not routed correctly when “chest pain” is entered. Patient sent to general queue instead of urgent queue.<br><span class="mini-link">View trace →</span>' });
+      renderAll();
+    }
 
-    els.reset.addEventListener('click', function () {
-      stage = 'initial';
-      anchors = JSON.parse(JSON.stringify(base));
-      anchors.forEach(function (a) { a.status = 'unknown'; });
-      selected = null;
-      setRoute('not screened yet', '#0A5F66', '#9FE3DE', 'Run the pass to trace this submission.', '#9FE3DE');
-      els.traceTitle.textContent = 'Trace inspector'; els.traceTitle.style.color = '#0E7C86';
-      els.traceBody.textContent = 'Click any anchor in the ledger to read its trace.';
-      render();
-    });
+    function repairAndRegress() {
+      if (state.stage === 'initial') runTests();
+      state.stage = 'repaired';
+      state.build = 'v0.7.3';
+      if ($('lastRun')) $('lastRun').textContent = nowTime();
+      state.anchors[0].status = 'passed'; state.anchors[0].updated = nowTime(); state.anchors[0].trace = '3 scenarios • 18 steps\nTrace URG-041\nRepaired rule: v0.7.3';
+      state.anchors[0].traceText = 'Trace URG-041 after patch\nPatch: route chest pain, fainting, severe bleeding, and shortness of breath to nurse review.\nObserved: chest pain flagged HIGH PRIORITY and sent to urgent queue.\nResult: PASS.';
+      state.anchors[1].status = 'patched'; state.anchors[1].updated = nowTime(); state.anchors[1].trace = '5 scenarios • 22 steps\nTrace SMS-017\nPatched template: v0.7.3';
+      state.anchors[1].traceText = 'Trace SMS-017 after patch\nPatch: SMS excludes symptoms and visit reasons.\nObserved: "We received your intake. We’ll review and follow up shortly."\nResult: PATCHED, needs final privacy regression.';
+      state.anchors[2].status = 'passed'; state.anchors[2].updated = nowTime(); state.anchors[2].trace = '4 scenarios • 16 steps\nTrace DUP-009\nNo code changes';
+      state.anchors[2].traceText = 'Trace DUP-009\nInput: same patient submits twice within 15 minutes.\nObserved: one merged queue item with latest notes.\nResult: REGRESSION PASS.';
+      state.regressions = [
+        { name: 'Happy-path intake submits', status: 'pass', detail: 'Routine visible requirement still works.' },
+        { name: 'Urgent symptom routing', status: 'pass', detail: 'Chest pain routes to nurse review.' },
+        { name: 'Duplicate submission merge', status: 'pass', detail: 'Privacy patch preserved internal reason field.' }
+      ];
+      if ($('smsPreview')) $('smsPreview').textContent = 'Sunrise Clinic: We received your intake. We’ll review and follow up shortly. Reply STOP to opt out.';
+      if ($('smsNote')) $('smsNote').textContent = '✅ No symptom details included.';
+      addChat({ who:'You', type:'user', time: nowTime(), text:'Repair the routing logic and re-run tests.' });
+      addChat({ who:'Harness', type:'bot', time: nowTime(), kind:'success', text:'✅ <b>Repaired and verified</b><br><br>Urgent symptom routing now correct. Duplicate regression passed. SMS privacy patch applied but final evidence still needed.' });
+      renderAll();
+    }
 
-    render();
+    function collectEvidence() {
+      if (state.stage === 'initial') runTests();
+      if (state.stage === 'tested') repairAndRegress();
+      state.stage = 'final';
+      if ($('lastRun')) $('lastRun').textContent = nowTime();
+      state.anchors[1].status = 'evidenced'; state.anchors[1].updated = nowTime(); state.anchors[1].trace = '5 scenarios • 22 steps\nTrace SMS-017\nPrivacy regression passed';
+      state.anchors[1].traceText = 'Trace SMS-017 final privacy regression\nObserved: SMS contains appointment status only. No symptom, diagnosis, free text, or visit reason.\nResult: PASS + EVIDENCED.';
+      state.anchors[3].status = 'evidenced'; state.anchors[3].updated = nowTime(); state.anchors[3].trace = '2 scenarios • 8 steps\nTrace AUD-004\nOverride log captured';
+      state.anchors[3].traceText = 'Trace AUD-004\nInput: staff manually overrides triage priority.\nObserved: audit log captures actor, timestamp, previous priority, new priority, and reason.\nResult: PASS + EVIDENCED.';
+      state.regressions.push({ name:'SMS privacy regression', status:'pass', detail:'SMS excludes symptoms and visit reasons.' });
+      state.regressions.push({ name:'Manual override audit log', status:'pass', detail:'Audit evidence captured.' });
+      addChat({ who:'Harness', type:'bot', time: nowTime(), kind:'success', text:'✅ <b>Gate cleared</b><br><br>All critical anchors are repaired and evidenced. The app can ship inside this evidence envelope.' });
+      renderAll();
+    }
+
+    function reset() {
+      state.stage = 'initial'; state.build = 'v0.1.0';
+      state.anchors = JSON.parse(JSON.stringify(baseAnchors));
+      state.chat = [
+        { who: 'You', type: 'user', time: '10:02 AM', text: 'Build a clinic intake dashboard for patients and staff. Include triage, queue, and SMS updates.' },
+        { who: 'Harness', type: 'bot', time: '10:02 AM', text: 'Got it. I’ll build the intake experience and run a convergence pass to surface hidden rules and risks before we ship.' }
+      ];
+      state.regressions = [
+        { name: 'Happy-path intake submits', status: 'not run', detail: 'Routine visible requirement.' },
+        { name: 'Normal queue still works', status: 'not run', detail: 'Repair should not break routine queue.' },
+        { name: 'Duplicate submission merge', status: 'not run', detail: 'Privacy patch should preserve internal reason field.' }
+      ];
+      if ($('lastRun')) $('lastRun').textContent = 'Not run';
+      renderAll();
+    }
+
+    function openTrace(key) {
+      const a = state.anchors.find(x => x.key === key);
+      $('modalTitle').textContent = a.title;
+      $('modalBody').textContent = a.traceText;
+      $('modalBackdrop').classList.add('open');
+    }
+    window.openGatePolicy = function() {
+      $('modalTitle').textContent = 'Critical gate policy';
+      $('modalBody').textContent = 'If any critical anchor is unsatisfied → BLOCK.\nIf any critical anchor is unknown but suspected → REOPEN EVIDENCE.\nIf evidence for critical anchors is missing → ESCALATE or REOPEN.\nIf all discovered critical anchors are satisfied and evidenced → SHIP may be allowed.';
+      $('modalBackdrop').classList.add('open');
+    }
+
+    function exportLog() {
+      const log = {
+        run_id: 'demo-clinic-intake-001', method: 'convergence_harness_v0',
+        stage: state.stage, build: state.build,
+        last_run: $('lastRun') ? $('lastRun').textContent : '—',
+        anchors: state.anchors, regressions: state.regressions,
+        decision: gateStatus().word, exported_at: new Date().toISOString()
+      };
+      const blob = new Blob([JSON.stringify(log, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'convergence_harness_v0_run_log.json'; a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    if ($('runTests')) $('runTests').onclick = runTests;
+    if ($('runFromOverview')) $('runFromOverview').onclick = runTests;
+    if ($('repairBtn')) $('repairBtn').onclick = repairAndRegress;
+    if ($('collectBtn')) $('collectBtn').onclick = collectEvidence;
+    if ($('resetBtn')) $('resetBtn').onclick = reset;
+    if ($('exportBtn')) $('exportBtn').onclick = exportLog;
+    if ($('closeModal')) $('closeModal').onclick = () => $('modalBackdrop').classList.remove('open');
+    if ($('modalBackdrop')) $('modalBackdrop').addEventListener('click', e => { if (e.target.id === 'modalBackdrop') e.currentTarget.classList.remove('open'); });
+    const sendBtn = $('sendBtn');
+    if (sendBtn) sendBtn.onclick = () => {
+      const composer = $('composer');
+      const text = composer ? composer.value.trim() : '';
+      if (!text) return;
+      addChat({ who:'You', type:'user', time: nowTime(), text });
+      composer.value = '';
+      addChat({ who:'Harness', type:'bot', time: nowTime(), text:'I can run tests, repair, collect audit evidence, or export the run log. Try the action buttons in the Evidence tab.' });
+    };
+    if ($('toolsBtn')) $('toolsBtn').onclick = () => openGatePolicy();
+    if ($('inspectBuild')) $('inspectBuild').onclick = () => openTrace('urgent');
+    root.querySelectorAll('.tab').forEach(btn => btn.addEventListener('click', () => {
+      root.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      root.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      $(btn.dataset.tab).classList.add('active');
+    }));
+
+    renderAll();
   })();
   </script>
 </section>

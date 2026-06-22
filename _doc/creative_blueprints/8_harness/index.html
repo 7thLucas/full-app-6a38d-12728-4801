@@ -1,211 +1,1350 @@
 <section id="cw6" class="w-full h-full overflow-auto">
+
   <style>
-    #cw6 {
-      --bg:#f6f8fc; --panel:#ffffff; --ink:#111827; --muted:#667085; --line:#e5e9f2;
-      --blue:#3454f5; --blue-soft:#eef2ff; --green:#168a4a; --green-soft:#eaf8ef;
-      --red:#d92d20; --red-soft:#fff1f0; --amber:#b85c00; --amber-soft:#fff7e6;
-      --purple:#6d28d9; --purple-soft:#f3e8ff; --shadow:0 18px 50px rgba(17,24,39,0.08); --radius:22px;
+    :root {
+      --bg: #f6f8fc;
+      --panel: #ffffff;
+      --ink: #111827;
+      --muted: #667085;
+      --line: #e5e9f2;
+      --blue: #3454f5;
+      --blue-soft: #eef2ff;
+      --green: #168a4a;
+      --green-soft: #eaf8ef;
+      --red: #d92d20;
+      --red-soft: #fff1f0;
+      --amber: #b85c00;
+      --amber-soft: #fff7e6;
+      --purple: #6d28d9;
+      --purple-soft: #f3e8ff;
+      --shadow: 0 18px 50px rgba(17, 24, 39, 0.08);
+      --radius: 22px;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
       color: var(--ink);
       background:
-        radial-gradient(circle at 16% 12%, rgba(52,84,245,0.08), transparent 24%),
-        radial-gradient(circle at 80% 0%, rgba(109,40,217,0.08), transparent 24%),
+        radial-gradient(circle at 16% 12%, rgba(52, 84, 245, 0.08), transparent 24%),
+        radial-gradient(circle at 80% 0%, rgba(109, 40, 217, 0.08), transparent 24%),
         var(--bg);
-      display:flex; padding:16px; height:100%;
+      min-height: 100vh;
+      overflow: hidden;
     }
-    #cw6 *, #cw6 *::before, #cw6 *::after { box-sizing:border-box; }
-    #cw6 button, #cw6 input, #cw6 textarea { font: inherit; }
-    #cw6 button { cursor: pointer; }
 
-    #cw6 .panel {
-      background: rgba(255,255,255,0.92); border: 1px solid var(--line);
-      border-radius: var(--radius); box-shadow: var(--shadow); min-height: 0; overflow: hidden;
+    button,
+    input,
+    textarea {
+      font: inherit;
     }
-    #cw6 .center-panel { display:flex; flex-direction:column; min-height:0; flex:1; }
 
-    #cw6 .center-top { padding: 18px 24px 0; border-bottom: 1px solid var(--line); background: rgba(255,255,255,.84); }
-    #cw6 .top-row { display:flex; align-items:flex-start; justify-content:space-between; gap: 18px; }
-    #cw6 h1 { margin: 0; font-size: 23px; letter-spacing: -0.03em; }
-    #cw6 .subtitle { color: var(--muted); margin-top: 3px; }
-    #cw6 .actions { display:flex; gap:10px; align-items:center; flex-wrap: wrap; }
-    #cw6 .chips { display:flex; gap: 0; border: 1px solid var(--line); border-radius: 13px; overflow:hidden; background:white; }
-    #cw6 .chip { padding: 10px 14px; border-right: 1px solid var(--line); font-size: 12px; min-width: 82px; }
-    #cw6 .chip:last-child { border-right:0; }
-    #cw6 .chip b { display:block; font-size: 11px; color:#475467; }
-    #cw6 .chip span { color:#111827; }
-    #cw6 .staging::after { content:""; display:inline-block; width:7px; height:7px; border-radius:50%; background:#22c55e; margin-left:5px; }
-    #cw6 .inspect-btn { border:1px solid var(--line); background:#fff; padding: 12px 16px; border-radius: 13px; font-weight:800; color:#263149; }
-
-    #cw6 .tabs { display:flex; gap: 10px; margin-top: 18px; overflow-x:auto; }
-    #cw6 .tab { border:0; background:transparent; padding: 13px 14px; color: #475467; font-weight: 800; border-bottom: 3px solid transparent; }
-    #cw6 .tab.active { color: var(--blue); border-bottom-color: var(--blue); }
-
-    #cw6 .main-content { flex:1; overflow:auto; padding: 18px 24px; min-height:0; }
-    #cw6 .toolbar { display:flex; justify-content:space-between; gap:12px; align-items:center; margin-bottom: 14px; }
-    #cw6 h2 { margin: 0; font-size: 17px; letter-spacing: -0.02em; }
-    #cw6 .hint { color: var(--muted); font-size: 13px; margin-top: 3px; }
-    #cw6 .primary, #cw6 .secondary, #cw6 .danger {
-      border-radius: 13px; padding: 10px 13px; font-size: 12px; font-weight: 900; border: 1px solid var(--line); background: white; color:#344054;
+    button {
+      cursor: pointer;
     }
-    #cw6 .primary { background: var(--blue); border-color: var(--blue); color:white; }
-    #cw6 .danger { color:var(--red); background:#fff; }
-    #cw6 .select { border:1px solid var(--line); border-radius: 13px; padding:10px 12px; font-weight:800; color:#344054; background:white; font-size:12px; }
-    #cw6 .small-btn { border: 1px solid var(--line); background: #fff; color: #334155; border-radius: 12px; padding: 8px 11px; font-weight: 700; font-size: 12px; }
 
-    #cw6 .ledger { border:1px solid var(--line); border-radius: 16px; overflow:hidden; background:white; }
-    #cw6 .ledger-head, #cw6 .ledger-row { display:grid; grid-template-columns: 1.25fr .85fr .75fr 86px; gap:14px; align-items:center; padding: 12px 18px; }
-    #cw6 .ledger-head { font-size:11px; color:#667085; background:#fbfcff; font-weight:900; text-transform:none; }
-    #cw6 .ledger-row { border-top:1px solid var(--line); cursor:pointer; }
-    #cw6 .ledger-row:hover { background:#fbfcff; }
-    #cw6 .anchor-cell { display:flex; gap:13px; align-items:center; }
-    #cw6 .num { width:34px; height:34px; border-radius: 10px; display:grid; place-items:center; font-weight:900; border: 1px solid; flex-shrink:0; }
-    #cw6 .num.red { color:var(--red); border-color:#ffb4ad; background:#fff6f5; }
-    #cw6 .num.green { color:var(--green); border-color:#a7e8c1; background:#f0fff5; }
-    #cw6 .num.amber { color:var(--amber); border-color:#ffd79d; background:#fff9ed; }
-    #cw6 .anchor-title { font-weight:900; font-size:13px; }
-    #cw6 .anchor-desc { color:#667085; font-size:12px; line-height:1.35; margin-top:3px; }
-    #cw6 .trace { color:#475467; font-size:12px; line-height:1.4; }
-    #cw6 .pill { display:inline-flex; align-items:center; justify-content:center; padding: 8px 10px; border-radius: 9px; font-size: 12px; font-weight:900; border:1px solid; line-height:1.2; }
-    #cw6 .pill.red { color:var(--red); background:var(--red-soft); border-color:#ffc9c4; }
-    #cw6 .pill.green { color:var(--green); background:var(--green-soft); border-color:#c1eacf; }
-    #cw6 .pill.amber { color:var(--amber); background:var(--amber-soft); border-color:#ffdca7; }
-    #cw6 .updated { color:#475467; font-size: 12px; display:flex; align-items:center; justify-content:space-between; }
-
-    #cw6 .trace-flow, #cw6 .gate-panel, #cw6 .overview-grid, #cw6 .simple-card {
-      background:#fff; border:1px solid var(--line); border-radius: 16px; margin-top:14px; padding:16px;
+    .app {
+      display: grid;
+      grid-template-columns: 360px minmax(620px, 1fr) 410px;
+      gap: 16px;
+      padding: 16px;
+      height: 100vh;
     }
-    #cw6 .flow-row { display:flex; justify-content:space-between; align-items:flex-start; gap: 14px; margin-top: 16px; }
-    #cw6 .flow-step { flex:1; text-align:center; position:relative; }
-    #cw6 .flow-step:not(:last-child)::after { content:""; position:absolute; top:24px; left:62%; width:76%; border-top:2px dotted #cbd5e1; }
-    #cw6 .flow-icon { width:44px; height:44px; border-radius:50%; display:grid; place-items:center; margin:0 auto 8px; background:var(--blue-soft); color:var(--blue); font-size:20px; border:1px solid #d8e0ff; }
-    #cw6 .flow-label { font-weight:900; font-size:12px; }
-    #cw6 .flow-copy { color:#667085; font-size:11px; line-height:1.3; margin-top:3px; }
 
-    #cw6 .gate-panel { display:grid; grid-template-columns: 220px 1fr 170px; padding:0; overflow:hidden; }
-    #cw6 .gate-status { padding: 22px 18px; background: var(--red-soft); }
-    #cw6 .gate-status.ship { background: var(--green-soft); }
-    #cw6 .gate-status.reopen { background: var(--amber-soft); }
-    #cw6 .gate-word { font-size:30px; font-weight: 1000; margin: 10px 0 4px; letter-spacing: -0.05em; }
-    #cw6 .gate-word.block { color:var(--red); }
-    #cw6 .gate-word.ship { color:var(--green); }
-    #cw6 .gate-word.reopen { color:var(--amber); }
-    #cw6 .gate-list, #cw6 .gate-summary { padding: 18px; border-left:1px solid var(--line); }
-    #cw6 .gate-list h3, #cw6 .gate-summary h3 { font-size:13px; margin:0 0 12px; }
-    #cw6 .gate-anchor { display:grid; grid-template-columns: 24px 1fr auto; gap:10px; align-items:center; margin:10px 0; font-size:12px; }
-    #cw6 .small-num { width:22px; height:22px; border-radius:7px; border:1px solid #ffc4be; color:var(--red); display:grid; place-items:center; font-weight:900; background:white; }
-    #cw6 .summary-row { display:flex; justify-content:space-between; font-size:12px; margin-bottom:8px; }
-    #cw6 .footer-note { margin-top:14px; color:#667085; font-size:12px; display:flex; justify-content:space-between; }
+    .panel {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      min-height: 0;
+      overflow: hidden;
+    }
 
-    #cw6 .tab-pane { display:none; }
-    #cw6 .tab-pane.active { display:block; }
-    #cw6 .overview-grid { display:grid; grid-template-columns: repeat(3,1fr); gap:14px; }
-    #cw6 .metric { background:#fbfcff; border:1px solid var(--line); border-radius:14px; padding:16px; }
-    #cw6 .metric-val { font-size:28px; font-weight:1000; letter-spacing:-.05em; }
-    #cw6 .metric-label { color:#667085; font-size:12px; margin-top:5px; }
-    #cw6 .hypothesis-list { display:grid; gap:10px; }
-    #cw6 .hypothesis-item { padding:14px; border:1px solid var(--line); border-radius:14px; background:#fff; display:flex; justify-content:space-between; gap: 14px; }
+    .left-panel,
+    .center-panel,
+    .right-panel {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
 
-    #cw6 .modal-backdrop { position: fixed; inset: 0; background: rgba(15,23,42,.42); display: none; align-items:center; justify-content:center; z-index: 20; }
-    #cw6 .modal-backdrop.open { display:flex; }
-    #cw6 .modal { width:min(620px, 90vw); background:white; border-radius:22px; padding:22px; box-shadow: 0 30px 100px rgba(0,0,0,.28); }
-    #cw6 .modal h3 { margin: 0 0 10px; }
-    #cw6 .trace-box { background:#0f172a; color:#dbeafe; border-radius:14px; padding:14px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space:pre-wrap; font-size:12px; line-height:1.5; }
-    #cw6 .modal-actions { margin-top:16px; display:flex; justify-content:flex-end; }
+    .project-header {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-    @media (max-width: 1100px) {
-      #cw6 .gate-panel { grid-template-columns: 1fr; }
-      #cw6 .gate-list, #cw6 .gate-summary { border-left:0; border-top:1px solid var(--line); }
+    .shield {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #2f54eb, #7c3aed);
+      color: white;
+      font-weight: 900;
+      font-size: 23px;
+      box-shadow: 0 10px 24px rgba(52, 84, 245, .22);
+    }
+
+    .project-title {
+      font-weight: 800;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .project-sub {
+      color: var(--muted);
+      margin-top: 2px;
+      font-size: 13px;
+    }
+
+    .caret {
+      margin-left: auto;
+      color: var(--muted);
+    }
+
+    .session-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      font-size: 12px;
+      color: var(--muted);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .live-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #22c55e;
+      display: inline-block;
+      margin-right: 8px;
+      box-shadow: 0 0 0 4px #dcfce7;
+    }
+
+    .chat {
+      flex: 1;
+      overflow: auto;
+      padding: 18px 18px 10px;
+      min-height: 0;
+    }
+
+    .msg {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      background: var(--blue);
+      box-shadow: 0 8px 16px rgba(52, 84, 245, .18);
+    }
+
+    .bot {
+      background: #e8eef9;
+      color: #234;
+    }
+
+    .msg-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .bubble {
+      padding: 12px 13px;
+      background: #f3f6fb;
+      border-radius: 14px;
+      font-size: 13px;
+      line-height: 1.35;
+      border: 1px solid #edf1f7;
+    }
+
+    .bubble.user {
+      background: #eaf0ff;
+      border-color: #dbe5ff;
+    }
+
+    .bubble.alert {
+      background: var(--red-soft);
+      border-color: #ffc8c2;
+      color: #701c15;
+    }
+
+    .bubble.success {
+      background: var(--green-soft);
+      border-color: #bcebd0;
+      color: #064e2d;
+    }
+
+    .bubble ul {
+      padding-left: 18px;
+      margin: 6px 0 0;
+    }
+
+    .mini-link {
+      color: var(--blue);
+      font-weight: 700;
+      margin-top: 8px;
+      display: inline-block;
+    }
+
+    .composer {
+      margin: 10px 14px 14px;
+      border: 1.5px solid #c9d2ff;
+      border-radius: 18px;
+      padding: 12px;
+      background: white;
+      box-shadow: 0 10px 30px rgba(52, 84, 245, .08);
+    }
+
+    .composer textarea {
+      width: 100%;
+      border: 0;
+      resize: none;
+      min-height: 58px;
+      outline: 0;
+      color: #334155;
+    }
+
+    .composer-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .small-btn {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: #334155;
+      border-radius: 12px;
+      padding: 8px 11px;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .send {
+      margin-left: auto;
+      border: 0;
+      background: linear-gradient(135deg, #3b50f5, #7c3aed);
+      color: #fff;
+      border-radius: 14px;
+      width: 42px;
+      height: 42px;
+      font-size: 18px;
+    }
+
+    .center-top {
+      padding: 18px 24px 0;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, .84);
+    }
+
+    .top-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 23px;
+      letter-spacing: -0.03em;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    .chips {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      overflow: hidden;
+      background: white;
+    }
+
+    .chip {
+      padding: 10px 14px;
+      border-right: 1px solid var(--line);
+      font-size: 12px;
+      min-width: 82px;
+    }
+
+    .chip:last-child {
+      border-right: 0;
+    }
+
+    .chip b {
+      display: block;
+      font-size: 11px;
+      color: #475467;
+    }
+
+    .chip span {
+      color: #111827;
+    }
+
+    .staging::after {
+      content: "";
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      margin-left: 5px;
+    }
+
+    .inspect-btn {
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 12px 16px;
+      border-radius: 13px;
+      font-weight: 800;
+      color: #263149;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+      overflow-x: auto;
+    }
+
+    .tab {
+      border: 0;
+      background: transparent;
+      padding: 13px 14px;
+      color: #475467;
+      font-weight: 800;
+      border-bottom: 3px solid transparent;
+    }
+
+    .tab.active {
+      color: var(--blue);
+      border-bottom-color: var(--blue);
+    }
+
+    .main-content {
+      flex: 1;
+      overflow: auto;
+      padding: 18px 24px;
+      min-height: 0;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 17px;
+      letter-spacing: -0.02em;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 3px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .primary,
+    .secondary,
+    .danger {
+      border-radius: 13px;
+      padding: 10px 13px;
+      font-size: 12px;
+      font-weight: 900;
+      border: 1px solid var(--line);
+      background: white;
+      color: #344054;
+    }
+
+    .primary {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: white;
+    }
+
+    .danger {
+      color: var(--red);
+      background: #fff;
+    }
+
+    .select {
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 10px 12px;
+      font-weight: 800;
+      color: #344054;
+      background: white;
+      font-size: 12px;
+    }
+
+    .ledger {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      background: white;
+    }
+
+    .ledger-head,
+    .ledger-row {
+      display: grid;
+      grid-template-columns: 1.25fr .85fr .75fr 86px;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 18px;
+    }
+
+    .ledger-head {
+      font-size: 11px;
+      color: #667085;
+      background: #fbfcff;
+      font-weight: 900;
+      text-transform: none;
+    }
+
+    .ledger-row {
+      border-top: 1px solid var(--line);
+      cursor: pointer;
+    }
+
+    .ledger-row:hover {
+      background: #fbfcff;
+    }
+
+    .anchor-cell {
+      display: flex;
+      gap: 13px;
+      align-items: center;
+    }
+
+    .num {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      border: 1px solid;
+      flex-shrink: 0;
+    }
+
+    .num.red {
+      color: var(--red);
+      border-color: #ffb4ad;
+      background: #fff6f5;
+    }
+
+    .num.green {
+      color: var(--green);
+      border-color: #a7e8c1;
+      background: #f0fff5;
+    }
+
+    .num.amber {
+      color: var(--amber);
+      border-color: #ffd79d;
+      background: #fff9ed;
+    }
+
+    .anchor-title {
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .anchor-desc {
+      color: #667085;
+      font-size: 12px;
+      line-height: 1.35;
+      margin-top: 3px;
+    }
+
+    .trace {
+      color: #475467;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 10px;
+      border-radius: 9px;
+      font-size: 12px;
+      font-weight: 900;
+      border: 1px solid;
+      line-height: 1.2;
+    }
+
+    .pill.red {
+      color: var(--red);
+      background: var(--red-soft);
+      border-color: #ffc9c4;
+    }
+
+    .pill.green {
+      color: var(--green);
+      background: var(--green-soft);
+      border-color: #c1eacf;
+    }
+
+    .pill.amber {
+      color: var(--amber);
+      background: var(--amber-soft);
+      border-color: #ffdca7;
+    }
+
+    .updated {
+      color: #475467;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .trace-flow,
+    .gate-panel,
+    .overview-grid,
+    .simple-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      margin-top: 14px;
+      padding: 16px;
+    }
+
+    .flow-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .flow-step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+    }
+
+    .flow-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 24px;
+      left: 62%;
+      width: 76%;
+      border-top: 2px dotted #cbd5e1;
+    }
+
+    .flow-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 8px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 20px;
+      border: 1px solid #d8e0ff;
+    }
+
+    .flow-label {
+      font-weight: 900;
+      font-size: 12px;
+    }
+
+    .flow-copy {
+      color: #667085;
+      font-size: 11px;
+      line-height: 1.3;
+      margin-top: 3px;
+    }
+
+    .gate-panel {
+      display: grid;
+      grid-template-columns: 220px 1fr 170px;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .gate-status {
+      padding: 22px 18px;
+      background: var(--red-soft);
+    }
+
+    .gate-status.ship {
+      background: var(--green-soft);
+    }
+
+    .gate-status.reopen {
+      background: var(--amber-soft);
+    }
+
+    .gate-word {
+      font-size: 30px;
+      font-weight: 1000;
+      margin: 10px 0 4px;
+      letter-spacing: -0.05em;
+    }
+
+    .gate-word.block {
+      color: var(--red);
+    }
+
+    .gate-word.ship {
+      color: var(--green);
+    }
+
+    .gate-word.reopen {
+      color: var(--amber);
+    }
+
+    .gate-list,
+    .gate-summary {
+      padding: 18px;
+      border-left: 1px solid var(--line);
+    }
+
+    .gate-list h3,
+    .gate-summary h3 {
+      font-size: 13px;
+      margin: 0 0 12px;
+    }
+
+    .gate-anchor {
+      display: grid;
+      grid-template-columns: 24px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      margin: 10px 0;
+      font-size: 12px;
+    }
+
+    .small-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 7px;
+      border: 1px solid #ffc4be;
+      color: var(--red);
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      background: white;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .footer-note {
+      margin-top: 14px;
+      color: #667085;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .tab-pane {
+      display: none;
+    }
+
+    .tab-pane.active {
+      display: block;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .metric {
+      background: #fbfcff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .metric-val {
+      font-size: 28px;
+      font-weight: 1000;
+      letter-spacing: -.05em;
+    }
+
+    .metric-label {
+      color: #667085;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .hypothesis-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .hypothesis-item {
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .right-top {
+      padding: 18px 20px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .preview-title {
+      font-weight: 900;
+    }
+
+    .preview-icons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 34px;
+      height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: white;
+      color: #334155;
+      display: grid;
+      place-items: center;
+    }
+
+    .phone-wrap {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background-image: radial-gradient(#dbe3f2 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+
+    .phone {
+      width: 285px;
+      height: 620px;
+      background: #0b0b0d;
+      border-radius: 45px;
+      padding: 10px;
+      box-shadow: 0 24px 50px rgba(0, 0, 0, .23);
+      position: relative;
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      top: 17px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 92px;
+      height: 25px;
+      background: #000;
+      border-radius: 999px;
+      z-index: 3;
+    }
+
+    .screen {
+      height: 100%;
+      background: #fff;
+      border-radius: 36px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .statusbar {
+      height: 35px;
+      padding: 9px 18px 0;
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .app-header {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 0 16px;
+      border-bottom: 1px solid #eef1f6;
+    }
+
+    .sun {
+      color: #f97316;
+      font-size: 24px;
+    }
+
+    .clinic-name {
+      font-weight: 1000;
+      font-size: 15px;
+    }
+
+    .hamb {
+      margin-left: auto;
+      color: #475467;
+      font-weight: 900;
+    }
+
+    .mobile-body {
+      padding: 12px;
+      height: calc(100% - 91px);
+      overflow: hidden;
+      background: #fbfcff;
+    }
+
+    .welcome {
+      background: white;
+      border: 1px solid #edf1f7;
+      border-radius: 14px;
+      padding: 10px;
+      display: flex;
+      gap: 9px;
+      align-items: center;
+    }
+
+    .person {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: #f5d0fe;
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+    }
+
+    .mobile-card {
+      margin-top: 10px;
+      background: white;
+      border: 1px solid #edf1f7;
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .mobile-card h4 {
+      margin: 0 0 8px;
+      font-size: 12px;
+    }
+
+    .progress {
+      height: 5px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      width: 38%;
+      background: var(--blue);
+    }
+
+    .mobile-label {
+      font-size: 10px;
+      font-weight: 800;
+      color: #344054;
+      margin: 8px 0 4px;
+    }
+
+    .mobile-input {
+      height: 31px;
+      border: 1px solid #e3e7ee;
+      border-radius: 7px;
+      padding: 8px;
+      color: #98a2b3;
+      font-size: 11px;
+      background: #fff;
+    }
+
+    .urgent-toggle {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1px solid #e3e7ee;
+      border-radius: 8px;
+      overflow: hidden;
+      height: 31px;
+    }
+
+    .urgent-toggle button {
+      border: 0;
+      border-right: 1px solid #e3e7ee;
+      background: #fff;
+      font-weight: 800;
+      font-size: 11px;
+      color: #334155;
+    }
+
+    .urgent-toggle button:last-child {
+      border-right: 0;
+    }
+
+    .urgent-toggle button.active {
+      background: var(--blue);
+      color: white;
+    }
+
+    .mobile-primary {
+      width: 100%;
+      height: 34px;
+      border: 0;
+      border-radius: 8px;
+      background: var(--blue);
+      color: white;
+      font-weight: 900;
+      margin-top: 10px;
+    }
+
+    .secure {
+      text-align: center;
+      color: #667085;
+      font-size: 10px;
+      margin-top: 6px;
+    }
+
+    .queue-row {
+      display: grid;
+      grid-template-columns: 24px 1fr auto;
+      gap: 7px;
+      align-items: center;
+      padding: 7px 0;
+      border-bottom: 1px solid #edf1f7;
+    }
+
+    .queue-row:last-child {
+      border-bottom: 0;
+    }
+
+    .qicon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #eef2ff;
+      color: var(--blue);
+      display: grid;
+      place-items: center;
+      font-size: 12px;
+    }
+
+    .qname {
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .qdesc {
+      font-size: 10px;
+      color: #667085;
+    }
+
+    .tag {
+      font-size: 8px;
+      font-weight: 900;
+      border-radius: 6px;
+      padding: 4px 5px;
+    }
+
+    .tag.red {
+      color: var(--red);
+      background: var(--red-soft);
+    }
+
+    .tag.amber {
+      color: var(--amber);
+      background: var(--amber-soft);
+    }
+
+    .tag.green {
+      color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .sms {
+      font-size: 10px;
+      line-height: 1.35;
+      color: #344054;
+      background: #f5f7fb;
+      padding: 9px;
+      border-radius: 10px;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, .42);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      width: min(620px, 90vw);
+      background: white;
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 30px 100px rgba(0, 0, 0, .28);
+    }
+
+    .modal h3 {
+      margin: 0 0 10px;
+    }
+
+    .trace-box {
+      background: #0f172a;
+      color: #dbeafe;
+      border-radius: 14px;
+      padding: 14px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      white-space: pre-wrap;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .modal-actions {
+      margin-top: 16px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    @media (max-width: 1280px) {
+      body {
+        overflow: auto;
+      }
+
+      .app {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: 100vh;
+      }
+
+      .panel {
+        min-height: 580px;
+      }
+
+      .left-panel {
+        min-height: 680px;
+      }
+
+      .right-panel {
+        min-height: 760px;
+      }
     }
   </style>
 
-  <main class="panel center-panel">
-    <div class="center-top">
-      <div class="top-row">
+  <div class="app">
+    <aside class="panel left-panel">
+      <div class="project-header">
+        <div class="shield">✚</div>
         <div>
-          <h1>Convergence Harness v0</h1>
-          <div class="subtitle">Clinic Intake Experiment</div>
+          <div class="project-title">Clinic Intake</div>
+          <div class="project-sub">Convergence Harness v0</div>
         </div>
-        <div class="actions">
-          <div class="chips">
-            <div class="chip"><b>Build</b><span id="buildVersion">v0.1.0</span></div>
-            <div class="chip"><b>Last run</b><span id="lastRun">Not run</span></div>
-            <div class="chip"><b>Environment</b><span class="staging">Staging</span></div>
+        <div class="caret">⌄</div>
+      </div>
+      <div class="session-bar"><span><i class="live-dot"></i>Session active</span><span>Auto-save on</span></div>
+      <div id="chat" class="chat"></div>
+      <div class="composer">
+        <textarea id="composer" placeholder="Ask the harness to test, inspect, or repair..."></textarea>
+        <div class="composer-actions">
+          <button class="small-btn">＋</button>
+          <button class="small-btn">🎙</button>
+          <button id="toolsBtn" class="small-btn">🛠 Tools</button>
+          <button id="sendBtn" class="send">➤</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="panel center-panel">
+      <div class="center-top">
+        <div class="top-row">
+          <div>
+            <h1>Convergence Harness v0</h1>
+            <div class="subtitle">Clinic Intake Experiment</div>
           </div>
-          <button class="inspect-btn" id="inspectBuild">&lt;/&gt; Inspect build</button>
-        </div>
-      </div>
-      <div class="tabs" id="tabs">
-        <button class="tab" data-tab="overview">⌘ Overview</button>
-        <button class="tab" data-tab="hypothesis">☷ Hypothesis Ledger</button>
-        <button class="tab active" data-tab="evidence">♙ Evidence</button>
-        <button class="tab" data-tab="regression">⟳ Regression</button>
-        <button class="tab" data-tab="gate">◇ Gate</button>
-      </div>
-    </div>
-
-    <section class="main-content">
-      <div id="overview" class="tab-pane">
-        <div class="toolbar">
-          <div><h2>Run overview</h2><div class="hint">One screen summary for the clinic intake convergence pass.</div></div>
-          <button class="primary" id="runFromOverview">▶ Run convergence pass</button>
-        </div>
-        <div class="overview-grid">
-          <div class="metric"><div id="mAnchors" class="metric-val">4</div><div class="metric-label">Tracked anchors</div></div>
-          <div class="metric"><div id="mPassed" class="metric-val">0</div><div class="metric-label">Passed / evidenced</div></div>
-          <div class="metric"><div id="mGate" class="metric-val">WAIT</div><div class="metric-label">Decision gate</div></div>
-        </div>
-        <div class="simple-card">
-          <h2>What this app simulates</h2>
-          <p class="hint">The harness builds a clinic intake workflow, tests hidden rules like urgent routing and SMS privacy, repairs failures, re-runs regressions, and decides whether the app can ship.</p>
-        </div>
-      </div>
-
-      <div id="hypothesis" class="tab-pane">
-        <div class="toolbar"><div><h2>Hypothesis Ledger</h2><div class="hint">Potential hidden rules before we have proof.</div></div></div>
-        <div id="hypothesisList" class="hypothesis-list"></div>
-      </div>
-
-      <div id="evidence" class="tab-pane active">
-        <div class="toolbar">
-          <div><h2>Evidence Ledger</h2><div class="hint">Anchors capture hidden rules, tests, traces, and outcomes.</div></div>
           <div class="actions">
-            <select class="select"><option>All anchors</option><option>Critical</option><option>Open risk</option></select>
-            <button class="secondary" id="runTests">▶ Run hidden-rule tests</button>
-            <button class="primary" id="repairBtn">Repair & regress</button>
-            <button class="secondary" id="collectBtn">Collect audit evidence</button>
-            <button class="secondary" id="exportBtn">Export log</button>
-            <button class="danger" id="resetBtn">Reset</button>
+            <div class="chips">
+              <div class="chip"><b>Build</b><span id="buildVersion">v0.1.0</span></div>
+              <div class="chip"><b>Last run</b><span id="lastRun">Not run</span></div>
+              <div class="chip"><b>Environment</b><span class="staging">Staging</span></div>
+            </div>
+            <button class="inspect-btn" id="inspectBuild">&lt;/&gt; Inspect build</button>
           </div>
         </div>
-        <div class="ledger">
-          <div class="ledger-head"><div>Anchor</div><div>Evidence & Trace</div><div>Status</div><div>Updated</div></div>
-          <div id="ledgerRows"></div>
+        <div class="tabs" id="tabs">
+          <button class="tab" data-tab="overview">⌘ Overview</button>
+          <button class="tab" data-tab="hypothesis">☷ Hypothesis Ledger</button>
+          <button class="tab active" data-tab="evidence">♙ Evidence</button>
+          <button class="tab" data-tab="regression">⟳ Regression</button>
+          <button class="tab" data-tab="gate">◇ Gate</button>
         </div>
-        <div class="trace-flow">
-          <b>Trace flow</b> <span class="hint">How every anchor is proven before we gate.</span>
-          <div class="flow-row">
-            <div class="flow-step"><div class="flow-icon">☑</div><div class="flow-label">Scenario</div><div class="flow-copy">Define what<br>must hold</div></div>
-            <div class="flow-step"><div class="flow-icon">☍</div><div class="flow-label">Trace</div><div class="flow-copy">Execute & capture<br>evidence</div></div>
-            <div class="flow-step"><div class="flow-icon">⌁</div><div class="flow-label">Repair</div><div class="flow-copy">Fix rule or code<br>when needed</div></div>
-            <div class="flow-step"><div class="flow-icon">▣</div><div class="flow-label">Regression</div><div class="flow-copy">Re-run to confirm<br>no side effects</div></div>
-            <div class="flow-step"><div class="flow-icon">🔒</div><div class="flow-label">Gate</div><div class="flow-copy">Ship, Block,<br>or Reopen</div></div>
+      </div>
+
+      <section class="main-content">
+        <div id="overview" class="tab-pane">
+          <div class="toolbar">
+            <div>
+              <h2>Run overview</h2>
+              <div class="hint">One screen summary for the clinic intake convergence pass.</div>
+            </div>
+            <button class="primary" id="runFromOverview">▶ Run convergence pass</button>
+          </div>
+          <div class="overview-grid">
+            <div class="metric">
+              <div id="mAnchors" class="metric-val">4</div>
+              <div class="metric-label">Tracked anchors</div>
+            </div>
+            <div class="metric">
+              <div id="mPassed" class="metric-val">0</div>
+              <div class="metric-label">Passed / evidenced</div>
+            </div>
+            <div class="metric">
+              <div id="mGate" class="metric-val">WAIT</div>
+              <div class="metric-label">Decision gate</div>
+            </div>
+          </div>
+          <div class="simple-card">
+            <h2>What this app simulates</h2>
+            <p class="hint">The harness builds a clinic intake workflow, tests hidden rules like urgent routing and SMS
+              privacy, repairs failures, re-runs regressions, and decides whether the app can ship.</p>
           </div>
         </div>
-        <div id="gatePanel" class="gate-panel"></div>
-        <div class="footer-note"><span>Harness v0 provides evidence that hidden constraints are satisfied before we ship. <b>No hidden rule. No silent risk. No ship.</b></span><span>Learn more ↗</span></div>
-      </div>
 
-      <div id="regression" class="tab-pane">
-        <div class="toolbar"><div><h2>Regression checks</h2><div class="hint">Repairs should not break previously discovered anchors.</div></div></div>
-        <div id="regressionList" class="hypothesis-list"></div>
-      </div>
+        <div id="hypothesis" class="tab-pane">
+          <div class="toolbar">
+            <div>
+              <h2>Hypothesis Ledger</h2>
+              <div class="hint">Potential hidden rules before we have proof.</div>
+            </div>
+          </div>
+          <div id="hypothesisList" class="hypothesis-list"></div>
+        </div>
 
-      <div id="gate" class="tab-pane">
-        <div class="toolbar"><div><h2>Decision Gate</h2><div class="hint">The app only ships if critical blockers are cleared and evidenced.</div></div></div>
-        <div id="gateOnly"></div>
+        <div id="evidence" class="tab-pane active">
+          <div class="toolbar">
+            <div>
+              <h2>Evidence Ledger</h2>
+              <div class="hint">Anchors capture hidden rules, tests, traces, and outcomes.</div>
+            </div>
+            <div class="actions">
+              <select class="select">
+                <option>All anchors</option>
+                <option>Critical</option>
+                <option>Open risk</option>
+              </select>
+              <button class="secondary" id="runTests">▶ Run hidden-rule tests</button>
+              <button class="primary" id="repairBtn">Repair & regress</button>
+              <button class="secondary" id="collectBtn">Collect audit evidence</button>
+              <button class="secondary" id="exportBtn">Export log</button>
+              <button class="danger" id="resetBtn">Reset</button>
+            </div>
+          </div>
+          <div class="ledger">
+            <div class="ledger-head">
+              <div>Anchor</div>
+              <div>Evidence & Trace</div>
+              <div>Status</div>
+              <div>Updated</div>
+            </div>
+            <div id="ledgerRows"></div>
+          </div>
+          <div class="trace-flow">
+            <b>Trace flow</b> <span class="hint">How every anchor is proven before we gate.</span>
+            <div class="flow-row">
+              <div class="flow-step">
+                <div class="flow-icon">☑</div>
+                <div class="flow-label">Scenario</div>
+                <div class="flow-copy">Define what<br>must hold</div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-icon">☍</div>
+                <div class="flow-label">Trace</div>
+                <div class="flow-copy">Execute & capture<br>evidence</div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-icon">⌁</div>
+                <div class="flow-label">Repair</div>
+                <div class="flow-copy">Fix rule or code<br>when needed</div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-icon">▣</div>
+                <div class="flow-label">Regression</div>
+                <div class="flow-copy">Re-run to confirm<br>no side effects</div>
+              </div>
+              <div class="flow-step">
+                <div class="flow-icon">🔒</div>
+                <div class="flow-label">Gate</div>
+                <div class="flow-copy">Ship, Block,<br>or Reopen</div>
+              </div>
+            </div>
+          </div>
+          <div id="gatePanel" class="gate-panel"></div>
+          <div class="footer-note"><span>Harness v0 provides evidence that hidden constraints are satisfied before we
+              ship. <b>No hidden rule. No silent risk. No ship.</b></span><span>Learn more ↗</span></div>
+        </div>
+
+        <div id="regression" class="tab-pane">
+          <div class="toolbar">
+            <div>
+              <h2>Regression checks</h2>
+              <div class="hint">Repairs should not break previously discovered anchors.</div>
+            </div>
+          </div>
+          <div id="regressionList" class="hypothesis-list"></div>
+        </div>
+
+        <div id="gate" class="tab-pane">
+          <div class="toolbar">
+            <div>
+              <h2>Decision Gate</h2>
+              <div class="hint">The app only ships if critical blockers are cleared and evidenced.</div>
+            </div>
+          </div>
+          <div id="gateOnly"></div>
+        </div>
+      </section>
+    </main>
+
+    <aside class="panel right-panel">
+      <div class="right-top">
+        <div class="preview-title">App Preview</div>
+        <div class="preview-icons"><button class="icon-btn">📱</button><button class="icon-btn">▣</button><button
+            class="icon-btn">↗</button><button class="icon-btn">↻</button></div>
       </div>
-    </section>
-  </main>
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="screen">
+            <div class="statusbar"><span>9:41</span><span>◖◗ ◉ ▰</span></div>
+            <div class="app-header"><span class="sun">☼</span><span class="clinic-name">Sunrise Clinic
+                Intake</span><span class="hamb">☰</span></div>
+            <div class="mobile-body">
+              <div class="welcome">
+                <div class="person">👩🏻</div>
+                <div><b>Welcome, Jamie</b>
+                  <div class="qdesc">We're here to help. Let's get you the right care.</div>
+                </div>
+              </div>
+              <div class="mobile-card">
+                <div style="display:flex;justify-content:space-between;align-items:center">
+                  <h4>Start your intake</h4><span class="qdesc">Step 1 of 5</span>
+                </div>
+                <div class="progress"><span></span></div>
+                <div class="mobile-label">What brings you in today?</div>
+                <div class="mobile-input">Briefly describe your symptoms</div>
+                <div class="mobile-label">When did this start?</div>
+                <div class="mobile-input">Select date 📅</div>
+                <div class="mobile-label">Any urgent symptoms?</div>
+                <div class="urgent-toggle"><button>Yes</button><button>Unsure</button><button class="active">No</button>
+                </div>
+                <button class="mobile-primary">Continue</button>
+                <div class="secure">🔒 Secure & HIPAA-compliant</div>
+              </div>
+              <div class="mobile-card">
+                <div style="display:flex;justify-content:space-between">
+                  <h4>Your intake status</h4><span class="qdesc">Est. 10–15 min</span>
+                </div>
+                <div class="queue-row">
+                  <div class="qicon">◷</div>
+                  <div>
+                    <div class="qname">Under review</div>
+                    <div class="qdesc">A nurse will review your answers.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mobile-card">
+                <div style="display:flex;justify-content:space-between">
+                  <h4>Care team queue (live)</h4><span class="qdesc">View all</span>
+                </div>
+                <div class="queue-row">
+                  <div class="qicon">♙</div>
+                  <div>
+                    <div class="qname">James T.</div>
+                    <div class="qdesc">Chest pain • High priority</div>
+                  </div><span class="tag red">URGENT</span>
+                </div>
+                <div class="queue-row">
+                  <div class="qicon">♙</div>
+                  <div>
+                    <div class="qname">Maria S.</div>
+                    <div class="qdesc">Abdominal pain</div>
+                  </div><span class="tag amber">REVIEW</span>
+                </div>
+                <div class="queue-row">
+                  <div class="qicon">♙</div>
+                  <div>
+                    <div class="qname">Alex R.</div>
+                    <div class="qdesc">Headache • Follow-up</div>
+                  </div><span class="tag green">LOW</span>
+                </div>
+              </div>
+              <div class="mobile-card">
+                <div style="display:flex;justify-content:space-between">
+                  <h4>SMS preview</h4><span class="qdesc">Edit</span>
+                </div>
+                <div class="sms" id="smsPreview">Sunrise Clinic: We received your intake. We'll review and follow up
+                  shortly. Reply STOP to opt out.</div>
+                <div class="secure" id="smsNote">✅ No symptom details included.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
 
   <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal">
@@ -216,42 +1355,58 @@
   </div>
 
   <script>
-  (function () {
-    var root = document.getElementById('cw6');
-    if (!root || root.dataset.wired) return;
-    root.dataset.wired = '1';
-
     const nowTime = () => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     const baseAnchors = [
       {
-        id: 1, key: 'urgent', title: 'Urgent symptom routing',
+        id: 1,
+        key: 'urgent',
+        title: 'Urgent symptom routing',
         desc: 'Patients with urgent indicators must be routed to urgent queue with high priority.',
-        trace: 'No scenario captured yet\nWaiting on evidence', status: 'unknown', updated: '—', severity: 'red',
+        trace: 'No scenario captured yet\nWaiting on evidence',
+        status: 'unknown',
+        updated: '—',
+        severity: 'red',
         traceText: 'No trace yet. Run hidden-rule tests to test chest pain routing.'
       },
       {
-        id: 2, key: 'sms', title: 'SMS privacy',
+        id: 2,
+        key: 'sms',
+        title: 'SMS privacy',
         desc: 'SMS messages must not include sensitive symptom details or free text.',
-        trace: 'No scenario captured yet\nWaiting on evidence', status: 'unknown', updated: '—', severity: 'red',
+        trace: 'No scenario captured yet\nWaiting on evidence',
+        status: 'unknown',
+        updated: '—',
+        severity: 'red',
         traceText: 'No trace yet. Run hidden-rule tests to preview SMS payload.'
       },
       {
-        id: 3, key: 'duplicate', title: 'Duplicate submission merge',
+        id: 3,
+        key: 'duplicate',
+        title: 'Duplicate submission merge',
         desc: 'Repeated submissions for same patient within 15 min should merge.',
-        trace: 'No scenario captured yet\nWaiting on evidence', status: 'unknown', updated: '—', severity: 'amber',
+        trace: 'No scenario captured yet\nWaiting on evidence',
+        status: 'unknown',
+        updated: '—',
+        severity: 'amber',
         traceText: 'No trace yet. Run hidden-rule tests to test repeated submissions.'
       },
       {
-        id: 4, key: 'audit', title: 'Audit log for manual override',
+        id: 4,
+        key: 'audit',
+        title: 'Audit log for manual override',
         desc: 'All manual overrides must be recorded with reason and staff identity.',
-        trace: 'No trace captured yet\nWaiting on evidence', status: 'open', updated: '—', severity: 'amber',
+        trace: 'No trace captured yet\nWaiting on evidence',
+        status: 'open',
+        updated: '—',
+        severity: 'amber',
         traceText: 'No trace yet. Manual override audit logging still needs evidence.'
       }
     ];
 
     const state = {
-      stage: 'initial', build: 'v0.1.0',
+      stage: 'initial',
+      build: 'v0.1.0',
       anchors: JSON.parse(JSON.stringify(baseAnchors)),
       chat: [
         { who: 'You', type: 'user', time: '10:02 AM', text: 'Build a clinic intake dashboard for patients and staff. Include triage, queue, and SMS updates.' },
@@ -274,13 +1429,13 @@
       evidenced: { label: 'Passed\n+ evidenced', cls: 'green' }
     };
 
-    const $ = id => document.getElementById(id);
-
-    function addChat(message) { state.chat.push(message); renderChat(); }
+    function addChat(message) {
+      state.chat.push(message);
+      renderChat();
+    }
 
     function renderChat() {
-      const chat = $('chat');
-      if (!chat) return;
+      const chat = document.getElementById('chat');
       chat.innerHTML = state.chat.map(m => `
         <div class="msg">
           <div class="avatar ${m.type === 'bot' ? 'bot' : ''}">${m.type === 'bot' ? '🤖' : 'Y'}</div>
@@ -288,13 +1443,13 @@
             <div class="msg-meta"><b>${m.who}</b><span>${m.time}</span></div>
             <div class="bubble ${m.type === 'user' ? 'user' : ''} ${m.kind || ''}">${m.text}</div>
           </div>
-        </div>`).join('');
+        </div>
+      `).join('');
       chat.scrollTop = chat.scrollHeight;
     }
 
     function renderLedger() {
-      const rows = $('ledgerRows');
-      if (!rows) return;
+      const rows = document.getElementById('ledgerRows');
       rows.innerHTML = state.anchors.map(a => {
         const st = statusMap[a.status];
         const numCls = st.cls === 'green' ? 'green' : st.cls === 'red' ? 'red' : 'amber';
@@ -313,8 +1468,7 @@
     }
 
     function renderHypotheses() {
-      const list = $('hypothesisList');
-      if (!list) return;
+      const list = document.getElementById('hypothesisList');
       const hypotheses = [
         ['Urgent symptoms may need special triage', 'critical', 'Medical intake workflows often have hidden urgent-routing rules.'],
         ['SMS content may leak private health details', 'critical', 'Confirmation messages can accidentally include symptoms or visit reasons.'],
@@ -328,8 +1482,7 @@
     }
 
     function renderRegressions() {
-      const list = $('regressionList');
-      if (!list) return;
+      const list = document.getElementById('regressionList');
       list.innerHTML = state.regressions.map(r => {
         const cls = r.status === 'pass' ? 'green' : r.status === 'fail' ? 'red' : 'amber';
         return `<div class="hypothesis-item"><div><b>${r.name}</b><div class="hint">${r.detail}</div></div><span class="pill ${cls}">${r.status}</span></div>`;
@@ -350,7 +1503,6 @@
       const passedCount = state.anchors.filter(a => ['passed', 'evidenced'].includes(a.status)).length;
       const openCount = state.anchors.filter(a => ['open', 'unknown'].includes(a.status)).length;
       const blockCount = gate.blocking.length;
-      const lastRunText = $('lastRun') ? $('lastRun').textContent : '—';
       const panelHtml = `
         <div class="gate-status ${gate.cls}">
           <div style="font-weight:900">Decision Gate</div>
@@ -360,7 +1512,7 @@
         </div>
         <div class="gate-list">
           <h3>${gate.blocking.length ? 'Blocking / open anchors' : 'Cleared anchors'}</h3>
-          ${(gate.blocking.length ? gate.blocking : state.anchors).slice(0,4).map(a => `<div class="gate-anchor"><span class="small-num">${a.id}</span><b>${a.title}</b><span class="hint">${statusMap[a.status].label.split('\n')[0]} ›</span></div>`).join('')}
+          ${(gate.blocking.length ? gate.blocking : state.anchors).slice(0, 4).map(a => `<div class="gate-anchor"><span class="small-num">${a.id}</span><b>${a.title}</b><span class="hint">${statusMap[a.status].label.split('\n')[0]} ›</span></div>`).join('')}
         </div>
         <div class="gate-summary">
           <h3>Summary</h3>
@@ -368,31 +1520,32 @@
           <div class="summary-row"><span>Passed</span><b style="color:var(--green)">${passedCount}</b></div>
           <div class="summary-row"><span>Open risks</span><b style="color:var(--amber)">${openCount}</b></div>
           <div class="summary-row"><span>Blocking</span><b style="color:var(--red)">${blockCount}</b></div>
-          <div class="summary-row"><span>Last run</span><b>${lastRunText}</b></div>
-        </div>`;
-      if ($('gatePanel')) $('gatePanel').innerHTML = panelHtml;
-      if ($('gateOnly')) $('gateOnly').innerHTML = `<div class="gate-panel">${panelHtml}</div>`;
-      if ($('mPassed')) $('mPassed').textContent = passedCount;
-      if ($('mGate')) $('mGate').textContent = gate.word;
+          <div class="summary-row"><span>Last run</span><b>${document.getElementById('lastRun').textContent}</b></div>
+        </div>
+      `;
+      document.getElementById('gatePanel').innerHTML = panelHtml;
+      document.getElementById('gateOnly').innerHTML = `<div class="gate-panel">${panelHtml}</div>`;
+      document.getElementById('mPassed').textContent = passedCount;
+      document.getElementById('mGate').textContent = gate.word;
     }
 
     function renderAll() {
-      if ($('buildVersion')) $('buildVersion').textContent = state.build;
+      document.getElementById('buildVersion').textContent = state.build;
       renderChat(); renderLedger(); renderHypotheses(); renderRegressions(); renderGate();
     }
 
     function runTests() {
       state.stage = 'tested';
       state.build = 'v0.2.0';
-      if ($('lastRun')) $('lastRun').textContent = nowTime();
+      document.getElementById('lastRun').textContent = nowTime();
       state.anchors[0].status = 'failed'; state.anchors[0].updated = nowTime(); state.anchors[0].trace = '3 scenarios • 18 steps\nTrace URG-041\nChest pain → normal queue';
       state.anchors[0].traceText = 'Trace URG-041\nInput: patient reason="chest pain"\nObserved: case entered normal queue. No urgent flag.\nExpected: route to nurse review before normal queue.\nResult: CRITICAL FAIL.';
       state.anchors[1].status = 'failed'; state.anchors[1].updated = nowTime(); state.anchors[1].trace = '5 scenarios • 22 steps\nTrace SMS-017\nSymptom leaked in SMS';
       state.anchors[1].traceText = 'Trace SMS-017\nInput: SMS preview after chest pain intake.\nObserved: "Your visit for chest pain is confirmed."\nExpected: no symptom or visit reason in SMS.\nResult: CRITICAL FAIL.';
       state.anchors[2].status = 'unknown'; state.anchors[2].trace = 'Queued after repairs\nWaiting on regression'; state.anchors[2].updated = nowTime();
       state.anchors[3].status = 'open'; state.anchors[3].updated = nowTime();
-      addChat({ who:'Harness', type:'bot', time: nowTime(), text:'Starting hidden-rule tests:<ul><li>Urgent symptom routing</li><li>SMS privacy & leakage</li><li>Duplicate submission merge</li><li>Audit log for manual override</li></ul>I’ll record evidence and update the ledger.' });
-      addChat({ who:'Harness', type:'bot', time: nowTime(), kind:'alert', text:'⚠️ <b>Critical issue discovered</b><br><br>Urgent symptoms are not routed correctly when “chest pain” is entered. Patient sent to general queue instead of urgent queue.<br><span class="mini-link">View trace →</span>' });
+      addChat({ who: 'Harness', type: 'bot', time: nowTime(), text: 'Starting hidden-rule tests:<ul><li>Urgent symptom routing</li><li>SMS privacy & leakage</li><li>Duplicate submission merge</li><li>Audit log for manual override</li></ul>I’ll record evidence and update the ledger.' });
+      addChat({ who: 'Harness', type: 'bot', time: nowTime(), kind: 'alert', text: '⚠️ <b>Critical issue discovered</b><br><br>Urgent symptoms are not routed correctly when “chest pain” is entered. Patient sent to general queue instead of urgent queue.<br><span class="mini-link">View trace →</span>' });
       renderAll();
     }
 
@@ -400,7 +1553,7 @@
       if (state.stage === 'initial') runTests();
       state.stage = 'repaired';
       state.build = 'v0.7.3';
-      if ($('lastRun')) $('lastRun').textContent = nowTime();
+      document.getElementById('lastRun').textContent = nowTime();
       state.anchors[0].status = 'passed'; state.anchors[0].updated = nowTime(); state.anchors[0].trace = '3 scenarios • 18 steps\nTrace URG-041\nRepaired rule: v0.7.3';
       state.anchors[0].traceText = 'Trace URG-041 after patch\nPatch: route chest pain, fainting, severe bleeding, and shortness of breath to nurse review.\nObserved: chest pain flagged HIGH PRIORITY and sent to urgent queue.\nResult: PASS.';
       state.anchors[1].status = 'patched'; state.anchors[1].updated = nowTime(); state.anchors[1].trace = '5 scenarios • 22 steps\nTrace SMS-017\nPatched template: v0.7.3';
@@ -412,10 +1565,10 @@
         { name: 'Urgent symptom routing', status: 'pass', detail: 'Chest pain routes to nurse review.' },
         { name: 'Duplicate submission merge', status: 'pass', detail: 'Privacy patch preserved internal reason field.' }
       ];
-      if ($('smsPreview')) $('smsPreview').textContent = 'Sunrise Clinic: We received your intake. We’ll review and follow up shortly. Reply STOP to opt out.';
-      if ($('smsNote')) $('smsNote').textContent = '✅ No symptom details included.';
-      addChat({ who:'You', type:'user', time: nowTime(), text:'Repair the routing logic and re-run tests.' });
-      addChat({ who:'Harness', type:'bot', time: nowTime(), kind:'success', text:'✅ <b>Repaired and verified</b><br><br>Urgent symptom routing now correct. Duplicate regression passed. SMS privacy patch applied but final evidence still needed.' });
+      document.getElementById('smsPreview').textContent = 'Sunrise Clinic: We received your intake. We’ll review and follow up shortly. Reply STOP to opt out.';
+      document.getElementById('smsNote').textContent = '✅ No symptom details included.';
+      addChat({ who: 'You', type: 'user', time: nowTime(), text: 'Repair the routing logic and re-run tests.' });
+      addChat({ who: 'Harness', type: 'bot', time: nowTime(), kind: 'success', text: '✅ <b>Repaired and verified</b><br><br>Urgent symptom routing now correct. Duplicate regression passed. SMS privacy patch applied but final evidence still needed.' });
       renderAll();
     }
 
@@ -423,14 +1576,14 @@
       if (state.stage === 'initial') runTests();
       if (state.stage === 'tested') repairAndRegress();
       state.stage = 'final';
-      if ($('lastRun')) $('lastRun').textContent = nowTime();
+      document.getElementById('lastRun').textContent = nowTime();
       state.anchors[1].status = 'evidenced'; state.anchors[1].updated = nowTime(); state.anchors[1].trace = '5 scenarios • 22 steps\nTrace SMS-017\nPrivacy regression passed';
       state.anchors[1].traceText = 'Trace SMS-017 final privacy regression\nObserved: SMS contains appointment status only. No symptom, diagnosis, free text, or visit reason.\nResult: PASS + EVIDENCED.';
       state.anchors[3].status = 'evidenced'; state.anchors[3].updated = nowTime(); state.anchors[3].trace = '2 scenarios • 8 steps\nTrace AUD-004\nOverride log captured';
       state.anchors[3].traceText = 'Trace AUD-004\nInput: staff manually overrides triage priority.\nObserved: audit log captures actor, timestamp, previous priority, new priority, and reason.\nResult: PASS + EVIDENCED.';
-      state.regressions.push({ name:'SMS privacy regression', status:'pass', detail:'SMS excludes symptoms and visit reasons.' });
-      state.regressions.push({ name:'Manual override audit log', status:'pass', detail:'Audit evidence captured.' });
-      addChat({ who:'Harness', type:'bot', time: nowTime(), kind:'success', text:'✅ <b>Gate cleared</b><br><br>All critical anchors are repaired and evidenced. The app can ship inside this evidence envelope.' });
+      state.regressions.push({ name: 'SMS privacy regression', status: 'pass', detail: 'SMS excludes symptoms and visit reasons.' });
+      state.regressions.push({ name: 'Manual override audit log', status: 'pass', detail: 'Audit evidence captured.' });
+      addChat({ who: 'Harness', type: 'bot', time: nowTime(), kind: 'success', text: '✅ <b>Gate cleared</b><br><br>All critical anchors are repaired and evidenced. The app can ship inside this evidence envelope.' });
       renderAll();
     }
 
@@ -446,29 +1599,33 @@
         { name: 'Normal queue still works', status: 'not run', detail: 'Repair should not break routine queue.' },
         { name: 'Duplicate submission merge', status: 'not run', detail: 'Privacy patch should preserve internal reason field.' }
       ];
-      if ($('lastRun')) $('lastRun').textContent = 'Not run';
+      document.getElementById('lastRun').textContent = 'Not run';
       renderAll();
     }
 
     function openTrace(key) {
       const a = state.anchors.find(x => x.key === key);
-      $('modalTitle').textContent = a.title;
-      $('modalBody').textContent = a.traceText;
-      $('modalBackdrop').classList.add('open');
+      document.getElementById('modalTitle').textContent = a.title;
+      document.getElementById('modalBody').textContent = a.traceText;
+      document.getElementById('modalBackdrop').classList.add('open');
     }
-    window.openGatePolicy = function() {
-      $('modalTitle').textContent = 'Critical gate policy';
-      $('modalBody').textContent = 'If any critical anchor is unsatisfied → BLOCK.\nIf any critical anchor is unknown but suspected → REOPEN EVIDENCE.\nIf evidence for critical anchors is missing → ESCALATE or REOPEN.\nIf all discovered critical anchors are satisfied and evidenced → SHIP may be allowed.';
-      $('modalBackdrop').classList.add('open');
+    window.openGatePolicy = function () {
+      document.getElementById('modalTitle').textContent = 'Critical gate policy';
+      document.getElementById('modalBody').textContent = 'If any critical anchor is unsatisfied → BLOCK.\nIf any critical anchor is unknown but suspected → REOPEN EVIDENCE.\nIf evidence for critical anchors is missing → ESCALATE or REOPEN.\nIf all discovered critical anchors are satisfied and evidenced → SHIP may be allowed.';
+      document.getElementById('modalBackdrop').classList.add('open');
     }
 
     function exportLog() {
       const log = {
-        run_id: 'demo-clinic-intake-001', method: 'convergence_harness_v0',
-        stage: state.stage, build: state.build,
-        last_run: $('lastRun') ? $('lastRun').textContent : '—',
-        anchors: state.anchors, regressions: state.regressions,
-        decision: gateStatus().word, exported_at: new Date().toISOString()
+        run_id: 'demo-clinic-intake-001',
+        method: 'convergence_harness_v0',
+        stage: state.stage,
+        build: state.build,
+        last_run: document.getElementById('lastRun').textContent,
+        anchors: state.anchors,
+        regressions: state.regressions,
+        decision: gateStatus().word,
+        exported_at: new Date().toISOString()
       };
       const blob = new Blob([JSON.stringify(log, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
@@ -477,33 +1634,30 @@
       URL.revokeObjectURL(url);
     }
 
-    if ($('runTests')) $('runTests').onclick = runTests;
-    if ($('runFromOverview')) $('runFromOverview').onclick = runTests;
-    if ($('repairBtn')) $('repairBtn').onclick = repairAndRegress;
-    if ($('collectBtn')) $('collectBtn').onclick = collectEvidence;
-    if ($('resetBtn')) $('resetBtn').onclick = reset;
-    if ($('exportBtn')) $('exportBtn').onclick = exportLog;
-    if ($('closeModal')) $('closeModal').onclick = () => $('modalBackdrop').classList.remove('open');
-    if ($('modalBackdrop')) $('modalBackdrop').addEventListener('click', e => { if (e.target.id === 'modalBackdrop') e.currentTarget.classList.remove('open'); });
-    const sendBtn = $('sendBtn');
-    if (sendBtn) sendBtn.onclick = () => {
-      const composer = $('composer');
-      const text = composer ? composer.value.trim() : '';
+    document.getElementById('runTests').onclick = runTests;
+    document.getElementById('runFromOverview').onclick = runTests;
+    document.getElementById('repairBtn').onclick = repairAndRegress;
+    document.getElementById('collectBtn').onclick = collectEvidence;
+    document.getElementById('resetBtn').onclick = reset;
+    document.getElementById('exportBtn').onclick = exportLog;
+    document.getElementById('closeModal').onclick = () => document.getElementById('modalBackdrop').classList.remove('open');
+    document.getElementById('modalBackdrop').addEventListener('click', e => { if (e.target.id === 'modalBackdrop') e.currentTarget.classList.remove('open'); });
+    document.getElementById('sendBtn').onclick = () => {
+      const text = document.getElementById('composer').value.trim();
       if (!text) return;
-      addChat({ who:'You', type:'user', time: nowTime(), text });
-      composer.value = '';
-      addChat({ who:'Harness', type:'bot', time: nowTime(), text:'I can run tests, repair, collect audit evidence, or export the run log. Try the action buttons in the Evidence tab.' });
+      addChat({ who: 'You', type: 'user', time: nowTime(), text });
+      document.getElementById('composer').value = '';
+      addChat({ who: 'Harness', type: 'bot', time: nowTime(), text: 'I can run tests, repair, collect audit evidence, or export the run log. Try the action buttons in the Evidence tab.' });
     };
-    if ($('toolsBtn')) $('toolsBtn').onclick = () => openGatePolicy();
-    if ($('inspectBuild')) $('inspectBuild').onclick = () => openTrace('urgent');
-    root.querySelectorAll('.tab').forEach(btn => btn.addEventListener('click', () => {
-      root.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      root.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    document.getElementById('toolsBtn').onclick = () => openGatePolicy();
+    document.getElementById('inspectBuild').onclick = () => openTrace('urgent');
+    document.querySelectorAll('.tab').forEach(btn => btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
-      $(btn.dataset.tab).classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
     }));
 
     renderAll();
-  })();
   </script>
 </section>

@@ -5,7 +5,7 @@
 
 ## What it is
 
-A patient intake dashboard for a small clinic. Patients self-complete an intake form
+**Clearway** is a patient intake dashboard for a small clinic. Patients self-complete an intake form
 before or on arrival; clinic staff watch a live queue of who has checked in and where
 each patient is in the flow; patients receive an SMS confirmation when their intake is
 received. The product removes the front-desk clipboard and the manual phone-call

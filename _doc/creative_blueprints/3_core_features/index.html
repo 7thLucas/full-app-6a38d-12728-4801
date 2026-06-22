@@ -2,39 +2,55 @@
   <div class="h-full flex flex-col">
     <div class="mb-6">
       <span class="text-sm font-semibold tracking-widest uppercase" style="color:#0E7C86">Core Features</span>
-      <h2 class="mt-2 text-4xl font-extrabold text-slate-900 tracking-tight">Built around two people</h2>
+      <h2 class="mt-2 text-4xl font-extrabold text-slate-900 tracking-tight">Built around the people at the desk</h2>
     </div>
 
     <!-- Persona chips -->
-    <div class="flex gap-3 mb-8">
+    <div class="flex gap-3 mb-6">
       <span class="px-4 py-2 rounded-full text-sm font-semibold text-white" style="background:#0E7C86">Front-desk staff</span>
+      <span class="px-4 py-2 rounded-full text-sm font-semibold text-white" style="background:#B4543A">Triage nurse</span>
       <span class="px-4 py-2 rounded-full text-sm font-semibold text-slate-600" style="background:#EEF2F3">Patients</span>
     </div>
 
-    <!-- Feature grid -->
-    <div class="grid grid-cols-3 gap-6 flex-1">
+    <!-- Feature grid (2x2) -->
+    <div class="grid grid-cols-2 gap-5 flex-1">
       <div class="rounded-2xl p-6 flex flex-col" style="background:#F7FAFA;border:1px solid #E2EBEC">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-white text-lg font-bold mb-4" style="background:#0E7C86">1</div>
-        <h3 class="text-xl font-bold text-slate-900">Live staff queue</h3>
-        <p class="mt-3 text-slate-600 leading-relaxed">
-          Every checked-in patient appears in real time with a clear status —
-          waiting, in progress, seen. The desk's home screen.
-        </p>
-      </div>
-      <div class="rounded-2xl p-6 flex flex-col" style="background:#F7FAFA;border:1px solid #E2EBEC">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-white text-lg font-bold mb-4" style="background:#0E7C86">2</div>
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white text-base font-bold mb-3" style="background:#0E7C86">1</div>
         <h3 class="text-xl font-bold text-slate-900">Patient intake form</h3>
-        <p class="mt-3 text-slate-600 leading-relaxed">
-          Mobile-first, no login. Contact details, reason for visit, and basic
-          history — captured cleanly, no clipboard to re-key.
+        <p class="mt-2 text-slate-600 leading-relaxed">
+          Mobile-first, no login. Contact details, reason for visit, and basic history —
+          captured cleanly, no clipboard to re-key.
         </p>
       </div>
+
+      <!-- Safety-critical: highlighted -->
+      <div class="rounded-2xl p-6 flex flex-col" style="background:#FBF1EE;border:1px solid #E7B7A8">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white text-base font-bold" style="background:#B4543A">!</div>
+          <span class="px-2.5 py-1 rounded-full text-xs font-bold tracking-wide" style="background:#B4543A;color:#fff">Safety-critical</span>
+        </div>
+        <h3 class="text-xl font-bold text-slate-900">Urgent-symptom triage</h3>
+        <p class="mt-2 text-slate-700 leading-relaxed">
+          Every intake is screened first. Red-flag symptoms like <span class="font-semibold">chest pain</span>
+          route straight to <span class="font-semibold">nurse review</span> — never the normal waiting queue.
+        </p>
+      </div>
+
       <div class="rounded-2xl p-6 flex flex-col" style="background:#F7FAFA;border:1px solid #E2EBEC">
-        <div class="w-11 h-11 rounded-xl flex items-center justify-center text-white text-lg font-bold mb-4" style="background:#0E7C86">3</div>
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white text-base font-bold mb-3" style="background:#0E7C86">2</div>
+        <h3 class="text-xl font-bold text-slate-900">Live staff queue</h3>
+        <p class="mt-2 text-slate-600 leading-relaxed">
+          Non-urgent patients appear in real time with clear status — waiting, in
+          progress, seen. The desk's home screen.
+        </p>
+      </div>
+
+      <div class="rounded-2xl p-6 flex flex-col" style="background:#F7FAFA;border:1px solid #E2EBEC">
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center text-white text-base font-bold mb-3" style="background:#0E7C86">3</div>
         <h3 class="text-xl font-bold text-slate-900">SMS confirmation</h3>
-        <p class="mt-3 text-slate-600 leading-relaxed">
-          The moment intake is received, the patient gets a text confirming it —
-          quiet reassurance and cheap no-show insurance.
+        <p class="mt-2 text-slate-600 leading-relaxed">
+          The moment intake is received, the patient gets a text confirming it — quiet
+          reassurance and cheap no-show insurance.
         </p>
       </div>
     </div>

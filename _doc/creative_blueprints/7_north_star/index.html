@@ -14,8 +14,9 @@
     <div class="mb-6">
       <p class="text-lg text-slate-600 max-w-3xl leading-relaxed">
         The one number this app lives or dies by: <span class="font-bold text-slate-900">intake forms
-        actually submitted</span> by patients in the deployed app each week — each one creating a queue
-        entry and an SMS confirmation. Not page views, not logins. Completed intakes.
+        actually submitted</span> by patients in the deployed app each week — each one screened by the
+        triage policy, routed to the right lane, and confirmed by SMS. Not page views, not logins.
+        Completed, safely-triaged intakes.
       </p>
     </div>
 
@@ -63,7 +64,12 @@
       </div>
     </div>
 
-    <p class="mt-5 text-xs text-slate-400">
+    <div class="mt-5 rounded-xl px-5 py-3 flex items-center gap-3" style="background:#FBF1EE;border:1px solid #E7B7A8">
+      <span class="px-2.5 py-1 rounded-full text-xs font-bold tracking-wide" style="background:#B4543A;color:#fff">Safety guardrail</span>
+      <span class="text-sm text-slate-700">The number that must never break: <span class="font-semibold">urgent intakes correctly routed to nurse review = 100%</span>. A chest-pain case in the normal queue is a failed operation, not a slow one.</span>
+    </div>
+
+    <p class="mt-3 text-xs text-slate-400">
       Figures are projections from placeholder assumptions, not measured results. Replace the
       highlighted assumptions with your clinic's real patient volume and staff time to see your number.
     </p>

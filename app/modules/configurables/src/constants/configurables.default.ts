@@ -59,72 +59,123 @@ export type TFont = {
   textFont: string;
 };
 
+export type TIntakeCopy = {
+  heading: string;
+  subheading?: string;
+  submitLabel: string;
+  privacyNote?: string;
+  confirmationTitle: string;
+  confirmationMessage: string;
+  urgentNotice: string;
+};
+
+export type TQueueCopy = {
+  heading: string;
+  nurseReviewLabel: string;
+  normalQueueLabel: string;
+  refreshSeconds: number;
+};
+
+export type TSmsConfig = {
+  enabled: boolean;
+  confirmationTemplate: string;
+  urgentTemplate: string;
+};
+
 export type TDefaultConfigurableData = {
   appName: string;
   logoUrl: string;
   brandColor: TBrandColor;
   font: TFont;
-  // Mirror new schema fields here. Example:
-  //   maxItemsPerPage?: number;
-  //   enableNotifications?: boolean;
-  //   featuredCategories?: string[];
+  clinicName: string;
+  tagline?: string;
+  intake: TIntakeCopy;
+  queue: TQueueCopy;
+  sms: TSmsConfig;
+  urgentSymptomKeywords?: string[];
 };
 
 export const defaultConfigurablesData: TDefaultConfigurableData = {
-  appName: "My App",
+  appName: "Clearway",
   logoUrl: "",
   brandColor: {
-    // Base
-    background:        "#ffffff",
-    foreground:        "#09090b",
+    // Base — clean whites and very light cool grays
+    background:        "#f7f9fa",
+    foreground:        "#1a2b2e",
     // Card
     card:              "#ffffff",
-    cardForeground:    "#09090b",
+    cardForeground:    "#1a2b2e",
     // Popover
     popover:           "#ffffff",
-    popoverForeground: "#09090b",
-    // Primary
-    primary:           "#2563eb",
+    popoverForeground: "#1a2b2e",
+    // Primary — Clearway teal
+    primary:           "#0e7c86",
     primaryForeground: "#ffffff",
-    // Secondary
-    secondary:           "#f4f4f5",
-    secondaryForeground: "#18181b",
+    // Secondary — soft cool gray
+    secondary:           "#e8eef0",
+    secondaryForeground: "#1a2b2e",
     // Muted
-    muted:           "#f4f4f5",
-    mutedForeground: "#71717a",
-    // Accent
-    accent:           "#f4f4f5",
-    accentForeground: "#18181b",
-    // Destructive
-    destructive:           "#ef4444",
-    destructiveForeground: "#fafafa",
+    muted:           "#eef2f4",
+    mutedForeground: "#5b6b6e",
+    // Accent — light teal tint
+    accent:           "#d7edef",
+    accentForeground: "#0a5f66",
+    // Destructive — high-contrast alert red (urgent / nurse review)
+    destructive:           "#c0392b",
+    destructiveForeground: "#ffffff",
     // Border / Input / Ring
-    border: "#e4e4e7",
-    input:  "#e4e4e7",
-    ring:   "#2563eb",
+    border: "#dbe4e6",
+    input:  "#dbe4e6",
+    ring:   "#0e7c86",
     // Charts
-    chart1: "#f97316",
-    chart2: "#0d9488",
-    chart3: "#1e3a5f",
-    chart4: "#d4a017",
-    chart5: "#ea580c",
+    chart1: "#0e7c86",
+    chart2: "#3aa0a8",
+    chart3: "#0a5f66",
+    chart4: "#5b8a90",
+    chart5: "#c0392b",
     // Navbar
     navbarBackground: "#ffffff",
     // Sidebar
-    sidebarBackground:        "#fafafa",
-    sidebarForeground:        "#3f3f46",
-    sidebarPrimary:           "#2563eb",
+    sidebarBackground:        "#ffffff",
+    sidebarForeground:        "#1a2b2e",
+    sidebarPrimary:           "#0e7c86",
     sidebarPrimaryForeground: "#ffffff",
-    sidebarAccent:            "#f4f4f5",
-    sidebarAccentForeground:  "#18181b",
-    sidebarBorder:            "#e4e4e7",
-    sidebarRing:              "#2563eb",
+    sidebarAccent:            "#d7edef",
+    sidebarAccentForeground:  "#0a5f66",
+    sidebarBorder:            "#dbe4e6",
+    sidebarRing:              "#0e7c86",
   },
   font: {
     headingFont: "Plus Jakarta Sans",
     textFont: "Inter",
   },
-  // ─────────────────────────────────────────────────────────────────────
-  // Add new field defaults here. See RULES.md §5 for per-type shape.
-  // ─────────────────────────────────────────────────────────────────────
+  clinicName: "Clearway Clinic",
+  tagline: "A calm, paperless intake for our patients.",
+  intake: {
+    heading: "Patient check-in",
+    subheading:
+      "Tell us a little about your visit. It takes about a minute, and you'll get a text once we have you.",
+    submitLabel: "Submit check-in",
+    privacyNote:
+      "Your information is kept private and used only by our clinical staff for your visit.",
+    confirmationTitle: "You're checked in",
+    confirmationMessage:
+      "Thanks — your intake has been received. Please take a seat, and we'll send a text confirmation shortly.",
+    urgentNotice:
+      "Based on what you described, a nurse will see you as a priority. Please tell the front desk right away if you feel worse.",
+  },
+  queue: {
+    heading: "Live patient queue",
+    nurseReviewLabel: "Nurse review — urgent",
+    normalQueueLabel: "Waiting queue",
+    refreshSeconds: 5,
+  },
+  sms: {
+    enabled: true,
+    confirmationTemplate:
+      "Hi {{name}}, this is {{clinic}}. We've received your check-in. Please take a seat — staff will call you shortly.",
+    urgentTemplate:
+      "Hi {{name}}, this is {{clinic}}. We've received your check-in and a nurse will see you as a priority. If you feel worse, alert the front desk immediately.",
+  },
+  urgentSymptomKeywords: [],
 };

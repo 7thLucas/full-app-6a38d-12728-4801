@@ -9,7 +9,9 @@
 before or on arrival; clinic staff watch a live queue of who has checked in and where
 each patient is in the flow; patients receive an SMS confirmation when their intake is
 received. The product removes the front-desk clipboard and the manual phone-call
-reminders from the daily routine.
+reminders from the daily routine. Critically, it screens every intake for urgent
+symptoms — a chest-pain submission is routed straight to nurse review, never the
+normal waiting queue.
 
 ## Who it's for
 

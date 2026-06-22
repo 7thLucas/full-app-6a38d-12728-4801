@@ -1,0 +1,225 @@
+<section id="cw6" class="w-full h-full overflow-auto bg-white p-12">
+  <style>
+    #cw6 .mode-portrait .cw6-split { flex-direction: column; }
+    #cw6 .mode-landscape .cw6-split { flex-direction: row; }
+    #cw6 [data-anchor] { cursor: pointer; transition: background .15s, border-color .15s; }
+    #cw6 [data-anchor]:hover { background:#EEF6F6; }
+    #cw6 .cw6-btn { cursor: pointer; transition: transform .08s, opacity .15s; }
+    #cw6 .cw6-btn:active { transform: translateY(1px); }
+    #cw6 .cw6-btn[disabled] { opacity:.4; cursor:not-allowed; }
+    #cw6 .cw6-fade { animation: cw6in .25s ease; }
+    @keyframes cw6in { from { opacity:0; transform: translateY(4px); } to { opacity:1; transform:none; } }
+  </style>
+
+  <div class="h-full flex flex-col">
+    <!-- Header -->
+    <div class="mb-6 flex items-start justify-between gap-4">
+      <div>
+        <span class="text-sm font-semibold tracking-widest uppercase" style="color:#0E7C86">The Harness — try it</span>
+        <h2 class="mt-2 text-4xl font-extrabold text-slate-900 tracking-tight">The Harness: proof before it ships</h2>
+        <p class="mt-3 text-lg text-slate-600 max-w-2xl leading-relaxed">
+          Clearway builds every visible requirement — then a convergence pass hunts the
+          <span class="font-semibold text-slate-900">hidden rule</span> the prompt never spelled out:
+          a chest-pain intake must reach nurse review, never the normal queue. Run it. Watch it
+          fail, repair, and only then open the gate.
+        </p>
+      </div>
+      <span id="cw6-gateChip" class="px-4 py-2 rounded-full text-xs font-bold tracking-wide whitespace-nowrap"
+        style="background:#FFF4CC;color:#8A6D00;border:1px solid #F0E2A8">Gate — WAIT</span>
+    </div>
+
+    <!-- Body split -->
+    <div class="cw6-split flex flex-1 gap-6 min-h-0">
+      <!-- Ledger -->
+      <div class="flex-1 rounded-2xl p-6 flex flex-col min-h-0" style="background:#F7FAFA;border:1px solid #E2EBEC">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-xs font-bold tracking-widest uppercase" style="color:#0E7C86">Evidence ledger</span>
+          <span class="text-xs text-slate-500">Build <span id="cw6-build" class="font-mono font-semibold text-slate-700">v0.1.0</span></span>
+        </div>
+        <div id="cw6-rows" class="space-y-2.5 flex-1"></div>
+      </div>
+
+      <!-- Gate + triage routing -->
+      <div class="flex flex-col gap-4" style="flex-basis:38%">
+        <!-- Gate -->
+        <div id="cw6-gate" class="rounded-2xl p-6 flex flex-col items-center justify-center text-center"
+          style="background:#FFF8E6;border:1px solid #F0E2A8;min-height:140px">
+          <span class="text-xs font-bold tracking-widest uppercase" style="color:#8A6D00">Decision gate</span>
+          <div id="cw6-gateWord" class="text-5xl font-extrabold tracking-tight mt-2" style="color:#8A6D00">WAIT</div>
+          <p id="cw6-gateSub" class="mt-2 text-sm text-slate-600 leading-snug">Run the convergence pass to begin.</p>
+        </div>
+
+        <!-- Triage routing visual (C1) -->
+        <div class="rounded-2xl p-5 text-white flex flex-col" style="background:#0E7C86">
+          <span class="text-xs font-bold tracking-widest uppercase" style="color:#9FE3DE">Triage — live scenario</span>
+          <div class="mt-3 rounded-xl p-3 flex items-center gap-3" style="background:#0A626A">
+            <div class="w-9 h-9 rounded-lg flex items-center justify-center text-base flex-shrink-0" style="background:#0E7C86">🫀</div>
+            <div class="min-w-0">
+              <div class="text-sm font-bold">Jordan P.</div>
+              <div class="text-xs" style="color:#9FE3DE">Reason: chest pain</div>
+            </div>
+          </div>
+          <div class="mt-3 flex items-center gap-2 text-sm">
+            <span style="color:#9FE3DE">Routed to →</span>
+            <span id="cw6-route" class="px-2.5 py-1 rounded-full text-xs font-bold"
+              style="background:#0A626A;color:#9FE3DE">not screened yet</span>
+          </div>
+          <div id="cw6-routeNote" class="mt-2 text-xs font-semibold" style="color:#9FE3DE">Run the pass to trace this submission.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action bar -->
+    <div class="mt-5 flex items-center gap-3 flex-wrap">
+      <button id="cw6-run" class="cw6-btn px-5 py-2.5 rounded-xl text-sm font-bold text-white" style="background:#0E7C86">▶ Run convergence pass</button>
+      <button id="cw6-repair" class="cw6-btn px-5 py-2.5 rounded-xl text-sm font-bold text-white" style="background:#B4543A" disabled>⌁ Repair &amp; regress</button>
+      <button id="cw6-ship" class="cw6-btn px-5 py-2.5 rounded-xl text-sm font-bold" style="background:#EEF2F3;color:#0E7C86;border:1px solid #C9E0E0" disabled>🔒 Open the gate</button>
+      <button id="cw6-reset" class="cw6-btn ml-auto px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-500" style="background:#fff;border:1px solid #E2EBEC">↺ Reset</button>
+    </div>
+    <p class="mt-3 text-xs text-slate-400">
+      Visible requirements pass on build. The critical rule is hidden — it only ships once traced and evidenced.
+      No hidden rule, no silent risk, no ship. Click an anchor to read its trace.
+    </p>
+  </div>
+
+  <script>
+  (function () {
+    var root = document.getElementById('cw6');
+    if (!root || root.dataset.wired) return;
+    root.dataset.wired = '1';
+
+    // Visible requirements V1–V4 + hidden critical C1 (clinic_intake world spec)
+    var base = [
+      { id:'V1', key:'v1', kind:'visible', title:'Intake form captures details', desc:'Name, contact, reason for visit, and preferred time.',
+        trace:'Visible requirement V1 — built into the intake form. Captured cleanly, no clipboard re-key.' },
+      { id:'V2', key:'v2', kind:'visible', title:'Staff queue shows submissions', desc:'Every submitted request appears in the live staff queue.',
+        trace:'Visible requirement V2 — submissions render in the staff dashboard queue in real time.' },
+      { id:'V3', key:'v3', kind:'visible', title:'SMS confirmation on submit', desc:'Patient receives a text confirming intake was received.',
+        trace:'Visible requirement V3 — confirmation SMS fires on submission. Status only, no marketing.' },
+      { id:'V4', key:'v4', kind:'visible', title:'Staff can mark reviewed', desc:'Staff advance a request to a reviewed state.',
+        trace:'Visible requirement V4 — staff move each request forward until cleared.' },
+      { id:'C1', key:'urgent', kind:'critical', title:'Urgent symptom routing', desc:'Chest pain must reach nurse review, never the normal queue.',
+        trace:'Hidden critical C1 — not yet tested. Discoverable by run_scenario:urgent_symptom or inspect_policy:triage_policy.' }
+    ];
+
+    var STATUS = {
+      unknown:  { label:'Not tested',         bg:'#FFF4CC', fg:'#8A6D00', bd:'#F0E2A8', numbg:'#FFF8E6' },
+      pass:     { label:'Passed + evidenced', bg:'#E9F6F4', fg:'#0E7C86', bd:'#BFE6E1', numbg:'#E9F6F4' },
+      fail:     { label:'Critical blocker',   bg:'#FBF1EE', fg:'#B4543A', bd:'#E7B7A8', numbg:'#FBF1EE' },
+      patched:  { label:'Patched — verifying',bg:'#FFF4CC', fg:'#8A6D00', bd:'#F0E2A8', numbg:'#FFF8E6' }
+    };
+
+    var stage = 'initial';
+    var anchors = JSON.parse(JSON.stringify(base));
+    anchors.forEach(function (a) { a.status = 'unknown'; });
+
+    var els = {
+      rows:   root.querySelector('#cw6-rows'),
+      build:  root.querySelector('#cw6-build'),
+      gate:   root.querySelector('#cw6-gate'),
+      word:   root.querySelector('#cw6-gateWord'),
+      sub:    root.querySelector('#cw6-gateSub'),
+      chip:   root.querySelector('#cw6-gateChip'),
+      route:  root.querySelector('#cw6-route'),
+      routeNote: root.querySelector('#cw6-routeNote'),
+      run:    root.querySelector('#cw6-run'),
+      repair: root.querySelector('#cw6-repair'),
+      ship:   root.querySelector('#cw6-ship'),
+      reset:  root.querySelector('#cw6-reset')
+    };
+
+    function renderRows() {
+      els.rows.innerHTML = anchors.map(function (a) {
+        var s = STATUS[a.status];
+        var crit = a.kind === 'critical';
+        return '<div data-anchor="' + a.key + '" class="cw6-fade rounded-xl p-3 flex items-center gap-3"' +
+          ' style="background:#fff;border:1px solid ' + (crit ? '#E7B7A8' : '#E2EBEC') + '">' +
+            '<div class="w-9 h-9 rounded-lg flex items-center justify-center text-xs font-extrabold flex-shrink-0"' +
+            ' style="color:' + s.fg + ';background:' + s.numbg + ';border:1px solid ' + s.bd + '">' + a.id + '</div>' +
+            '<div class="min-w-0 flex-1">' +
+              '<div class="text-sm font-bold text-slate-900 truncate">' + a.title +
+                (crit ? ' <span class="ml-1 px-1.5 py-0.5 rounded text-[10px] font-bold align-middle" style="background:#B4543A;color:#fff">CRITICAL · HIDDEN</span>' : '') +
+              '</div>' +
+              '<div class="text-xs text-slate-500 leading-snug">' + a.desc + '</div>' +
+            '</div>' +
+            '<span class="px-2.5 py-1 rounded-full text-xs font-bold whitespace-nowrap"' +
+            ' style="background:' + s.bg + ';color:' + s.fg + ';border:1px solid ' + s.bd + '">' + s.label + '</span>' +
+          '</div>';
+      }).join('');
+      els.rows.querySelectorAll('[data-anchor]').forEach(function (r) {
+        r.addEventListener('click', function () {
+          var a = anchors.filter(function (x) { return x.key === r.dataset.anchor; })[0];
+          window.alert(a.id + ' — ' + a.title + '\n\n' + a.trace);
+        });
+      });
+    }
+
+    function setGate(word, sub, bg, fg, bd, chipText) {
+      els.word.textContent = word; els.word.style.color = fg;
+      els.sub.textContent = sub;
+      els.gate.style.background = bg; els.gate.style.borderColor = bd;
+      els.chip.textContent = 'Gate — ' + chipText;
+      els.chip.style.background = bg; els.chip.style.color = fg; els.chip.style.borderColor = bd;
+    }
+
+    function setRoute(text, bg, fg, note, noteColor) {
+      els.route.textContent = text; els.route.style.background = bg; els.route.style.color = fg;
+      els.routeNote.textContent = note; els.routeNote.style.color = noteColor;
+    }
+
+    function render() {
+      els.build.textContent = stage === 'initial' ? 'v0.1.0' : stage === 'tested' ? 'v0.2.0' : 'v0.7.3';
+      renderRows();
+      els.repair.disabled = stage !== 'tested';
+      els.ship.disabled   = stage !== 'repaired';
+      els.run.disabled    = stage !== 'initial';
+
+      if (stage === 'initial') {
+        setGate('WAIT', 'Run the convergence pass to begin.', '#FFF8E6', '#8A6D00', '#F0E2A8', 'WAIT');
+      } else if (stage === 'tested') {
+        setGate('BLOCK', 'Critical C1 unresolved: chest pain sat in the normal queue.', '#FBF1EE', '#B4543A', '#E7B7A8', 'BLOCK');
+      } else if (stage === 'repaired') {
+        setGate('REVIEW', 'C1 patched and regressed — collect evidence to open the gate.', '#FFF8E6', '#8A6D00', '#F0E2A8', 'REVIEW');
+      } else {
+        setGate('SHIP', 'All critical rules satisfied and evidenced.', '#E9F6F4', '#0E7C86', '#BFE6E1', 'SHIP');
+      }
+    }
+
+    els.run.addEventListener('click', function () {
+      stage = 'tested';
+      // Visible requirements pass; hidden critical fails.
+      anchors[0].status = 'pass'; anchors[1].status = 'pass'; anchors[2].status = 'pass'; anchors[3].status = 'pass';
+      anchors[4].status = 'fail';
+      anchors[4].trace = 'Trace URG-041 (run_scenario:urgent_symptom) — Input reason="chest pain". Observed: dropped into NORMAL queue, no urgent flag. Expected: nurse review before normal queue. Result: CRITICAL FAIL.';
+      setRoute('❌ Normal queue', '#FBF1EE', '#B4543A', 'Urgent symptom left in the normal queue — critical fail.', '#FFD9CC');
+      render();
+    });
+
+    els.repair.addEventListener('click', function () {
+      stage = 'repaired';
+      anchors[4].status = 'patched';
+      anchors[4].trace = 'Trace URG-041 (patched v0.7.3) — triage_policy now flags chest pain HIGH PRIORITY and routes to nurse review before the normal queue. Regression: normal-queue patients unaffected. Result: PATCHED, awaiting final evidence.';
+      setRoute('✅ Nurse review', '#9FE3DE', '#0A626A', 'Routed to nurse review before the normal queue — patched.', '#E6F6F4');
+      render();
+    });
+
+    els.ship.addEventListener('click', function () {
+      stage = 'final';
+      anchors[4].status = 'pass';
+      anchors[4].trace = 'Trace URG-041 + triage_policy citation — satisfaction_check met: final workflow routes chest pain to nurse review before the normal queue. Evidence: scenario trace + policy citation. Result: PASS + EVIDENCED.';
+      setRoute('✅ Nurse review', '#9FE3DE', '#0A626A', 'Evidenced by scenario trace + triage_policy citation.', '#E6F6F4');
+      render();
+    });
+
+    els.reset.addEventListener('click', function () {
+      stage = 'initial';
+      anchors = JSON.parse(JSON.stringify(base));
+      anchors.forEach(function (a) { a.status = 'unknown'; });
+      setRoute('not screened yet', '#0A626A', '#9FE3DE', 'Run the pass to trace this submission.', '#9FE3DE');
+      render();
+    });
+
+    render();
+  })();
+  </script>
+</section>

@@ -1,0 +1,71 @@
+<section class="w-full h-full overflow-auto bg-white p-12">
+  <div class="h-full flex flex-col">
+    <div class="mb-6 flex items-center justify-between">
+      <div>
+        <span class="text-sm font-semibold tracking-widest uppercase" style="color:#0E7C86">North Star</span>
+        <h2 class="mt-2 text-4xl font-extrabold text-slate-900 tracking-tight">Intakes submitted, every week</h2>
+      </div>
+      <span class="px-4 py-2 rounded-full text-xs font-bold tracking-wide" style="background:#FBF1EE;color:#B4543A;border:1px solid #F0D9D2">
+        Projected impact — based on your inputs
+      </span>
+    </div>
+
+    <!-- Verified operation -->
+    <div class="mb-6">
+      <p class="text-lg text-slate-600 max-w-3xl leading-relaxed">
+        The one number this app lives or dies by: <span class="font-bold text-slate-900">intake forms
+        actually submitted</span> by patients in the deployed app each week — each one creating a queue
+        entry and an SMS confirmation. Not page views, not logins. Completed intakes.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-6 flex-1">
+      <!-- WVO projection -->
+      <div class="rounded-2xl p-7 flex flex-col" style="background:#F7FAFA;border:1px solid #E2EBEC">
+        <span class="text-xs font-bold tracking-widest uppercase" style="color:#0E7C86">Weekly Verified Operations</span>
+        <div class="mt-4 space-y-3 text-slate-700">
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-full text-xs font-semibold" style="background:#FFF4CC;color:#8A6D00">Assumption — adjust this</span>
+            <span class="text-sm text-slate-500">patients / day</span>
+          </div>
+          <div class="text-slate-700 leading-relaxed">
+            <span class="font-mono font-bold text-slate-900">25</span> intakes / day
+            &times; <span class="font-mono font-bold text-slate-900">5</span> open days
+          </div>
+        </div>
+        <div class="mt-auto pt-5">
+          <div class="text-5xl font-extrabold" style="color:#0E7C86">125</div>
+          <div class="text-sm text-slate-500 mt-1">verified intakes / week</div>
+        </div>
+      </div>
+
+      <!-- Value / ROI -->
+      <div class="rounded-2xl p-7 flex flex-col text-white" style="background:#0E7C86">
+        <span class="text-xs font-bold tracking-widest uppercase" style="color:#9FE3DE">Value of those operations</span>
+        <div class="mt-4 space-y-3" style="color:#E6F6F4">
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-full text-xs font-semibold" style="background:#0A626A;color:#9FE3DE">Assumption — adjust this</span>
+            <span class="text-sm">min saved per intake</span>
+          </div>
+          <div class="leading-relaxed">
+            <span class="font-mono font-bold text-white">125</span> intakes/wk
+            &times; <span class="font-mono font-bold text-white">6</span> min saved
+            = <span class="font-bold text-white">12.5 staff-hours / week</span>
+          </div>
+          <div class="leading-relaxed text-sm">
+            12.5 hrs/wk &times; 52 weeks = <span class="font-bold text-white">~650 staff-hours / year</span> reclaimed at the front desk
+          </div>
+        </div>
+        <div class="mt-auto pt-5">
+          <div class="text-5xl font-extrabold">~650</div>
+          <div class="text-sm mt-1" style="color:#9FE3DE">front-desk hours saved / year</div>
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-5 text-xs text-slate-400">
+      Figures are projections from placeholder assumptions, not measured results. Replace the
+      highlighted assumptions with your clinic's real patient volume and staff time to see your number.
+    </p>
+  </div>
+</section>

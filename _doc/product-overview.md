@@ -24,16 +24,33 @@ reminders from the daily routine.
 
 1. **Patient submits intake form** — the originating event. Personal + contact details,
    reason for visit, basic medical history.
-2. **Patient enters the staff queue** — submission creates a queue entry visible to
-   staff in real time, with status (e.g. waiting → in progress → seen).
-3. **SMS confirmation sent** — on submission, the patient receives a text confirming
+2. **Urgent-symptom triage (safety-critical)** — every submission is screened against
+   a triage policy *before* it reaches the normal queue. If urgent symptoms are present
+   (e.g. **chest pain**), the patient is routed immediately to **nurse review**, not the
+   normal waiting queue. This routing is mandatory and takes precedence over normal flow.
+3. **Patient enters the appropriate queue** — non-urgent submissions create a normal
+   queue entry visible to staff in real time, with status (e.g. waiting → in progress →
+   seen). Urgent submissions appear in the nurse-review path, flagged and prioritized.
+4. **SMS confirmation sent** — on submission, the patient receives a text confirming
    their intake was received.
-4. **Staff work the queue** — staff advance each patient through the flow until cleared.
+5. **Staff work the queue** — staff advance each patient through the flow until cleared;
+   a nurse handles the urgent-review path.
+
+## Triage policy (safety-critical, non-negotiable)
+
+- Urgent symptoms — **chest pain** and similar red-flag presentations — must route to
+  **nurse review before the normal queue**. This is a critical correctness requirement,
+  not a nice-to-have: a chest-pain intake must never sit in the normal waiting queue.
+- The policy is explicit and inspectable (`triage_policy`), so the routing decision can
+  be traced for any given submission.
 
 ## Core capabilities
 
 - Public, mobile-friendly **intake form** for patients.
-- Live **staff queue dashboard** showing checked-in patients and their status.
+- **Urgent-symptom triage routing**: screens each submission and sends red-flag cases
+  (e.g. chest pain) to nurse review ahead of the normal queue.
+- Live **staff queue dashboard** showing checked-in patients and their status, with a
+  distinct **nurse-review** path for urgent cases.
 - Automated **SMS confirmation** on intake submission.
 
 ## Positioning

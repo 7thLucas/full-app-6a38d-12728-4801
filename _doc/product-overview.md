@@ -68,6 +68,6 @@ clinical charting. Revisit as the product proves out.
 
 ## Open questions (to confirm during onboarding)
 
-- Clinic name and branding.
+- The clinic's own name (for in-app labeling) — the product brand is set (Clearway).
 - Team size at the front desk and typical weekly patient volume (needed to project impact).
 - Whether patients fill the form pre-arrival, on arrival, or both.

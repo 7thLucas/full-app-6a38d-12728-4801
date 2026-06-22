@@ -171,5 +171,75 @@ export const configurableSchemas: ConfigurableSchemas = {
         },
       ],
     },
+
+    // ── Clinic identity (owner-facing) ─────────────────────────────────────
+    {
+      fieldName: "clinicName",
+      type: "string",
+      required: true,
+      label: "Clinic Name",
+      minLength: 1,
+      maxLength: 120,
+    },
+    {
+      fieldName: "tagline",
+      type: "string",
+      required: false,
+      label: "Tagline",
+      maxLength: 200,
+    },
+
+    // ── Intake form copy ───────────────────────────────────────────────────
+    {
+      fieldName: "intake",
+      type: "object",
+      required: true,
+      label: "Intake Form",
+      fields: [
+        { fieldName: "heading", type: "string", required: true, label: "Form Heading", maxLength: 120 },
+        { fieldName: "subheading", type: "string", required: false, label: "Form Subheading", maxLength: 300 },
+        { fieldName: "submitLabel", type: "string", required: true, label: "Submit Button Label", maxLength: 60 },
+        { fieldName: "privacyNote", type: "string", required: false, label: "Privacy Note", maxLength: 300 },
+        { fieldName: "confirmationTitle", type: "string", required: true, label: "Confirmation Title", maxLength: 120 },
+        { fieldName: "confirmationMessage", type: "string", required: true, label: "Confirmation Message", maxLength: 400 },
+        { fieldName: "urgentNotice", type: "string", required: true, label: "Urgent Routing Notice", maxLength: 400 },
+      ],
+    },
+
+    // ── Staff queue copy ───────────────────────────────────────────────────
+    {
+      fieldName: "queue",
+      type: "object",
+      required: true,
+      label: "Staff Queue",
+      fields: [
+        { fieldName: "heading", type: "string", required: true, label: "Queue Heading", maxLength: 120 },
+        { fieldName: "nurseReviewLabel", type: "string", required: true, label: "Nurse Review Lane Label", maxLength: 80 },
+        { fieldName: "normalQueueLabel", type: "string", required: true, label: "Normal Queue Label", maxLength: 80 },
+        { fieldName: "refreshSeconds", type: "number", required: true, label: "Live Refresh Interval (seconds)", min: 2, max: 120 },
+      ],
+    },
+
+    // ── SMS confirmation ───────────────────────────────────────────────────
+    {
+      fieldName: "sms",
+      type: "object",
+      required: true,
+      label: "SMS Confirmation",
+      fields: [
+        { fieldName: "enabled", type: "boolean", required: true, label: "Send SMS Confirmation" },
+        { fieldName: "confirmationTemplate", type: "string", required: true, label: "Confirmation Message Template", maxLength: 320 },
+        { fieldName: "urgentTemplate", type: "string", required: true, label: "Urgent Message Template", maxLength: 320 },
+      ],
+    },
+
+    // ── Triage policy (urgent symptom list is owner-extendable) ────────────
+    {
+      fieldName: "urgentSymptomKeywords",
+      type: "array",
+      required: false,
+      label: "Additional Urgent Symptom Keywords",
+      item: { type: "string", required: true },
+    },
   ],
 };

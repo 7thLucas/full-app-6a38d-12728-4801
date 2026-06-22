@@ -1,4 +1,4 @@
-# Product Overview — Clinic Intake & Queue
+# Product Overview — Clearway
 
 > Single source of truth for the product. Facts here drive the creative blueprint and the app.
 > Items marked _(assumption)_ are not yet confirmed by the user and should be validated during onboarding.

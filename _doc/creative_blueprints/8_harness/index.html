@@ -2,22 +2,22 @@
 
   <style>
     :root {
-      --bg: #f6f8fc;
+      --bg: #eef3f3;
       --panel: #ffffff;
-      --ink: #111827;
-      --muted: #667085;
-      --line: #e5e9f2;
-      --blue: #3454f5;
-      --blue-soft: #eef2ff;
-      --green: #168a4a;
-      --green-soft: #eaf8ef;
-      --red: #d92d20;
-      --red-soft: #fff1f0;
-      --amber: #b85c00;
-      --amber-soft: #fff7e6;
-      --purple: #6d28d9;
-      --purple-soft: #f3e8ff;
-      --shadow: 0 18px 50px rgba(17, 24, 39, 0.08);
+      --ink: #0e2a2d;
+      --muted: #5c6f72;
+      --line: #e2ebec;
+      --blue: #0e7c86;
+      --blue-soft: #dcf2ef;
+      --green: #0e7c5f;
+      --green-soft: #d8f1ea;
+      --red: #9f4632;
+      --red-soft: #fbf1ee;
+      --amber: #8a6d00;
+      --amber-soft: #fff4cc;
+      --purple: #0a5f66;
+      --purple-soft: #cbedea;
+      --shadow: 0 18px 50px rgba(14, 42, 45, 0.08);
       --radius: 22px;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
@@ -30,8 +30,8 @@
       margin: 0;
       color: var(--ink);
       background:
-        radial-gradient(circle at 16% 12%, rgba(52, 84, 245, 0.08), transparent 24%),
-        radial-gradient(circle at 80% 0%, rgba(109, 40, 217, 0.08), transparent 24%),
+        radial-gradient(circle at 16% 12%, rgba(14, 124, 134, 0.10), transparent 24%),
+        radial-gradient(circle at 80% 0%, rgba(10, 95, 102, 0.10), transparent 24%),
         var(--bg);
       min-height: 100vh;
       overflow: hidden;
@@ -87,11 +87,11 @@
       border-radius: 14px;
       display: grid;
       place-items: center;
-      background: linear-gradient(135deg, #2f54eb, #7c3aed);
+      background: linear-gradient(135deg, #0e7c86, #0a5f66);
       color: white;
       font-weight: 900;
       font-size: 23px;
-      box-shadow: 0 10px 24px rgba(52, 84, 245, .22);
+      box-shadow: 0 10px 24px rgba(14, 124, 134, .22);
     }
 
     .project-title {
@@ -155,7 +155,7 @@
       font-size: 12px;
       font-weight: 800;
       background: var(--blue);
-      box-shadow: 0 8px 16px rgba(52, 84, 245, .18);
+      box-shadow: 0 8px 16px rgba(14, 124, 134, .18);
     }
 
     .bot {
@@ -182,7 +182,7 @@
 
     .bubble.user {
       background: #eaf0ff;
-      border-color: #dbe5ff;
+      border-color: #bfe7e2;
     }
 
     .bubble.alert {
@@ -211,11 +211,11 @@
 
     .composer {
       margin: 10px 14px 14px;
-      border: 1.5px solid #c9d2ff;
+      border: 1.5px solid #bfe7e2;
       border-radius: 18px;
       padding: 12px;
       background: white;
-      box-shadow: 0 10px 30px rgba(52, 84, 245, .08);
+      box-shadow: 0 10px 30px rgba(14, 124, 134, .08);
     }
 
     .composer textarea {
@@ -246,7 +246,7 @@
     .send {
       margin-left: auto;
       border: 0;
-      background: linear-gradient(135deg, #3b50f5, #7c3aed);
+      background: linear-gradient(135deg, #0e7c86, #0a5f66);
       color: #fff;
       border-radius: 14px;
       width: 42px;
@@ -314,7 +314,7 @@
       width: 7px;
       height: 7px;
       border-radius: 50%;
-      background: #22c55e;
+      background: var(--blue);
       margin-left: 5px;
     }
 
@@ -348,58 +348,52 @@
       border-bottom-color: var(--blue);
     }
 
-    .acc {
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: #fff;
-      margin-bottom: 12px;
-      overflow: hidden;
-    }
-
-    .acc>summary {
-      list-style: none;
-      cursor: pointer;
-      padding: 14px 16px;
-      font-weight: 800;
-      font-size: 13px;
-      color: #475467;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      border-bottom: 1px solid transparent;
-    }
-
-    .acc>summary::-webkit-details-marker {
+    .tabradio {
       display: none;
     }
 
-    .acc>summary::after {
-      content: "⌄";
-      margin-left: auto;
-      color: var(--muted);
-      transition: transform .2s;
+    .tablabels {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 18px;
     }
 
-    .acc[open]>summary {
+    .tablabels label {
+      cursor: pointer;
+      padding: 12px 14px;
+      font-weight: 800;
+      font-size: 13px;
+      color: #475467;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -1px;
+      white-space: nowrap;
+    }
+
+    .tablabels label:hover {
+      color: var(--ink);
+    }
+
+    .tabpanels>.panel {
+      display: none;
+    }
+
+    #t-overview:checked~.tabpanels #p-overview,
+    #t-hypothesis:checked~.tabpanels #p-hypothesis,
+    #t-evidence:checked~.tabpanels #p-evidence,
+    #t-regression:checked~.tabpanels #p-regression,
+    #t-gate:checked~.tabpanels #p-gate {
+      display: block;
+    }
+
+    #t-overview:checked~.tablabels label[for="t-overview"],
+    #t-hypothesis:checked~.tablabels label[for="t-hypothesis"],
+    #t-evidence:checked~.tablabels label[for="t-evidence"],
+    #t-regression:checked~.tablabels label[for="t-regression"],
+    #t-gate:checked~.tablabels label[for="t-gate"] {
       color: var(--blue);
-      border-bottom-color: var(--line);
-    }
-
-    .acc[open]>summary::after {
-      transform: rotate(180deg);
-    }
-
-    .acc>:not(summary) {
-      padding-left: 16px;
-      padding-right: 16px;
-    }
-
-    .acc>summary+* {
-      padding-top: 16px;
-    }
-
-    .acc>:last-child {
-      padding-bottom: 16px;
+      border-bottom-color: var(--blue);
     }
 
     .main-content {
@@ -521,20 +515,20 @@
 
     .num.red {
       color: var(--red);
-      border-color: #ffb4ad;
-      background: #fff6f5;
+      border-color: #e6c3ba;
+      background: #fbf1ee;
     }
 
     .num.green {
       color: var(--green);
-      border-color: #a7e8c1;
-      background: #f0fff5;
+      border-color: #a7d9c8;
+      background: #e6f6f1;
     }
 
     .num.amber {
       color: var(--amber);
-      border-color: #ffd79d;
-      background: #fff9ed;
+      border-color: #e6d9a3;
+      background: #fff7d6;
     }
 
     .anchor-title {
@@ -570,19 +564,19 @@
     .pill.red {
       color: var(--red);
       background: var(--red-soft);
-      border-color: #ffc9c4;
+      border-color: #e6c3ba;
     }
 
     .pill.green {
       color: var(--green);
       background: var(--green-soft);
-      border-color: #c1eacf;
+      border-color: #a7d9c8;
     }
 
     .pill.amber {
       color: var(--amber);
       background: var(--amber-soft);
-      border-color: #ffdca7;
+      border-color: #e6d9a3;
     }
 
     .updated {
@@ -637,7 +631,7 @@
       background: var(--blue-soft);
       color: var(--blue);
       font-size: 20px;
-      border: 1px solid #d8e0ff;
+      border: 1px solid #bfe7e2;
     }
 
     .flow-label {
@@ -716,7 +710,7 @@
       width: 22px;
       height: 22px;
       border-radius: 7px;
-      border: 1px solid #ffc4be;
+      border: 1px solid #e6c3ba;
       color: var(--red);
       display: grid;
       place-items: center;
@@ -1025,7 +1019,7 @@
       width: 22px;
       height: 22px;
       border-radius: 50%;
-      background: #eef2ff;
+      background: var(--blue-soft);
       color: var(--blue);
       display: grid;
       place-items: center;
@@ -1160,8 +1154,20 @@
       </div>
 
       <section class="main-content">
-        <details class="acc" id="overview">
-          <summary>⌘ Overview</summary>
+        <input type="radio" name="htab" id="t-overview" class="tabradio">
+        <input type="radio" name="htab" id="t-hypothesis" class="tabradio">
+        <input type="radio" name="htab" id="t-evidence" class="tabradio" checked>
+        <input type="radio" name="htab" id="t-regression" class="tabradio">
+        <input type="radio" name="htab" id="t-gate" class="tabradio">
+        <div class="tablabels">
+          <label for="t-overview">⌘ Overview</label>
+          <label for="t-hypothesis">☷ Hypothesis Ledger</label>
+          <label for="t-evidence">♙ Evidence</label>
+          <label for="t-regression">⟳ Regression</label>
+          <label for="t-gate">◇ Gate</label>
+        </div>
+        <div class="tabpanels">
+        <section class="panel" id="p-overview">
           <div class="toolbar">
             <div>
               <h2>Run overview</h2>
@@ -1188,10 +1194,9 @@
             <p class="hint">The harness builds a clinic intake workflow, tests hidden rules like urgent routing and SMS
               privacy, repairs failures, re-runs regressions, and decides whether the app can ship.</p>
           </div>
-        </details>
+        </section>
 
-        <details class="acc" id="hypothesis">
-          <summary>☷ Hypothesis Ledger</summary>
+        <section class="panel" id="p-hypothesis">
           <div class="toolbar">
             <div>
               <h2>Hypothesis Ledger</h2>
@@ -1225,10 +1230,9 @@
               </div><span class="pill amber">moderate</span>
             </div>
           </div>
-        </details>
+        </section>
 
-        <details class="acc" id="evidence" open>
-          <summary>♙ Evidence</summary>
+        <section class="panel" id="p-evidence">
           <div class="toolbar">
             <div>
               <h2>Evidence Ledger</h2>
@@ -1361,10 +1365,9 @@
           </div>
           <div class="footer-note"><span>Harness v0 provides evidence that hidden constraints are satisfied before we
               ship. <b>No hidden rule. No silent risk. No ship.</b></span><span>Learn more ↗</span></div>
-        </details>
+        </section>
 
-        <details class="acc" id="regression">
-          <summary>⟳ Regression</summary>
+        <section class="panel" id="p-regression">
           <div class="toolbar">
             <div>
               <h2>Regression checks</h2>
@@ -1388,10 +1391,9 @@
               </div><span class="pill amber">not run</span>
             </div>
           </div>
-        </details>
+        </section>
 
-        <details class="acc" id="gate">
-          <summary>◇ Gate</summary>
+        <section class="panel" id="p-gate">
           <div class="toolbar">
             <div>
               <h2>Decision Gate</h2>
@@ -1423,7 +1425,8 @@
               </div>
             </div>
           </div>
-        </details>
+        </section>
+        </div>
       </section>
   </div>
 </section>

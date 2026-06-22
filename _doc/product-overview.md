@@ -17,8 +17,8 @@ normal waiting queue.
 
 - **Clinic staff / front desk** — the primary operators. They live in the queue:
   triaging arrivals, seeing who has completed intake, and moving patients forward.
-- **Patients** — submit the intake form (name, contact, reason for visit, basic
-  history) and get an SMS confirmation. Low-friction, mobile-first; no account needed.
+- **Patients** — submit the intake form (name, contact, reason for visit, preferred
+  time) and get an SMS confirmation. Low-friction, mobile-first; no account needed.
 - **Triage nurse / clinical reviewer** — handles the urgent-review path. Sees red-flag
   intakes (e.g. chest pain) that the triage policy pulls out of the normal queue.
 - **Clinic owner / operator** _(assumption)_ — the buyer. Cares about front-desk time
@@ -27,7 +27,7 @@ normal waiting queue.
 ## Core workflow
 
 1. **Patient submits intake form** — the originating event. Personal + contact details,
-   reason for visit, basic medical history.
+   reason for visit, preferred appointment time.
 2. **Urgent-symptom triage (safety-critical)** — every submission is screened against
    a triage policy *before* it reaches the normal queue. If urgent symptoms are present
    (e.g. **chest pain**), the patient is routed immediately to **nurse review**, not the
@@ -37,8 +37,8 @@ normal waiting queue.
    seen). Urgent submissions appear in the nurse-review path, flagged and prioritized.
 4. **SMS confirmation sent** — on submission, the patient receives a text confirming
    their intake was received.
-5. **Staff work the queue** — staff advance each patient through the flow until cleared;
-   a nurse handles the urgent-review path.
+5. **Staff work the queue** — staff advance each patient through the flow and **mark a
+   request as reviewed** once handled; a nurse handles the urgent-review path.
 
 ## Triage policy (safety-critical, non-negotiable)
 
@@ -54,7 +54,8 @@ normal waiting queue.
 - **Urgent-symptom triage routing**: screens each submission and sends red-flag cases
   (e.g. chest pain) to nurse review ahead of the normal queue.
 - Live **staff queue dashboard** showing checked-in patients and their status, with a
-  distinct **nurse-review** path for urgent cases.
+  distinct **nurse-review** path for urgent cases. Staff can **mark a request as
+  reviewed** to clear it from the active queue.
 - Automated **SMS confirmation** on intake submission.
 
 ## Positioning

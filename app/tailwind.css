@@ -185,6 +185,50 @@
 
 
 
+/* ── Clearway motion system (state + feedback only, never decoration) ──────── */
+@layer utilities {
+  @keyframes cw-rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes cw-slide-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes cw-live-pulse {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.35; }
+  }
+  @keyframes cw-shimmer {
+    0%   { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  .cw-rise { animation: cw-rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .cw-slide-in { animation: cw-slide-in 0.2s ease-out both; }
+  .cw-live-dot { animation: cw-live-pulse 1.8s ease-in-out infinite; }
+
+  .cw-skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--muted) 25%,
+      var(--secondary) 37%,
+      var(--muted) 63%
+    );
+    background-size: 200% 100%;
+    animation: cw-shimmer 1.4s ease-in-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cw-rise,
+  .cw-slide-in,
+  .cw-live-dot,
+  .cw-skeleton {
+    animation: none !important;
+  }
+}
+
 /* Hide scrollbar for native mobile feel */
 ::-webkit-scrollbar {
   display: none;

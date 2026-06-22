@@ -50,6 +50,9 @@ export class QueueEntry extends CommonTypegooseEntity {
   reasonForVisit!: string;
 
   @prop({ type: String, required: false })
+  preferredTime?: string;
+
+  @prop({ type: String, required: false })
   medicalHistory?: string;
 
   // ── Triage outcome (decided server-side by triage-policy) ─────────────────

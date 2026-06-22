@@ -18,12 +18,12 @@ Calm, trustworthy, clinical-clean. Reassuring for patients, efficient for staff.
 Clean, legible sans-serif (system UI / Inter-like). Clear hierarchy: prominent headings, comfortable body, large tap targets for mobile intake.
 
 ### Layout & components
-- **Intake form**: mobile-first, single column, large inputs, big primary teal submit button. Minimal fields, clear labels, reassuring confirmation screen.
-- **Staff queue**: the home screen for staff. Two clearly separated lanes:
-  1. **Nurse review (urgent)** lane at the TOP — red-accented, visually dominant, prioritized above the normal queue.
-  2. **Normal queue** below — patient cards with status pills (waiting / in progress / seen) and an advance-status control.
-- Real-time updates so new check-ins and status changes appear live.
-- Status pills, clear iconography, comfortable spacing. Cards over dense tables for readability.
+- **Intake form**: mobile-first. On desktop a two-pane layout — a reassurance rail (3-step "what happens next") beside the form; on mobile they stack to a single column. Large inputs, label + inline hint per field, big primary teal submit button, reassuring confirmation screen. A live urgent-symptom note appears under "reason for visit" when red-flag terms are typed.
+- **Staff queue**: the home screen for staff. A slim summary toolbar (Urgent / Waiting / In progress counts) over two clearly separated lanes:
+  1. **Nurse review (urgent)** lane at the TOP — red-accented prominent cards, visually dominant, with matched-symptom chips and a full-width action. Prioritized above the normal queue.
+  2. **Normal queue** below — a dense, scannable row list (status dot, name, reason + preferred time, wait, status pill, inline action) so staff scan many patients fast. Rows stack on mobile.
+- Real-time polling so new check-ins and status changes appear live; a pulsing "live" dot and last-updated time in the header.
+- Skeleton loading (not a center spinner). Status pills with transitions, clear iconography, comfortable spacing. Motion is state/feedback only, with a reduced-motion fallback.
 
 ### Accessibility
 High contrast, especially for urgent/alert states. Large touch targets. Clear focus states.

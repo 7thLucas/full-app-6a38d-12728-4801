@@ -9,6 +9,7 @@ export interface QueueEntryDTO {
   phone: string;
   email?: string;
   reasonForVisit: string;
+  preferredTime?: string;
   medicalHistory?: string;
   triageLevel: "URGENT" | "ROUTINE";
   triageMatchedLabels: string[];
@@ -32,6 +33,7 @@ export interface IntakePayload {
   phone: string;
   email?: string;
   reasonForVisit: string;
+  preferredTime?: string;
   medicalHistory?: string;
 }
 

@@ -12,6 +12,7 @@ export interface CreateIntakeInput {
   phone: string;
   email?: string;
   reasonForVisit: string;
+  preferredTime?: string;
   medicalHistory?: string;
 }
 
@@ -94,6 +95,7 @@ export class QueueService {
       phone: input.phone.trim(),
       email: input.email?.trim() || undefined,
       reasonForVisit: input.reasonForVisit.trim(),
+      preferredTime: input.preferredTime?.trim() || undefined,
       medicalHistory: input.medicalHistory?.trim() || undefined,
       triageLevel: isUrgent ? "URGENT" : "ROUTINE",
       triageMatchedLabels: matchedLabels,

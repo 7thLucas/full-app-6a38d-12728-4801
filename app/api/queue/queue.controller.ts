@@ -10,7 +10,7 @@ const VALID_STATUSES: QueueStatus[] = ["waiting", "in_progress", "seen"];
 /** POST /api/queue/intake — public intake submission (no auth). */
 export async function createIntake(req: Request, res: Response) {
   try {
-    const { name, phone, email, reasonForVisit, medicalHistory } = req.body ?? {};
+    const { name, phone, email, reasonForVisit, preferredTime, medicalHistory } = req.body ?? {};
 
     if (!name || typeof name !== "string" || name.trim().length === 0) {
       return res.status(400).json({ success: false, message: "Name is required." });
@@ -27,6 +27,7 @@ export async function createIntake(req: Request, res: Response) {
       phone,
       email,
       reasonForVisit,
+      preferredTime,
       medicalHistory,
     });
 

@@ -19,6 +19,8 @@ normal waiting queue.
   triaging arrivals, seeing who has completed intake, and moving patients forward.
 - **Patients** — submit the intake form (name, contact, reason for visit, basic
   history) and get an SMS confirmation. Low-friction, mobile-first; no account needed.
+- **Triage nurse / clinical reviewer** — handles the urgent-review path. Sees red-flag
+  intakes (e.g. chest pain) that the triage policy pulls out of the normal queue.
 - **Clinic owner / operator** _(assumption)_ — the buyer. Cares about front-desk time
   saved and fewer no-shows.
 

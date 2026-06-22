@@ -348,6 +348,60 @@
       border-bottom-color: var(--blue);
     }
 
+    .acc {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .acc>summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      font-weight: 800;
+      font-size: 13px;
+      color: #475467;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid transparent;
+    }
+
+    .acc>summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .acc>summary::after {
+      content: "⌄";
+      margin-left: auto;
+      color: var(--muted);
+      transition: transform .2s;
+    }
+
+    .acc[open]>summary {
+      color: var(--blue);
+      border-bottom-color: var(--line);
+    }
+
+    .acc[open]>summary::after {
+      transform: rotate(180deg);
+    }
+
+    .acc>:not(summary) {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .acc>summary+* {
+      padding-top: 16px;
+    }
+
+    .acc>:last-child {
+      padding-bottom: 16px;
+    }
+
     .main-content {
       flex: 1;
       overflow: auto;
@@ -1103,17 +1157,11 @@
             <button class="inspect-btn" id="inspectBuild">&lt;/&gt; Inspect build</button>
           </div>
         </div>
-        <div class="tabs" id="tabs">
-          <button class="tab" data-tab="overview">⌘ Overview</button>
-          <button class="tab" data-tab="hypothesis">☷ Hypothesis Ledger</button>
-          <button class="tab active" data-tab="evidence">♙ Evidence</button>
-          <button class="tab" data-tab="regression">⟳ Regression</button>
-          <button class="tab" data-tab="gate">◇ Gate</button>
-        </div>
       </div>
 
       <section class="main-content">
-        <div id="overview" class="tab-pane">
+        <details class="acc" id="overview">
+          <summary>⌘ Overview</summary>
           <div class="toolbar">
             <div>
               <h2>Run overview</h2>
@@ -1140,19 +1188,47 @@
             <p class="hint">The harness builds a clinic intake workflow, tests hidden rules like urgent routing and SMS
               privacy, repairs failures, re-runs regressions, and decides whether the app can ship.</p>
           </div>
-        </div>
+        </details>
 
-        <div id="hypothesis" class="tab-pane">
+        <details class="acc" id="hypothesis">
+          <summary>☷ Hypothesis Ledger</summary>
           <div class="toolbar">
             <div>
               <h2>Hypothesis Ledger</h2>
               <div class="hint">Potential hidden rules before we have proof.</div>
             </div>
           </div>
-          <div id="hypothesisList" class="hypothesis-list"></div>
-        </div>
+          <div id="hypothesisList" class="hypothesis-list">
+            <div class="hypothesis-item">
+              <div><b>Urgent symptoms may need special triage</b>
+                <div class="hint">Medical intake workflows often have hidden urgent-routing rules.</div>
+              </div><span class="pill red">critical</span>
+            </div>
+            <div class="hypothesis-item">
+              <div><b>SMS content may leak private health details</b>
+                <div class="hint">Confirmation messages can accidentally include symptoms or visit reasons.</div>
+              </div><span class="pill red">critical</span>
+            </div>
+            <div class="hypothesis-item">
+              <div><b>Duplicate submissions should merge</b>
+                <div class="hint">Patients may submit repeatedly; duplicates can confuse triage.</div>
+              </div><span class="pill amber">moderate</span>
+            </div>
+            <div class="hypothesis-item">
+              <div><b>Manual overrides need audit logs</b>
+                <div class="hint">Staff actions in healthcare workflows often require auditability.</div>
+              </div><span class="pill red">critical</span>
+            </div>
+            <div class="hypothesis-item">
+              <div><b>Missing insurance should route to follow-up</b>
+                <div class="hint">Operational workflows need exception queues, not silent drops.</div>
+              </div><span class="pill amber">moderate</span>
+            </div>
+          </div>
+        </details>
 
-        <div id="evidence" class="tab-pane active">
+        <details class="acc" id="evidence" open>
+          <summary>♙ Evidence</summary>
           <div class="toolbar">
             <div>
               <h2>Evidence Ledger</h2>
@@ -1178,7 +1254,57 @@
               <div>Status</div>
               <div>Updated</div>
             </div>
-            <div id="ledgerRows"></div>
+            <div id="ledgerRows">
+              <div class="ledger-row" data-anchor="urgent">
+                <div class="anchor-cell">
+                  <div class="num amber">1</div>
+                  <div>
+                    <div class="anchor-title">Urgent symptom routing</div>
+                    <div class="anchor-desc">Patients with urgent indicators must be routed to urgent queue with high
+                      priority.</div>
+                  </div>
+                </div>
+                <div class="trace">No scenario captured yet<br>Waiting on evidence</div>
+                <div><span class="pill amber">Unknown / not tested</span></div>
+                <div class="updated"><span>—</span><span>›</span></div>
+              </div>
+              <div class="ledger-row" data-anchor="sms">
+                <div class="anchor-cell">
+                  <div class="num amber">2</div>
+                  <div>
+                    <div class="anchor-title">SMS privacy</div>
+                    <div class="anchor-desc">SMS messages must not include sensitive symptom details or free text.</div>
+                  </div>
+                </div>
+                <div class="trace">No scenario captured yet<br>Waiting on evidence</div>
+                <div><span class="pill amber">Unknown / not tested</span></div>
+                <div class="updated"><span>—</span><span>›</span></div>
+              </div>
+              <div class="ledger-row" data-anchor="duplicate">
+                <div class="anchor-cell">
+                  <div class="num amber">3</div>
+                  <div>
+                    <div class="anchor-title">Duplicate submission merge</div>
+                    <div class="anchor-desc">Repeated submissions for same patient within 15 min should merge.</div>
+                  </div>
+                </div>
+                <div class="trace">No scenario captured yet<br>Waiting on evidence</div>
+                <div><span class="pill amber">Unknown / not tested</span></div>
+                <div class="updated"><span>—</span><span>›</span></div>
+              </div>
+              <div class="ledger-row" data-anchor="audit">
+                <div class="anchor-cell">
+                  <div class="num amber">4</div>
+                  <div>
+                    <div class="anchor-title">Audit log for manual override</div>
+                    <div class="anchor-desc">All manual overrides must be recorded with reason and staff identity.</div>
+                  </div>
+                </div>
+                <div class="trace">No trace captured yet<br>Waiting on evidence</div>
+                <div><span class="pill amber">Needs evidence<br>/ open risk</span></div>
+                <div class="updated"><span>—</span><span>›</span></div>
+              </div>
+            </div>
           </div>
           <div class="trace-flow">
             <b>Trace flow</b> <span class="hint">How every anchor is proven before we gate.</span>
@@ -1210,347 +1336,94 @@
               </div>
             </div>
           </div>
-          <div id="gatePanel" class="gate-panel"></div>
+          <div id="gatePanel" class="gate-panel">
+            <div class="gate-status reopen">
+              <div style="font-weight:900">Decision Gate</div>
+              <div class="gate-word reopen">WAIT</div>
+              <div class="hint">Run convergence pass before shipping.</div>
+              <button class="small-btn" style="margin-top:14px">View gate policy</button>
+            </div>
+            <div class="gate-list">
+              <h3>Blocking / open anchors</h3>
+              <div class="gate-anchor"><span class="small-num">1</span><b>Urgent symptom routing</b><span class="hint">Unknown / not tested ›</span></div>
+              <div class="gate-anchor"><span class="small-num">2</span><b>SMS privacy</b><span class="hint">Unknown / not tested ›</span></div>
+              <div class="gate-anchor"><span class="small-num">3</span><b>Duplicate submission merge</b><span class="hint">Unknown / not tested ›</span></div>
+              <div class="gate-anchor"><span class="small-num">4</span><b>Audit log for manual override</b><span class="hint">Needs evidence ›</span></div>
+            </div>
+            <div class="gate-summary">
+              <h3>Summary</h3>
+              <div class="summary-row"><span>Total anchors</span><b>4</b></div>
+              <div class="summary-row"><span>Passed</span><b style="color:var(--green)">0</b></div>
+              <div class="summary-row"><span>Open risks</span><b style="color:var(--amber)">4</b></div>
+              <div class="summary-row"><span>Blocking</span><b style="color:var(--red)">4</b></div>
+              <div class="summary-row"><span>Last run</span><b>Not run</b></div>
+            </div>
+          </div>
           <div class="footer-note"><span>Harness v0 provides evidence that hidden constraints are satisfied before we
               ship. <b>No hidden rule. No silent risk. No ship.</b></span><span>Learn more ↗</span></div>
-        </div>
+        </details>
 
-        <div id="regression" class="tab-pane">
+        <details class="acc" id="regression">
+          <summary>⟳ Regression</summary>
           <div class="toolbar">
             <div>
               <h2>Regression checks</h2>
               <div class="hint">Repairs should not break previously discovered anchors.</div>
             </div>
           </div>
-          <div id="regressionList" class="hypothesis-list"></div>
-        </div>
+          <div id="regressionList" class="hypothesis-list">
+            <div class="hypothesis-item">
+              <div><b>Happy-path intake submits</b>
+                <div class="hint">Routine visible requirement.</div>
+              </div><span class="pill amber">not run</span>
+            </div>
+            <div class="hypothesis-item">
+              <div><b>Normal queue still works</b>
+                <div class="hint">Repair should not break routine queue.</div>
+              </div><span class="pill amber">not run</span>
+            </div>
+            <div class="hypothesis-item">
+              <div><b>Duplicate submission merge</b>
+                <div class="hint">Privacy patch should preserve internal reason field.</div>
+              </div><span class="pill amber">not run</span>
+            </div>
+          </div>
+        </details>
 
-        <div id="gate" class="tab-pane">
+        <details class="acc" id="gate">
+          <summary>◇ Gate</summary>
           <div class="toolbar">
             <div>
               <h2>Decision Gate</h2>
               <div class="hint">The app only ships if critical blockers are cleared and evidenced.</div>
             </div>
           </div>
-          <div id="gateOnly"></div>
-        </div>
+          <div id="gateOnly">
+            <div class="gate-panel">
+              <div class="gate-status reopen">
+                <div style="font-weight:900">Decision Gate</div>
+                <div class="gate-word reopen">WAIT</div>
+                <div class="hint">Run convergence pass before shipping.</div>
+                <button class="small-btn" style="margin-top:14px">View gate policy</button>
+              </div>
+              <div class="gate-list">
+                <h3>Blocking / open anchors</h3>
+                <div class="gate-anchor"><span class="small-num">1</span><b>Urgent symptom routing</b><span class="hint">Unknown / not tested ›</span></div>
+                <div class="gate-anchor"><span class="small-num">2</span><b>SMS privacy</b><span class="hint">Unknown / not tested ›</span></div>
+                <div class="gate-anchor"><span class="small-num">3</span><b>Duplicate submission merge</b><span class="hint">Unknown / not tested ›</span></div>
+                <div class="gate-anchor"><span class="small-num">4</span><b>Audit log for manual override</b><span class="hint">Needs evidence ›</span></div>
+              </div>
+              <div class="gate-summary">
+                <h3>Summary</h3>
+                <div class="summary-row"><span>Total anchors</span><b>4</b></div>
+                <div class="summary-row"><span>Passed</span><b style="color:var(--green)">0</b></div>
+                <div class="summary-row"><span>Open risks</span><b style="color:var(--amber)">4</b></div>
+                <div class="summary-row"><span>Blocking</span><b style="color:var(--red)">4</b></div>
+                <div class="summary-row"><span>Last run</span><b>Not run</b></div>
+              </div>
+            </div>
+          </div>
+        </details>
       </section>
   </div>
-
-  <div class="modal-backdrop" id="modalBackdrop">
-    <div class="modal">
-      <h3 id="modalTitle">Trace</h3>
-      <div class="trace-box" id="modalBody"></div>
-      <div class="modal-actions"><button class="primary" id="closeModal">Close</button></div>
-    </div>
-  </div>
-
-  <script>
-    const nowTime = () => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-    const baseAnchors = [
-      {
-        id: 1,
-        key: 'urgent',
-        title: 'Urgent symptom routing',
-        desc: 'Patients with urgent indicators must be routed to urgent queue with high priority.',
-        trace: 'No scenario captured yet\nWaiting on evidence',
-        status: 'unknown',
-        updated: '—',
-        severity: 'red',
-        traceText: 'No trace yet. Run hidden-rule tests to test chest pain routing.'
-      },
-      {
-        id: 2,
-        key: 'sms',
-        title: 'SMS privacy',
-        desc: 'SMS messages must not include sensitive symptom details or free text.',
-        trace: 'No scenario captured yet\nWaiting on evidence',
-        status: 'unknown',
-        updated: '—',
-        severity: 'red',
-        traceText: 'No trace yet. Run hidden-rule tests to preview SMS payload.'
-      },
-      {
-        id: 3,
-        key: 'duplicate',
-        title: 'Duplicate submission merge',
-        desc: 'Repeated submissions for same patient within 15 min should merge.',
-        trace: 'No scenario captured yet\nWaiting on evidence',
-        status: 'unknown',
-        updated: '—',
-        severity: 'amber',
-        traceText: 'No trace yet. Run hidden-rule tests to test repeated submissions.'
-      },
-      {
-        id: 4,
-        key: 'audit',
-        title: 'Audit log for manual override',
-        desc: 'All manual overrides must be recorded with reason and staff identity.',
-        trace: 'No trace captured yet\nWaiting on evidence',
-        status: 'open',
-        updated: '—',
-        severity: 'amber',
-        traceText: 'No trace yet. Manual override audit logging still needs evidence.'
-      }
-    ];
-
-    const state = {
-      stage: 'initial',
-      build: 'v0.1.0',
-      anchors: JSON.parse(JSON.stringify(baseAnchors)),
-      chat: [
-        { who: 'You', type: 'user', time: '10:02 AM', text: 'Build a clinic intake dashboard for patients and staff. Include triage, queue, and SMS updates.' },
-        { who: 'Harness', type: 'bot', time: '10:02 AM', text: 'Got it. I’ll build the intake experience and run a convergence pass to surface hidden rules and risks before we ship.' }
-      ],
-      regressions: [
-        { name: 'Happy-path intake submits', status: 'not run', detail: 'Routine visible requirement.' },
-        { name: 'Normal queue still works', status: 'not run', detail: 'Repair should not break routine queue.' },
-        { name: 'Duplicate submission merge', status: 'not run', detail: 'Privacy patch should preserve internal reason field.' }
-      ]
-    };
-
-    const statusMap = {
-      unknown: { label: 'Unknown / not tested', cls: 'amber' },
-      open: { label: 'Needs evidence\n/ open risk', cls: 'amber' },
-      failed: { label: 'Critical blocker\nfound', cls: 'red' },
-      patched: { label: 'Scenario failed\n→ patched', cls: 'red' },
-      repaired: { label: 'Critical blocker\nfound → repaired', cls: 'red' },
-      passed: { label: 'Regression\npassed', cls: 'green' },
-      evidenced: { label: 'Passed\n+ evidenced', cls: 'green' }
-    };
-
-    function addChat(message) {
-      state.chat.push(message);
-      renderChat();
-    }
-
-    function renderChat() {
-      const chat = document.getElementById('chat');
-      if (!chat) return;
-      chat.innerHTML = state.chat.map(m => `
-        <div class="msg">
-          <div class="avatar ${m.type === 'bot' ? 'bot' : ''}">${m.type === 'bot' ? '🤖' : 'Y'}</div>
-          <div>
-            <div class="msg-meta"><b>${m.who}</b><span>${m.time}</span></div>
-            <div class="bubble ${m.type === 'user' ? 'user' : ''} ${m.kind || ''}">${m.text}</div>
-          </div>
-        </div>
-      `).join('');
-      chat.scrollTop = chat.scrollHeight;
-    }
-
-    function renderLedger() {
-      const rows = document.getElementById('ledgerRows');
-      rows.innerHTML = state.anchors.map(a => {
-        const st = statusMap[a.status];
-        const numCls = st.cls === 'green' ? 'green' : st.cls === 'red' ? 'red' : 'amber';
-        return `
-        <div class="ledger-row" data-anchor="${a.key}">
-          <div class="anchor-cell">
-            <div class="num ${numCls}">${a.id}</div>
-            <div><div class="anchor-title">${a.title}</div><div class="anchor-desc">${a.desc}</div></div>
-          </div>
-          <div class="trace">${a.trace.replace(/\n/g, '<br>')}</div>
-          <div><span class="pill ${st.cls}">${st.label.replace(/\n/g, '<br>')}</span></div>
-          <div class="updated"><span>${a.updated}</span><span>›</span></div>
-        </div>`;
-      }).join('');
-      rows.querySelectorAll('.ledger-row').forEach(row => row.addEventListener('click', () => openTrace(row.dataset.anchor)));
-    }
-
-    function renderHypotheses() {
-      const list = document.getElementById('hypothesisList');
-      const hypotheses = [
-        ['Urgent symptoms may need special triage', 'critical', 'Medical intake workflows often have hidden urgent-routing rules.'],
-        ['SMS content may leak private health details', 'critical', 'Confirmation messages can accidentally include symptoms or visit reasons.'],
-        ['Duplicate submissions should merge', 'moderate', 'Patients may submit repeatedly; duplicates can confuse triage.'],
-        ['Manual overrides need audit logs', 'critical', 'Staff actions in healthcare workflows often require auditability.'],
-        ['Missing insurance should route to follow-up', 'moderate', 'Operational workflows need exception queues, not silent drops.']
-      ];
-      list.innerHTML = hypotheses.map(h => `
-        <div class="hypothesis-item"><div><b>${h[0]}</b><div class="hint">${h[2]}</div></div><span class="pill ${h[1] === 'critical' ? 'red' : 'amber'}">${h[1]}</span></div>
-      `).join('');
-    }
-
-    function renderRegressions() {
-      const list = document.getElementById('regressionList');
-      list.innerHTML = state.regressions.map(r => {
-        const cls = r.status === 'pass' ? 'green' : r.status === 'fail' ? 'red' : 'amber';
-        return `<div class="hypothesis-item"><div><b>${r.name}</b><div class="hint">${r.detail}</div></div><span class="pill ${cls}">${r.status}</span></div>`;
-      }).join('');
-    }
-
-    function gateStatus() {
-      const blocking = state.anchors.filter(a => ['failed', 'patched', 'repaired'].includes(a.status) || a.status === 'open' || a.status === 'unknown');
-      const passed = state.anchors.filter(a => ['passed', 'evidenced'].includes(a.status));
-      if (state.stage === 'final') return { word: 'SHIP', cls: 'ship', sub: 'All critical anchors cleared and evidenced.', blocking: [] };
-      if (state.stage === 'initial') return { word: 'WAIT', cls: 'reopen', sub: 'Run convergence pass before shipping.', blocking };
-      if (state.stage === 'tested') return { word: 'BLOCK', cls: 'block', sub: 'Critical blockers found. Repair before shipping.', blocking };
-      return { word: 'REOPEN', cls: 'reopen', sub: 'Audit evidence remains open. Collect evidence.', blocking };
-    }
-
-    function renderGate() {
-      const gate = gateStatus();
-      const passedCount = state.anchors.filter(a => ['passed', 'evidenced'].includes(a.status)).length;
-      const openCount = state.anchors.filter(a => ['open', 'unknown'].includes(a.status)).length;
-      const blockCount = gate.blocking.length;
-      const panelHtml = `
-        <div class="gate-status ${gate.cls}">
-          <div style="font-weight:900">Decision Gate</div>
-          <div class="gate-word ${gate.cls}">${gate.word}</div>
-          <div class="hint">${gate.sub}</div>
-          <button class="small-btn" style="margin-top:14px" onclick="openGatePolicy()">View gate policy</button>
-        </div>
-        <div class="gate-list">
-          <h3>${gate.blocking.length ? 'Blocking / open anchors' : 'Cleared anchors'}</h3>
-          ${(gate.blocking.length ? gate.blocking : state.anchors).slice(0, 4).map(a => `<div class="gate-anchor"><span class="small-num">${a.id}</span><b>${a.title}</b><span class="hint">${statusMap[a.status].label.split('\n')[0]} ›</span></div>`).join('')}
-        </div>
-        <div class="gate-summary">
-          <h3>Summary</h3>
-          <div class="summary-row"><span>Total anchors</span><b>${state.anchors.length}</b></div>
-          <div class="summary-row"><span>Passed</span><b style="color:var(--green)">${passedCount}</b></div>
-          <div class="summary-row"><span>Open risks</span><b style="color:var(--amber)">${openCount}</b></div>
-          <div class="summary-row"><span>Blocking</span><b style="color:var(--red)">${blockCount}</b></div>
-          <div class="summary-row"><span>Last run</span><b>${document.getElementById('lastRun').textContent}</b></div>
-        </div>
-      `;
-      document.getElementById('gatePanel').innerHTML = panelHtml;
-      document.getElementById('gateOnly').innerHTML = `<div class="gate-panel">${panelHtml}</div>`;
-      document.getElementById('mPassed').textContent = passedCount;
-      document.getElementById('mGate').textContent = gate.word;
-    }
-
-    function renderAll() {
-      document.getElementById('buildVersion').textContent = state.build;
-      renderChat(); renderLedger(); renderHypotheses(); renderRegressions(); renderGate();
-    }
-
-    function runTests() {
-      state.stage = 'tested';
-      state.build = 'v0.2.0';
-      document.getElementById('lastRun').textContent = nowTime();
-      state.anchors[0].status = 'failed'; state.anchors[0].updated = nowTime(); state.anchors[0].trace = '3 scenarios • 18 steps\nTrace URG-041\nChest pain → normal queue';
-      state.anchors[0].traceText = 'Trace URG-041\nInput: patient reason="chest pain"\nObserved: case entered normal queue. No urgent flag.\nExpected: route to nurse review before normal queue.\nResult: CRITICAL FAIL.';
-      state.anchors[1].status = 'failed'; state.anchors[1].updated = nowTime(); state.anchors[1].trace = '5 scenarios • 22 steps\nTrace SMS-017\nSymptom leaked in SMS';
-      state.anchors[1].traceText = 'Trace SMS-017\nInput: SMS preview after chest pain intake.\nObserved: "Your visit for chest pain is confirmed."\nExpected: no symptom or visit reason in SMS.\nResult: CRITICAL FAIL.';
-      state.anchors[2].status = 'unknown'; state.anchors[2].trace = 'Queued after repairs\nWaiting on regression'; state.anchors[2].updated = nowTime();
-      state.anchors[3].status = 'open'; state.anchors[3].updated = nowTime();
-      addChat({ who: 'Harness', type: 'bot', time: nowTime(), text: 'Starting hidden-rule tests:<ul><li>Urgent symptom routing</li><li>SMS privacy & leakage</li><li>Duplicate submission merge</li><li>Audit log for manual override</li></ul>I’ll record evidence and update the ledger.' });
-      addChat({ who: 'Harness', type: 'bot', time: nowTime(), kind: 'alert', text: '⚠️ <b>Critical issue discovered</b><br><br>Urgent symptoms are not routed correctly when “chest pain” is entered. Patient sent to general queue instead of urgent queue.<br><span class="mini-link">View trace →</span>' });
-      renderAll();
-    }
-
-    function repairAndRegress() {
-      if (state.stage === 'initial') runTests();
-      state.stage = 'repaired';
-      state.build = 'v0.7.3';
-      document.getElementById('lastRun').textContent = nowTime();
-      state.anchors[0].status = 'passed'; state.anchors[0].updated = nowTime(); state.anchors[0].trace = '3 scenarios • 18 steps\nTrace URG-041\nRepaired rule: v0.7.3';
-      state.anchors[0].traceText = 'Trace URG-041 after patch\nPatch: route chest pain, fainting, severe bleeding, and shortness of breath to nurse review.\nObserved: chest pain flagged HIGH PRIORITY and sent to urgent queue.\nResult: PASS.';
-      state.anchors[1].status = 'patched'; state.anchors[1].updated = nowTime(); state.anchors[1].trace = '5 scenarios • 22 steps\nTrace SMS-017\nPatched template: v0.7.3';
-      state.anchors[1].traceText = 'Trace SMS-017 after patch\nPatch: SMS excludes symptoms and visit reasons.\nObserved: "We received your intake. We’ll review and follow up shortly."\nResult: PATCHED, needs final privacy regression.';
-      state.anchors[2].status = 'passed'; state.anchors[2].updated = nowTime(); state.anchors[2].trace = '4 scenarios • 16 steps\nTrace DUP-009\nNo code changes';
-      state.anchors[2].traceText = 'Trace DUP-009\nInput: same patient submits twice within 15 minutes.\nObserved: one merged queue item with latest notes.\nResult: REGRESSION PASS.';
-      state.regressions = [
-        { name: 'Happy-path intake submits', status: 'pass', detail: 'Routine visible requirement still works.' },
-        { name: 'Urgent symptom routing', status: 'pass', detail: 'Chest pain routes to nurse review.' },
-        { name: 'Duplicate submission merge', status: 'pass', detail: 'Privacy patch preserved internal reason field.' }
-      ];
-      document.getElementById('smsPreview')?.replaceChildren('Sunrise Clinic: We received your intake. We’ll review and follow up shortly. Reply STOP to opt out.');
-      document.getElementById('smsNote')?.replaceChildren('✅ No symptom details included.');
-      addChat({ who: 'You', type: 'user', time: nowTime(), text: 'Repair the routing logic and re-run tests.' });
-      addChat({ who: 'Harness', type: 'bot', time: nowTime(), kind: 'success', text: '✅ <b>Repaired and verified</b><br><br>Urgent symptom routing now correct. Duplicate regression passed. SMS privacy patch applied but final evidence still needed.' });
-      renderAll();
-    }
-
-    function collectEvidence() {
-      if (state.stage === 'initial') runTests();
-      if (state.stage === 'tested') repairAndRegress();
-      state.stage = 'final';
-      document.getElementById('lastRun').textContent = nowTime();
-      state.anchors[1].status = 'evidenced'; state.anchors[1].updated = nowTime(); state.anchors[1].trace = '5 scenarios • 22 steps\nTrace SMS-017\nPrivacy regression passed';
-      state.anchors[1].traceText = 'Trace SMS-017 final privacy regression\nObserved: SMS contains appointment status only. No symptom, diagnosis, free text, or visit reason.\nResult: PASS + EVIDENCED.';
-      state.anchors[3].status = 'evidenced'; state.anchors[3].updated = nowTime(); state.anchors[3].trace = '2 scenarios • 8 steps\nTrace AUD-004\nOverride log captured';
-      state.anchors[3].traceText = 'Trace AUD-004\nInput: staff manually overrides triage priority.\nObserved: audit log captures actor, timestamp, previous priority, new priority, and reason.\nResult: PASS + EVIDENCED.';
-      state.regressions.push({ name: 'SMS privacy regression', status: 'pass', detail: 'SMS excludes symptoms and visit reasons.' });
-      state.regressions.push({ name: 'Manual override audit log', status: 'pass', detail: 'Audit evidence captured.' });
-      addChat({ who: 'Harness', type: 'bot', time: nowTime(), kind: 'success', text: '✅ <b>Gate cleared</b><br><br>All critical anchors are repaired and evidenced. The app can ship inside this evidence envelope.' });
-      renderAll();
-    }
-
-    function reset() {
-      state.stage = 'initial'; state.build = 'v0.1.0';
-      state.anchors = JSON.parse(JSON.stringify(baseAnchors));
-      state.chat = [
-        { who: 'You', type: 'user', time: '10:02 AM', text: 'Build a clinic intake dashboard for patients and staff. Include triage, queue, and SMS updates.' },
-        { who: 'Harness', type: 'bot', time: '10:02 AM', text: 'Got it. I’ll build the intake experience and run a convergence pass to surface hidden rules and risks before we ship.' }
-      ];
-      state.regressions = [
-        { name: 'Happy-path intake submits', status: 'not run', detail: 'Routine visible requirement.' },
-        { name: 'Normal queue still works', status: 'not run', detail: 'Repair should not break routine queue.' },
-        { name: 'Duplicate submission merge', status: 'not run', detail: 'Privacy patch should preserve internal reason field.' }
-      ];
-      document.getElementById('lastRun').textContent = 'Not run';
-      renderAll();
-    }
-
-    function openTrace(key) {
-      const a = state.anchors.find(x => x.key === key);
-      document.getElementById('modalTitle').textContent = a.title;
-      document.getElementById('modalBody').textContent = a.traceText;
-      document.getElementById('modalBackdrop').classList.add('open');
-    }
-    window.openGatePolicy = function () {
-      document.getElementById('modalTitle').textContent = 'Critical gate policy';
-      document.getElementById('modalBody').textContent = 'If any critical anchor is unsatisfied → BLOCK.\nIf any critical anchor is unknown but suspected → REOPEN EVIDENCE.\nIf evidence for critical anchors is missing → ESCALATE or REOPEN.\nIf all discovered critical anchors are satisfied and evidenced → SHIP may be allowed.';
-      document.getElementById('modalBackdrop').classList.add('open');
-    }
-
-    function exportLog() {
-      const log = {
-        run_id: 'demo-clinic-intake-001',
-        method: 'convergence_harness_v0',
-        stage: state.stage,
-        build: state.build,
-        last_run: document.getElementById('lastRun').textContent,
-        anchors: state.anchors,
-        regressions: state.regressions,
-        decision: gateStatus().word,
-        exported_at: new Date().toISOString()
-      };
-      const blob = new Blob([JSON.stringify(log, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'convergence_harness_v0_run_log.json'; a.click();
-      URL.revokeObjectURL(url);
-    }
-
-    document.getElementById('runTests').onclick = runTests;
-    document.getElementById('runFromOverview').onclick = runTests;
-    document.getElementById('repairBtn').onclick = repairAndRegress;
-    document.getElementById('collectBtn').onclick = collectEvidence;
-    document.getElementById('resetBtn').onclick = reset;
-    document.getElementById('exportBtn').onclick = exportLog;
-    document.getElementById('closeModal').onclick = () => document.getElementById('modalBackdrop').classList.remove('open');
-    document.getElementById('modalBackdrop').addEventListener('click', e => { if (e.target.id === 'modalBackdrop') e.currentTarget.classList.remove('open'); });
-    const sendBtn = document.getElementById('sendBtn');
-    if (sendBtn) sendBtn.onclick = () => {
-      const text = document.getElementById('composer').value.trim();
-      if (!text) return;
-      addChat({ who: 'You', type: 'user', time: nowTime(), text });
-      document.getElementById('composer').value = '';
-      addChat({ who: 'Harness', type: 'bot', time: nowTime(), text: 'I can run tests, repair, collect audit evidence, or export the run log. Try the action buttons in the Evidence tab.' });
-    };
-    document.getElementById('toolsBtn')?.addEventListener('click', () => openGatePolicy());
-    document.getElementById('inspectBuild').onclick = () => openTrace('urgent');
-    document.querySelectorAll('.tab').forEach(btn => btn.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById(btn.dataset.tab).classList.add('active');
-    }));
-
-    renderAll();
-  </script>
 </section>

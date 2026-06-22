@@ -49,7 +49,8 @@
 
     .app {
       display: grid;
-      grid-template-columns: 360px minmax(620px, 1fr) 410px;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
       gap: 16px;
       padding: 16px;
       height: 100vh;
@@ -1087,29 +1088,6 @@
   </style>
 
   <div class="app">
-    <aside class="panel left-panel">
-      <div class="project-header">
-        <div class="shield">✚</div>
-        <div>
-          <div class="project-title">Clinic Intake</div>
-          <div class="project-sub">Convergence Harness v0</div>
-        </div>
-        <div class="caret">⌄</div>
-      </div>
-      <div class="session-bar"><span><i class="live-dot"></i>Session active</span><span>Auto-save on</span></div>
-      <div id="chat" class="chat"></div>
-      <div class="composer">
-        <textarea id="composer" placeholder="Ask the harness to test, inspect, or repair..."></textarea>
-        <div class="composer-actions">
-          <button class="small-btn">＋</button>
-          <button class="small-btn">🎙</button>
-          <button id="toolsBtn" class="small-btn">🛠 Tools</button>
-          <button id="sendBtn" class="send">➤</button>
-        </div>
-      </div>
-    </aside>
-
-    <main class="panel center-panel">
       <div class="center-top">
         <div class="top-row">
           <div>
@@ -1257,93 +1235,6 @@
           <div id="gateOnly"></div>
         </div>
       </section>
-    </main>
-
-    <aside class="panel right-panel">
-      <div class="right-top">
-        <div class="preview-title">App Preview</div>
-        <div class="preview-icons"><button class="icon-btn">📱</button><button class="icon-btn">▣</button><button
-            class="icon-btn">↗</button><button class="icon-btn">↻</button></div>
-      </div>
-      <div class="phone-wrap">
-        <div class="phone">
-          <div class="screen">
-            <div class="statusbar"><span>9:41</span><span>◖◗ ◉ ▰</span></div>
-            <div class="app-header"><span class="sun">☼</span><span class="clinic-name">Sunrise Clinic
-                Intake</span><span class="hamb">☰</span></div>
-            <div class="mobile-body">
-              <div class="welcome">
-                <div class="person">👩🏻</div>
-                <div><b>Welcome, Jamie</b>
-                  <div class="qdesc">We're here to help. Let's get you the right care.</div>
-                </div>
-              </div>
-              <div class="mobile-card">
-                <div style="display:flex;justify-content:space-between;align-items:center">
-                  <h4>Start your intake</h4><span class="qdesc">Step 1 of 5</span>
-                </div>
-                <div class="progress"><span></span></div>
-                <div class="mobile-label">What brings you in today?</div>
-                <div class="mobile-input">Briefly describe your symptoms</div>
-                <div class="mobile-label">When did this start?</div>
-                <div class="mobile-input">Select date 📅</div>
-                <div class="mobile-label">Any urgent symptoms?</div>
-                <div class="urgent-toggle"><button>Yes</button><button>Unsure</button><button class="active">No</button>
-                </div>
-                <button class="mobile-primary">Continue</button>
-                <div class="secure">🔒 Secure & HIPAA-compliant</div>
-              </div>
-              <div class="mobile-card">
-                <div style="display:flex;justify-content:space-between">
-                  <h4>Your intake status</h4><span class="qdesc">Est. 10–15 min</span>
-                </div>
-                <div class="queue-row">
-                  <div class="qicon">◷</div>
-                  <div>
-                    <div class="qname">Under review</div>
-                    <div class="qdesc">A nurse will review your answers.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mobile-card">
-                <div style="display:flex;justify-content:space-between">
-                  <h4>Care team queue (live)</h4><span class="qdesc">View all</span>
-                </div>
-                <div class="queue-row">
-                  <div class="qicon">♙</div>
-                  <div>
-                    <div class="qname">James T.</div>
-                    <div class="qdesc">Chest pain • High priority</div>
-                  </div><span class="tag red">URGENT</span>
-                </div>
-                <div class="queue-row">
-                  <div class="qicon">♙</div>
-                  <div>
-                    <div class="qname">Maria S.</div>
-                    <div class="qdesc">Abdominal pain</div>
-                  </div><span class="tag amber">REVIEW</span>
-                </div>
-                <div class="queue-row">
-                  <div class="qicon">♙</div>
-                  <div>
-                    <div class="qname">Alex R.</div>
-                    <div class="qdesc">Headache • Follow-up</div>
-                  </div><span class="tag green">LOW</span>
-                </div>
-              </div>
-              <div class="mobile-card">
-                <div style="display:flex;justify-content:space-between">
-                  <h4>SMS preview</h4><span class="qdesc">Edit</span>
-                </div>
-                <div class="sms" id="smsPreview">Sunrise Clinic: We received your intake. We'll review and follow up
-                  shortly. Reply STOP to opt out.</div>
-                <div class="secure" id="smsNote">✅ No symptom details included.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </aside>
   </div>
 
   <div class="modal-backdrop" id="modalBackdrop">
@@ -1436,6 +1327,7 @@
 
     function renderChat() {
       const chat = document.getElementById('chat');
+      if (!chat) return;
       chat.innerHTML = state.chat.map(m => `
         <div class="msg">
           <div class="avatar ${m.type === 'bot' ? 'bot' : ''}">${m.type === 'bot' ? '🤖' : 'Y'}</div>
@@ -1565,8 +1457,8 @@
         { name: 'Urgent symptom routing', status: 'pass', detail: 'Chest pain routes to nurse review.' },
         { name: 'Duplicate submission merge', status: 'pass', detail: 'Privacy patch preserved internal reason field.' }
       ];
-      document.getElementById('smsPreview').textContent = 'Sunrise Clinic: We received your intake. We’ll review and follow up shortly. Reply STOP to opt out.';
-      document.getElementById('smsNote').textContent = '✅ No symptom details included.';
+      document.getElementById('smsPreview')?.replaceChildren('Sunrise Clinic: We received your intake. We’ll review and follow up shortly. Reply STOP to opt out.');
+      document.getElementById('smsNote')?.replaceChildren('✅ No symptom details included.');
       addChat({ who: 'You', type: 'user', time: nowTime(), text: 'Repair the routing logic and re-run tests.' });
       addChat({ who: 'Harness', type: 'bot', time: nowTime(), kind: 'success', text: '✅ <b>Repaired and verified</b><br><br>Urgent symptom routing now correct. Duplicate regression passed. SMS privacy patch applied but final evidence still needed.' });
       renderAll();
@@ -1642,14 +1534,15 @@
     document.getElementById('exportBtn').onclick = exportLog;
     document.getElementById('closeModal').onclick = () => document.getElementById('modalBackdrop').classList.remove('open');
     document.getElementById('modalBackdrop').addEventListener('click', e => { if (e.target.id === 'modalBackdrop') e.currentTarget.classList.remove('open'); });
-    document.getElementById('sendBtn').onclick = () => {
+    const sendBtn = document.getElementById('sendBtn');
+    if (sendBtn) sendBtn.onclick = () => {
       const text = document.getElementById('composer').value.trim();
       if (!text) return;
       addChat({ who: 'You', type: 'user', time: nowTime(), text });
       document.getElementById('composer').value = '';
       addChat({ who: 'Harness', type: 'bot', time: nowTime(), text: 'I can run tests, repair, collect audit evidence, or export the run log. Try the action buttons in the Evidence tab.' });
     };
-    document.getElementById('toolsBtn').onclick = () => openGatePolicy();
+    document.getElementById('toolsBtn')?.addEventListener('click', () => openGatePolicy());
     document.getElementById('inspectBuild').onclick = () => openTrace('urgent');
     document.querySelectorAll('.tab').forEach(btn => btn.addEventListener('click', () => {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));

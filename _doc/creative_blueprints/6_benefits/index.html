@@ -1,66 +1,93 @@
-<section class="w-full h-full overflow-auto bg-white p-12">
+<section id="cw6b" class="w-full h-full overflow-auto px-12 py-10" style="background:#EEF3F3">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
+    #cw6b{font-family:'Hanken Grotesk',system-ui,sans-serif;color:#0E2A2D;-webkit-font-smoothing:antialiased}
+    #cw6b h2,#cw6b h3,#cw6b .disp{font-family:'Bricolage Grotesque',system-ui,sans-serif;letter-spacing:-.025em;font-weight:800;text-wrap:balance}
+    #cw6b .mono{font-family:'Geist Mono',ui-monospace,monospace;font-feature-settings:'tnum' 1}
+    #cw6b .rail{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600}
+    @keyframes cw6bin{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+    #cw6b .rise{animation:cw6bin .5s cubic-bezier(.16,1,.3,1) both}
+    @media (prefers-reduced-motion:reduce){#cw6b .rise{animation:none}}
+    .mode-portrait #cw6b .sl-val{grid-template-columns:1fr}
+    .mode-portrait #cw6b .sl-val>div+div{border-left:0;border-top:1px solid #E6EDED}
+    .mode-portrait #cw6b .sl-roi{flex-direction:column;gap:1rem;text-align:left}
+    .mode-portrait #cw6b .sl-scope{grid-template-columns:1fr}
+  </style>
+
   <div class="h-full flex flex-col">
-    <div class="mb-6">
-      <span class="text-sm font-semibold tracking-widest uppercase" style="color:#0E7C86">The Payoff</span>
-      <h2 class="mt-2 text-4xl font-extrabold text-slate-900 tracking-tight">Where the value shows up</h2>
-      <p class="mt-3 text-lg text-slate-600 max-w-2xl leading-relaxed">
+    <div class="flex items-center justify-between pb-3.5 mb-6" style="border-bottom:1px solid #DCE6E6">
+      <div class="flex items-center gap-2.5">
+        <span class="inline-flex items-center justify-center w-6 h-6 rounded-md disp text-xs font-extrabold" style="background:#0E7C86;color:#fff">C</span>
+        <span class="rail" style="color:#0E7C86">Clearway</span>
+      </div>
+      <span class="rail" style="color:#6F898C">Ch. 06 · The payoff</span>
+    </div>
+
+    <div class="rise">
+      <h2 class="text-4xl" style="line-height:1.05">Where the value shows up</h2>
+      <p class="mt-3 text-lg leading-relaxed" style="color:#4D6164;max-width:64ch">
         Clearway replaces paper clipboards and manual reminder calls. The value is reclaimed front-desk
         time and fewer no-shows.
       </p>
     </div>
 
-    <div class="grid grid-cols-3 gap-5 mb-5">
-      <div class="rounded-2xl p-6" style="background:#F7FAFA;border:1px solid #E2EBEC">
-        <span class="text-xs font-bold tracking-widest uppercase" style="color:#0E7C86">Front desk</span>
-        <div class="mt-2 text-3xl font-extrabold text-slate-900">No clipboards</div>
-        <p class="mt-2 text-slate-600 leading-snug">Patients self-complete intake, so staff stop re-keying paper forms.</p>
+    <!-- Value band -->
+    <div class="sl-val grid grid-cols-3 mt-7 rounded-2xl rise" style="background:#fff;border:1px solid #DCE6E6;animation-delay:.05s">
+      <div class="p-6">
+        <span class="rail" style="color:#0E7C86">Front desk</span>
+        <div class="mt-2 text-3xl disp" style="color:#0E2A2D">No clipboards</div>
+        <p class="mt-2 text-sm leading-snug" style="color:#5C6F72">Patients self-complete intake, so staff stop re-keying paper forms.</p>
       </div>
-      <div class="rounded-2xl p-6" style="background:#F7FAFA;border:1px solid #E2EBEC">
-        <span class="text-xs font-bold tracking-widest uppercase" style="color:#0E7C86">No-shows</span>
-        <div class="mt-2 text-3xl font-extrabold text-slate-900">Fewer</div>
-        <p class="mt-2 text-slate-600 leading-snug">An automatic SMS confirmation replaces manual reminder calls.</p>
+      <div class="p-6" style="border-left:1px solid #E6EDED">
+        <span class="rail" style="color:#0E7C86">No-shows</span>
+        <div class="mt-2 text-3xl disp" style="color:#0E2A2D">Fewer</div>
+        <p class="mt-2 text-sm leading-snug" style="color:#5C6F72">An automatic SMS confirmation replaces manual reminder calls.</p>
       </div>
-      <div class="rounded-2xl p-6" style="background:#F7FAFA;border:1px solid #E2EBEC">
-        <span class="text-xs font-bold tracking-widest uppercase" style="color:#0E7C86">Visibility</span>
-        <div class="mt-2 text-3xl font-extrabold text-slate-900">One queue</div>
-        <p class="mt-2 text-slate-600 leading-snug">Live status for every checked-in patient, no guesswork.</p>
+      <div class="p-6" style="border-left:1px solid #E6EDED">
+        <span class="rail" style="color:#0E7C86">Visibility</span>
+        <div class="mt-2 text-3xl disp" style="color:#0E2A2D">One queue</div>
+        <p class="mt-2 text-sm leading-snug" style="color:#5C6F72">Live status for every checked-in patient, no guesswork.</p>
       </div>
     </div>
 
-    <!-- ROI summary -->
-    <div class="rounded-2xl p-7 text-white flex items-center justify-between mb-5" style="background:#0E7C86">
-      <div class="max-w-xl">
-        <span class="text-xs font-bold tracking-widest uppercase" style="color:#9FE3DE">The bottom line</span>
-        <h3 class="mt-2 text-2xl font-bold">One recovered appointment a week tends to cover it</h3>
-        <p class="mt-3 text-lg leading-relaxed" style="color:#E6F6F4">
+    <!-- ROI banner -->
+    <div class="sl-roi mt-6 rounded-2xl p-7 flex items-center justify-between relative overflow-hidden rise" style="background:#0E7C86;color:#fff;animation-delay:.12s">
+      <div class="absolute pointer-events-none" style="top:-40%;right:18%;width:36%;height:140%;background:radial-gradient(circle,rgba(159,227,222,.18),transparent 70%)"></div>
+      <div class="relative" style="max-width:60%">
+        <span class="rail" style="color:#9FE3DE">The bottom line</span>
+        <h3 class="mt-2 text-2xl leading-snug">One recovered appointment a week tends to cover it</h3>
+        <p class="mt-3 text-base leading-relaxed" style="color:#DCF2EF">
           The dashboard pays for itself on saved front-desk time alone; the SMS confirmation turns
           prevented no-shows into pure upside.
         </p>
       </div>
-      <div class="text-right pl-8">
-        <div class="text-5xl font-extrabold leading-none">52+</div>
-        <div class="mt-1 text-sm" style="color:#9FE3DE">recoverable appts / year<br>(1 per week)</div>
+      <div class="relative text-right pl-8" style="border-left:1px solid rgba(255,255,255,.18)">
+        <div class="text-6xl disp mono leading-none" style="color:#fff">52<span style="font-size:.5em;vertical-align:super">+</span></div>
+        <div class="mt-1.5 text-sm" style="color:#9FE3DE">recoverable appts / year<br>(1 per week)</div>
       </div>
     </div>
 
     <!-- Scope -->
-    <div class="grid grid-cols-2 gap-5">
-      <div class="rounded-2xl p-6" style="background:#E9F6F4;border:1px solid #BFE6E1">
-        <span class="text-xs font-bold tracking-widest uppercase" style="color:#0E7C86">In scope today</span>
+    <div class="sl-scope grid grid-cols-2 gap-5 mt-6 rise" style="animation-delay:.18s">
+      <div class="rounded-2xl p-6" style="background:#E9F6F4;border:1px solid #C6E5E1">
+        <div class="flex items-center gap-2">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#0E7C86" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          <span class="rail" style="color:#0A5F66">In scope today</span>
+        </div>
         <div class="mt-3 flex flex-wrap gap-2">
-          <span class="px-3 py-1.5 rounded-full text-sm font-semibold" style="background:#fff;color:#0A626A;border:1px solid #BFE6E1">Intake form</span>
-          <span class="px-3 py-1.5 rounded-full text-sm font-semibold" style="background:#fff;color:#0A626A;border:1px solid #BFE6E1">Urgent-symptom triage</span>
-          <span class="px-3 py-1.5 rounded-full text-sm font-semibold" style="background:#fff;color:#0A626A;border:1px solid #BFE6E1">Live staff queue</span>
-          <span class="px-3 py-1.5 rounded-full text-sm font-semibold" style="background:#fff;color:#0A626A;border:1px solid #BFE6E1">SMS confirmation</span>
+          <span class="px-3 py-1.5 rounded-full text-sm font-semibold" style="background:#fff;color:#0A5F66;border:1px solid #C6E5E1">Intake form</span>
+          <span class="px-3 py-1.5 rounded-full text-sm font-semibold" style="background:#fff;color:#0A5F66;border:1px solid #C6E5E1">Urgent-symptom triage</span>
+          <span class="px-3 py-1.5 rounded-full text-sm font-semibold" style="background:#fff;color:#0A5F66;border:1px solid #C6E5E1">Live staff queue</span>
+          <span class="px-3 py-1.5 rounded-full text-sm font-semibold" style="background:#fff;color:#0A5F66;border:1px solid #C6E5E1">SMS confirmation</span>
         </div>
       </div>
-      <div class="rounded-2xl p-6" style="background:#F7FAFA;border:1px solid #E2EBEC">
-        <span class="text-xs font-bold tracking-widest uppercase text-slate-500">Out of scope — for now</span>
+      <div class="rounded-2xl p-6" style="background:#F3F6F6;border:1px solid #DCE6E6">
+        <span class="rail" style="color:#7E9598">Out of scope — for now</span>
         <div class="mt-3 flex flex-wrap gap-2">
-          <span class="px-3 py-1.5 rounded-full text-sm font-medium text-slate-500" style="background:#fff;border:1px solid #E2EBEC">EHR integration</span>
-          <span class="px-3 py-1.5 rounded-full text-sm font-medium text-slate-500" style="background:#fff;border:1px solid #E2EBEC">Billing / payments</span>
-          <span class="px-3 py-1.5 rounded-full text-sm font-medium text-slate-500" style="background:#fff;border:1px solid #E2EBEC">Scheduling / booking</span>
-          <span class="px-3 py-1.5 rounded-full text-sm font-medium text-slate-500" style="background:#fff;border:1px solid #E2EBEC">Clinical charting</span>
+          <span class="px-3 py-1.5 rounded-full text-sm font-medium" style="color:#7E9598;background:#fff;border:1px solid #E2EBEC">EHR integration</span>
+          <span class="px-3 py-1.5 rounded-full text-sm font-medium" style="color:#7E9598;background:#fff;border:1px solid #E2EBEC">Billing / payments</span>
+          <span class="px-3 py-1.5 rounded-full text-sm font-medium" style="color:#7E9598;background:#fff;border:1px solid #E2EBEC">Scheduling / booking</span>
+          <span class="px-3 py-1.5 rounded-full text-sm font-medium" style="color:#7E9598;background:#fff;border:1px solid #E2EBEC">Clinical charting</span>
         </div>
       </div>
     </div>

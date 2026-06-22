@@ -77,7 +77,8 @@ appointment per week tends to cover the product's cost.
 
 ## Scope (current)
 
-In scope: patient intake form, live staff queue, SMS confirmation.
+In scope: patient intake form, urgent-symptom triage routing to nurse review, live
+staff queue, SMS confirmation.
 Out of scope (for now): EHR integration, billing/payments, scheduling/booking,
 clinical charting. Revisit as the product proves out.
 

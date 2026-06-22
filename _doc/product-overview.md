@@ -83,6 +83,8 @@ clinical charting. Revisit as the product proves out.
 
 ## Strategic principles
 
+- Safety first: urgent symptoms (e.g. chest pain) always route to nurse review before
+  the normal queue. This rule is non-negotiable and overrides convenience or speed.
 - Front desk first: the queue is the product's home screen for staff.
 - Zero friction for patients: no login, mobile-first, minimal fields.
 - Confirmation is no-show insurance, not a marketing channel.
